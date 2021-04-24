@@ -1,8 +1,6 @@
 package controller;
 
-import domain.user.BettingMoney;
-import domain.user.PlayerName;
-import domain.user.PlayerNames;
+import domain.user.*;
 import view.InputView;
 import view.OutputView;
 
@@ -14,10 +12,11 @@ import static java.util.stream.Collectors.toList;
 public class BlackJackGame {
 
     public static void main(String[] args) {
-        PlayerNames playerNames = inputPlayerNamesFromInputNames();
+        PlayerNames playerNames = inputPlayerNames();
+        Players players = inputPlayers(playerNames);
     }
 
-    private static PlayerNames inputPlayerNamesFromInputNames() {
+    private static PlayerNames inputPlayerNames() {
         OutputView.pleaseInputNames();
         List<PlayerName> playerNames = convertInputNamesIntoPlayerNames(InputView.inputNames());
         return new PlayerNames(playerNames);
@@ -28,6 +27,19 @@ public class BlackJackGame {
                 .map(String::trim)
                 .map(PlayerName::new)
                 .collect(toList());
+    }
+
+    private static Players inputPlayers(PlayerNames playerNames) {
+        List<Player> players = playerNames.getPlayerNames().stream()
+                .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
+                .collect(toList());
+        return new Players(players);
+    }
+
+    private static Player convertNamesAndBettingMoneyIntoPlayers(PlayerName playerName) {
+        OutputView.askHowMuchBettingToPlayer(playerName);
+        BettingMoney bettingMoney = inputBettingMoneyFromInputAmount(InputView.inputAmount());
+        return new Player(playerName, bettingMoney);
     }
 
     private static BettingMoney inputBettingMoneyFromInputAmount(BigDecimal amount) {
