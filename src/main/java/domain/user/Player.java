@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -18,6 +19,18 @@ public class Player {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public PlayerName getName() {
+        return name;
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
 }
