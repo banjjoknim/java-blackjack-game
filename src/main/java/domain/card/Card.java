@@ -10,4 +10,12 @@ public class Card {
         this.type = type;
     }
 
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
 }
