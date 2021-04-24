@@ -14,10 +14,12 @@ public class BlackJackGame {
     public static void main(String[] args) {
         PlayerNames playerNames = inputPlayerNames();
         Players players = inputPlayers(playerNames);
+
+        OutputView.printHandedOutTwoCardsToPlayers(players);
     }
 
     private static PlayerNames inputPlayerNames() {
-        OutputView.pleaseInputNames();
+        OutputView.printPleaseInputNames();
         List<PlayerName> playerNames = convertInputNamesIntoPlayerNames(InputView.inputNames());
         return new PlayerNames(playerNames);
     }
@@ -37,7 +39,7 @@ public class BlackJackGame {
     }
 
     private static Player convertNamesAndBettingMoneyIntoPlayers(PlayerName playerName) {
-        OutputView.askHowMuchBettingToPlayer(playerName);
+        OutputView.printAskHowMuchBettingToPlayer(playerName);
         BettingMoney bettingMoney = inputBettingMoneyFromInputAmount(InputView.inputAmount());
         return new Player(playerName, bettingMoney);
     }
