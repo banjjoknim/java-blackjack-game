@@ -17,7 +17,7 @@ public class InputView {
                 .collect(toList());
     }
 
-    public static BigDecimal inputBettingMoneyAmount() {
+    public static BigDecimal inputAmount() {
         return new BigDecimal(scanner.next());
     }
 

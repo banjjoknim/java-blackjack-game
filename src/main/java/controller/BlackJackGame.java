@@ -1,10 +1,12 @@
 package controller;
 
+import domain.user.BettingMoney;
 import domain.user.PlayerName;
 import domain.user.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -12,10 +14,10 @@ import static java.util.stream.Collectors.toList;
 public class BlackJackGame {
 
     public static void main(String[] args) {
-        PlayerNames playerNames = createPlayerNamesFromInputNames();
+        PlayerNames playerNames = inputPlayerNamesFromInputNames();
     }
 
-    private static PlayerNames createPlayerNamesFromInputNames() {
+    private static PlayerNames inputPlayerNamesFromInputNames() {
         OutputView.pleaseInputNames();
         List<PlayerName> playerNames = convertInputNamesIntoPlayerNames(InputView.inputNames());
         return new PlayerNames(playerNames);
@@ -26,6 +28,10 @@ public class BlackJackGame {
                 .map(String::trim)
                 .map(PlayerName::new)
                 .collect(toList());
+    }
+
+    private static BettingMoney inputBettingMoneyFromInputAmount(BigDecimal amount) {
+        return new BettingMoney(amount);
     }
 
 }

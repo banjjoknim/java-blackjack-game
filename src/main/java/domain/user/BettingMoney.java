@@ -6,17 +6,22 @@ import java.util.Objects;
 public class BettingMoney {
     private static final int POSITIVE = 1;
 
-    private BigDecimal bettingMoney;
+    private BigDecimal amount;
 
-    public BettingMoney(BigDecimal bettingMoney) {
-        this.bettingMoney = bettingMoney;
+    public BettingMoney(BigDecimal amount) {
+        validateBettingMoneyAmount(amount);
+        this.amount = amount;
     }
 
-    private void validateBettingMoney(BigDecimal bettingMoney) {
-        int bettingMoneyAmount = bettingMoney.compareTo(BigDecimal.ZERO);
+    private void validateBettingMoneyAmount(BigDecimal amount) {
+        int bettingMoneyAmount = amount.compareTo(BigDecimal.ZERO);
         if (bettingMoneyAmount != POSITIVE) {
             throw new IllegalArgumentException("배팅 금액은 0보다 커야 합니다.");
         }
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     @Override
@@ -24,12 +29,12 @@ public class BettingMoney {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BettingMoney that = (BettingMoney) o;
-        return Objects.equals(bettingMoney, that.bettingMoney);
+        return Objects.equals(amount, that.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bettingMoney);
+        return Objects.hash(amount);
     }
 
 }
