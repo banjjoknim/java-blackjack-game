@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Player {
     
-    private final String name;
-    private final double bettingMoney;
+    private final PlayerName name;
+    private final BettingMoney bettingMoney;
     private final List<Card> cards = new ArrayList<>();
 
-    public Player(String name, double bettingMoney) {
+    public Player(PlayerName name, BettingMoney bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
     }
