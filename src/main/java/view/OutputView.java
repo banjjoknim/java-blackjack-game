@@ -26,6 +26,11 @@ public class OutputView {
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
 
+    public static void printCards(Players players, Dealer dealer) {
+        OutputView.printCardsHeldByDealer(dealer);
+        players.getPlayers().stream().forEach(OutputView::printCardsHeldByPlayer);
+    }
+
     public static void printCardsHeldByPlayer(Player player) {
         String cardTypeAndSymbols = player.getCards().stream()
                 .map(card -> card.getType().getNumber() + card.getSymbol().getSymbolName())
