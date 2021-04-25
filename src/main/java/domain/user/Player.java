@@ -10,7 +10,7 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
-    private GameResult determineMatchResult(Dealer dealer) {
+    public GameResult determineMatchResult(Dealer dealer) {
         int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
         return GameResult.getMatchResult(matchResultValue);
     }
