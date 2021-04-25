@@ -28,14 +28,32 @@ public class OutputView {
 
     public static void printCards(Players players, Dealer dealer) {
         OutputView.printCardsHeldByDealer(dealer);
-        players.getPlayers().stream().forEach(OutputView::printCardsHeldByPlayer);
+        players.getPlayers().forEach(OutputView::printCardsHeldByPlayer);
+    }
+
+    public static void printResult(Players players, Dealer dealer) {
+        printAllCardsAndTotalNumberHeldByDealer(dealer);
+        printAllCardsAndTotalNumberHeldByPlayers(players);
+    }
+
+    private static void printAllCardsAndTotalNumberHeldByDealer(Dealer dealer) {
+        System.out.println("딜러 : " + getCardsInfo(dealer) + " - 결과 : " + dealer.calculateSumOfCardNumbers());
+    }
+
+    private static void printAllCardsAndTotalNumberHeldByPlayers(Players players) {
+        players.getPlayers()
+                .forEach(player -> System.out.println(player.getPlayerName().getName() + "카드 : " + getCardsInfo(player) + " - 결과 : " + player.calculateSumOfCardNumbers()));
     }
 
     public static void printCardsHeldByPlayer(Player player) {
-        String cardTypeAndSymbols = player.getCards().stream()
+        String cardTypeAndSymbols = getCardsInfo(player);
+        System.out.println(player.getPlayerName().getName() + "카드 : " + cardTypeAndSymbols);
+    }
+
+    private static String getCardsInfo(User dealer) {
+        return dealer.getCards().stream()
                 .map(card -> card.getType().getTypeName() + card.getSymbol().getSymbolName())
                 .collect(joining(SEPARATOR));
-        System.out.println(player.getPlayerName().getName() + "카드 : " + cardTypeAndSymbols);
     }
 
     public static void printCardsHeldByDealer(Dealer dealer) {
