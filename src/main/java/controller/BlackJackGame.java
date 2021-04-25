@@ -11,6 +11,8 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class BlackJackGame {
+    private static final int ZERO = 0;
+    private static final int NUMBER_OF_CARDS_BY_RULE = 2;
 
     public static void main(String[] args) {
         PlayerNames playerNames = inputPlayerNames();
@@ -53,7 +55,7 @@ public class BlackJackGame {
     }
 
     private static void distributeCard(Players players, Dealer dealer) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = ZERO; i < NUMBER_OF_CARDS_BY_RULE; i++) {
             players.drawCardsEachOther();
             Deck.distributeCard(dealer);
         }
@@ -64,16 +66,16 @@ public class BlackJackGame {
     }
 
     private static void chooseAnswer(Player player) {
-        while (true) {
+        boolean isBust = player.determineIsBust();
+        while (!isBust) {
             OutputView.printDoYouWantOneMoreCard(player);
             String answer = InputView.inputAnswer();
             if (answer.equals(InputView.NO)) {
                 break;
             }
-            if (answer.equals(InputView.YES)) {
-                Deck.distributeCard(player);
-            }
+            Deck.distributeCard(player);
             OutputView.printCardsHeldByPlayer(player);
+            isBust = player.determineIsBust();
         }
     }
 
