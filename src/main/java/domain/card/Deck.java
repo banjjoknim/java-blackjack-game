@@ -26,11 +26,7 @@ public class Deck {
     }
 
     public static void distributeCard(User user) {
-        user.addCard(getCardOnTop());
-    }
-
-    private static Card getCardOnTop() {
-        return cards.remove(TOP);
+        user.addCard(cards.remove(TOP));
     }
 
     public static List<Card> getCards() {
