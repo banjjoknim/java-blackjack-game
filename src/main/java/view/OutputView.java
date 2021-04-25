@@ -43,4 +43,8 @@ public class OutputView {
         System.out.println("딜러 : " + firstCard.getType().getNumber() + firstCard.getSymbol().getSymbolName());
     }
 
+    public static void printDoYouWantOneMoreCard(Player player) {
+        System.out.println(player.getPlayerName().getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
+
 }
