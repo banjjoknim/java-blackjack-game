@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,10 +33,15 @@ public class User {
         for (Card card : cards) {
             sumOfCardNumbers = sumOfCardNumbers + card.getType().getNumber();
         }
-        if (cards.size() == INITIAL_CARDS_SIZE && sumOfCardNumbers == ACE_AND_TEN) {
+        if (cards.size() == INITIAL_CARDS_SIZE && sumOfCardNumbers == ACE_AND_TEN && hasAce()) {
             sumOfCardNumbers = sumOfCardNumbers + TEN;
         }
         return sumOfCardNumbers;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getType().equals(Type.ACE));
     }
 
     public List<Card> getCards() {
