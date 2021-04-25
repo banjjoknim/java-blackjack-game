@@ -13,7 +13,7 @@ public enum GameResult {
         this.value = value;
     }
 
-    public static GameResult getMatchResult(int matchResultValue) {
+    public static GameResult getGameResult(int matchResultValue) {
         return Arrays.stream(GameResult.values())
                 .filter(matchResult -> matchResult.value == matchResultValue)
                 .findFirst()

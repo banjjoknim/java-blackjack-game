@@ -12,7 +12,7 @@ public class Player extends User {
 
     public GameResult determineMatchResult(Dealer dealer) {
         int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
-        return GameResult.getMatchResult(matchResultValue);
+        return GameResult.getGameResult(matchResultValue);
     }
 
     public PlayerName getPlayerName() {
