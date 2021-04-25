@@ -67,7 +67,8 @@ public class BlackJackGame {
 
     private static void chooseAnswer(Player player) {
         boolean isBust = player.determineIsBust();
-        while (!isBust) {
+        boolean isBlackJack = player.determineIsBlackJack();
+        while (!isBust || isBlackJack) {
             OutputView.printDoYouWantOneMoreCard(player);
             String answer = InputView.inputAnswer();
             if (answer.equals(InputView.NO)) {
