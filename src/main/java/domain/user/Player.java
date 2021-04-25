@@ -2,16 +2,16 @@ package domain.user;
 
 public class Player extends User {
 
-    private final PlayerName name;
+    private final PlayerName playerName;
     private final BettingMoney bettingMoney;
 
-    public Player(PlayerName name, BettingMoney bettingMoney) {
-        this.name = name;
+    public Player(PlayerName playerName, BettingMoney bettingMoney) {
+        this.playerName = playerName;
         this.bettingMoney = bettingMoney;
     }
 
-    public PlayerName getName() {
-        return name;
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 
     public BettingMoney getBettingMoney() {
