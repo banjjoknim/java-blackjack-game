@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.result.GameResult;
+
 public class Player extends User {
 
     private final PlayerName playerName;
