@@ -21,4 +21,8 @@ public enum Type {
         this.number = number;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
 }
