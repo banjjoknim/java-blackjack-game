@@ -1,19 +1,20 @@
 package domain.result;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public enum GameResult {
-    WIN(1, false, 2),
-    WIN_WITH_BLACK_JACK(1, true, 2.5),
-    DRAW(0, false, 1),
-    DRAW_WITH_BLACK_JACK(0, true, 1),
-    LOSE(-1, false, -1);
+    WIN(1, false, new BigDecimal("1")),
+    WIN_WITH_BLACK_JACK(1, true, new BigDecimal("1.5")),
+    DRAW(0, false, new BigDecimal("0")),
+    DRAW_WITH_BLACK_JACK(0, true, new BigDecimal("0")),
+    LOSE(-1, false, new BigDecimal("-1"));
 
     private int value;
     private boolean isBlackJack;
-    private double dividendRate;
+    private BigDecimal dividendRate;
 
-    GameResult(int value, boolean isBlackJack, double dividendRate) {
+    GameResult(int value, boolean isBlackJack, BigDecimal dividendRate) {
         this.value = value;
         this.isBlackJack = isBlackJack;
         this.dividendRate = dividendRate;
@@ -34,7 +35,7 @@ public enum GameResult {
         return isBlackJack;
     }
 
-    public double getDividendRate() {
+    public BigDecimal getDividendRate() {
         return dividendRate;
     }
 
