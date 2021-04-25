@@ -14,7 +14,7 @@ public class Player extends User {
 
     public GameResult determineMatchResult(Dealer dealer) {
         int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
-        return GameResult.getGameResult(matchResultValue);
+        return GameResult.getGameResult(matchResultValue, super.isBlackJack());
     }
 
     public PlayerName getPlayerName() {
