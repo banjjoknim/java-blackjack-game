@@ -62,7 +62,7 @@ class UserTest {
         User user = new User();
 
         // when
-        boolean isBust = user.determineIsBust();
+        boolean isBust = user.isBust();
 
         // then
         assertThat(isBust).isFalse();
@@ -78,7 +78,7 @@ class UserTest {
         user.addCard(new Card(Symbol.CLUB, Type.KING));
 
         // when
-        boolean isBust = user.determineIsBust();
+        boolean isBust = user.isBust();
 
         // then
         assertThat(isBust).isTrue();

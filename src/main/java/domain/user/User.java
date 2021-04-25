@@ -19,11 +19,11 @@ public class User {
         cards.add(card);
     }
 
-    public boolean determineIsBlackJack() {
+    public boolean isBlackJack() {
         return calculateSumOfCardNumbers() == BLACK_JACK && cards.size() == INITIAL_CARDS_SIZE;
     }
 
-    public boolean determineIsBust() {
+    public boolean isBust() {
         return calculateSumOfCardNumbers() > BLACK_JACK;
     }
 
