@@ -1,5 +1,8 @@
 package domain.user;
 
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +29,26 @@ class PlayerTest {
                 () -> assertThat(player.getBettingMoney()).isEqualTo(bettingMoney),
                 () -> assertThat(player.getPlayerName()).isEqualTo(playerName)
         );
+    }
+
+    @DisplayName("Player 의 게임 결과 결정 기능을 테스트한다.")
+    @Test
+    void determineGameResult() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.JACK));
+        player.addCard(new Card(Symbol.SPADE, Type.ACE));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
+        dealer.addCard(new Card(Symbol.HEART, Type.KING));
+
+        // when
+        GameResult gameResult = player.determineMatchResult(dealer);
+
+        // then
+        assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
 }
