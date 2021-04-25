@@ -76,7 +76,7 @@ public class BlackJackGame {
         while (!isBust || isBlackJack) {
             OutputView.printDoYouWantOneMoreCard(player);
             String answer = InputView.inputAnswer();
-            if (answer.equals(InputView.NO)) {
+            if (answer.equals("n")) {
                 break;
             }
             Deck.distributeCard(player);
