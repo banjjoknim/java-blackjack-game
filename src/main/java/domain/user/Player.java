@@ -10,9 +10,9 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
-    private MatchResult determineMatchResult(Dealer dealer) {
+    private GameResult determineMatchResult(Dealer dealer) {
         int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
-        return MatchResult.getMatchResult(matchResultValue);
+        return GameResult.getMatchResult(matchResultValue);
     }
 
     public PlayerName getPlayerName() {
