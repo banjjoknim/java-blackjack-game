@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.Deck;
 import domain.user.*;
 import view.InputView;
 import view.OutputView;
@@ -15,7 +16,9 @@ public class BlackJackGame {
         PlayerNames playerNames = inputPlayerNames();
         Players players = inputPlayers(playerNames);
         Dealer dealer = new Dealer();
+        OutputView.printHandedOutTwoCardsToPlayers(players);
         distributeCard(players, dealer);
+        OutputView.printCards(players, dealer);
     }
 
     private static PlayerNames inputPlayerNames() {
@@ -49,22 +52,10 @@ public class BlackJackGame {
     }
 
     private static void distributeCard(Players players, Dealer dealer) {
-        OutputView.printHandedOutTwoCardsToPlayers(players);
         for (int i = 0; i < 2; i++) {
-            distributeCardToPlayers(players);
-            distributeCardToDealer(dealer);
+            players.drawCardsEachOther();
+            Deck.distributeCard(dealer);
         }
-        OutputView.printCards(players, dealer);
-    }
-
-    private static void distributeCardToPlayers(Players players) {
-        for (Player player : players.getPlayers()) {
-            player.drawCard();
-        }
-    }
-
-    private static void distributeCardToDealer(Dealer dealer) {
-        dealer.drawCard();
     }
 
 }

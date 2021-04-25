@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +10,8 @@ public class User {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public void drawCard() {
-        cards.add(Deck.giveCardOnTop());
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public List<Card> getCards() {

@@ -1,5 +1,7 @@
 package domain.card;
 
+import domain.user.User;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +25,11 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public static Card giveCardOnTop() {
+    public static void distributeCard(User user) {
+        user.addCard(getCardOnTop());
+    }
+
+    private static Card getCardOnTop() {
         return cards.remove(TOP);
     }
 

@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.card.Deck;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +16,10 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void drawCardsEachOther() {
+        players.forEach(Deck::distributeCard);
     }
 
 }
