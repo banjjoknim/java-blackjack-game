@@ -31,16 +31,16 @@ public class OutputView {
         players.getPlayers().forEach(OutputView::printCardsHeldByPlayer);
     }
 
-    public static void printResult(Players players, Dealer dealer) {
-        printAllCardsAndTotalNumberHeldByDealer(dealer);
-        printAllCardsAndTotalNumberHeldByPlayers(players);
+    public static void printResults(Players players, Dealer dealer) {
+        printDealerResult(dealer);
+        printPlayersResult(players);
     }
 
-    private static void printAllCardsAndTotalNumberHeldByDealer(Dealer dealer) {
+    private static void printDealerResult(Dealer dealer) {
         System.out.println("딜러 : " + getCardsInfo(dealer) + " - 결과 : " + dealer.calculateSumOfCardNumbers());
     }
 
-    private static void printAllCardsAndTotalNumberHeldByPlayers(Players players) {
+    private static void printPlayersResult(Players players) {
         players.getPlayers()
                 .forEach(player -> System.out.println(player.getPlayerName().getName() + "카드 : " + getCardsInfo(player) + " - 결과 : " + player.calculateSumOfCardNumbers()));
     }
@@ -56,7 +56,7 @@ public class OutputView {
                 .collect(joining(SEPARATOR));
     }
 
-    public static void printCardsHeldByDealer(Dealer dealer) {
+    private static void printCardsHeldByDealer(Dealer dealer) {
         Card firstCard = dealer.getCards().get(FIRST);
         System.out.println("딜러 : " + firstCard.getType().getNumber() + firstCard.getSymbol().getSymbolName());
     }
