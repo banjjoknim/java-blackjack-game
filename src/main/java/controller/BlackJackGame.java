@@ -54,6 +54,7 @@ public class BlackJackGame {
             distributeCardToPlayers(players);
             distributeCardToDealer(dealer);
         }
+        printCards(players, dealer);
     }
 
     private static void distributeCardToPlayers(Players players) {
@@ -64,6 +65,11 @@ public class BlackJackGame {
 
     private static void distributeCardToDealer(Dealer dealer) {
         dealer.drawCard();
+    }
+
+    private static void printCards(Players players, Dealer dealer) {
+        OutputView.printCardsHeldByDealer(dealer);
+        players.getPlayers().stream().forEach(OutputView::printCardsHeldByPlayer);
     }
 
 }

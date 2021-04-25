@@ -1,13 +1,13 @@
 package view;
 
-import domain.user.Player;
-import domain.user.PlayerName;
-import domain.user.Players;
+import domain.card.Card;
+import domain.user.*;
 
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String SEPARATOR = ", ";
+    private static final int FIRST = 0;
 
 
     public static void printPleaseInputNames() {
@@ -20,10 +20,22 @@ public class OutputView {
 
     public static void printHandedOutTwoCardsToPlayers(Players players) {
         String playerNames = players.getPlayers().stream()
-                .map(Player::getName)
+                .map(Player::getPlayerName)
                 .map(PlayerName::getName)
                 .collect(joining(SEPARATOR));
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
+    }
+
+    public static void printCardsHeldByPlayer(Player player) {
+        String cardTypeAndSymbols = player.getCards().stream()
+                .map(card -> card.getType().getNumber() + card.getSymbol().getSymbolName())
+                .collect(joining(SEPARATOR));
+        System.out.println(player.getPlayerName().getName() + "카드 : " + cardTypeAndSymbols);
+    }
+
+    public static void printCardsHeldByDealer(Dealer dealer) {
+        Card firstCard = dealer.getCards().get(FIRST);
+        System.out.println("딜러 : " + firstCard.getType().getNumber() + firstCard.getSymbol().getSymbolName());
     }
 
 }
