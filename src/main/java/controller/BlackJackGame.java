@@ -22,6 +22,10 @@ public class BlackJackGame {
         distributeCard(players, dealer);
         OutputView.printCards(players, dealer);
         askWantMoreCardToPlayers(players);
+        while (dealer.hasSmallNumberLessThanRuleNumber()) {
+            OutputView.printDealerGetOneMoreCard();
+            Deck.distributeCard(dealer);
+        }
     }
 
     private static PlayerNames inputPlayerNames() {
@@ -66,8 +70,8 @@ public class BlackJackGame {
     }
 
     private static void chooseAnswer(Player player) {
-        boolean isBust = player.determineIsBust();
-        boolean isBlackJack = player.determineIsBlackJack();
+        boolean isBust = player.isBust();
+        boolean isBlackJack = player.isBlackJack();
         while (!isBust || isBlackJack) {
             OutputView.printDoYouWantOneMoreCard(player);
             String answer = InputView.inputAnswer();
@@ -76,7 +80,7 @@ public class BlackJackGame {
             }
             Deck.distributeCard(player);
             OutputView.printCardsHeldByPlayer(player);
-            isBust = player.determineIsBust();
+            isBust = player.isBust();
         }
     }
 
