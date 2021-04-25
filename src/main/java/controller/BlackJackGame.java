@@ -14,8 +14,8 @@ public class BlackJackGame {
     public static void main(String[] args) {
         PlayerNames playerNames = inputPlayerNames();
         Players players = inputPlayers(playerNames);
-
-        OutputView.printHandedOutTwoCardsToPlayers(players);
+        Dealer dealer = new Dealer();
+        distributeCard(players, dealer);
     }
 
     private static PlayerNames inputPlayerNames() {
@@ -46,6 +46,24 @@ public class BlackJackGame {
 
     private static BettingMoney inputBettingMoneyFromInputAmount(BigDecimal amount) {
         return new BettingMoney(amount);
+    }
+
+    private static void distributeCard(Players players, Dealer dealer) {
+        OutputView.printHandedOutTwoCardsToPlayers(players);
+        for (int i = 0; i < 2; i++) {
+            distributeCardToPlayers(players);
+            distributeCardToDealer(dealer);
+        }
+    }
+
+    private static void distributeCardToPlayers(Players players) {
+        for (Player player : players.getPlayers()) {
+            player.drawCard();
+        }
+    }
+
+    private static void distributeCardToDealer(Dealer dealer) {
+        dealer.drawCard();
     }
 
 }

@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +18,8 @@ public class Player {
         this.bettingMoney = bettingMoney;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void drawCard() {
+        cards.add(Cards.removeCardOnTop());
     }
 
     public PlayerName getName() {
