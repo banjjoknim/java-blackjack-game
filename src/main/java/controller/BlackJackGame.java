@@ -19,6 +19,7 @@ public class BlackJackGame {
         OutputView.printHandedOutTwoCardsToPlayers(players);
         distributeCard(players, dealer);
         OutputView.printCards(players, dealer);
+        askWantMoreCardToPlayers(players);
     }
 
     private static PlayerNames inputPlayerNames() {
@@ -55,6 +56,24 @@ public class BlackJackGame {
         for (int i = 0; i < 2; i++) {
             players.drawCardsEachOther();
             Deck.distributeCard(dealer);
+        }
+    }
+
+    private static void askWantMoreCardToPlayers(Players players) {
+        players.getPlayers().forEach(BlackJackGame::chooseAnswer);
+    }
+
+    private static void chooseAnswer(Player player) {
+        while (true) {
+            OutputView.printDoYouWantOneMoreCard(player);
+            String answer = InputView.inputAnswer();
+            if (answer.equals(InputView.NO)) {
+                break;
+            }
+            if (answer.equals(InputView.YES)) {
+                Deck.distributeCard(player);
+            }
+            OutputView.printCardsHeldByPlayer(player);
         }
     }
 
