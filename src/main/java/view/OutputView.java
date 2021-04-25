@@ -33,7 +33,7 @@ public class OutputView {
 
     public static void printCardsHeldByPlayer(Player player) {
         String cardTypeAndSymbols = player.getCards().stream()
-                .map(card -> card.getType().getNumber() + card.getSymbol().getSymbolName())
+                .map(card -> card.getType().getTypeName() + card.getSymbol().getSymbolName())
                 .collect(joining(SEPARATOR));
         System.out.println(player.getPlayerName().getName() + "카드 : " + cardTypeAndSymbols);
     }
