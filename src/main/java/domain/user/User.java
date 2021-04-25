@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ public class User {
     private final List<Card> cards = new ArrayList<>();
 
     public void drawCard() {
-        cards.add(Cards.removeCardOnTop());
+        cards.add(Deck.giveCardOnTop());
     }
 
     public List<Card> getCards() {
