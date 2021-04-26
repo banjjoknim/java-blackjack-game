@@ -36,7 +36,7 @@ class CardTest {
 
     @DisplayName("Card 의 Type 이 ACE 인지 판단하는 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideCardAndExpectedResult")
+    @MethodSource("provideCardAndExpectedResultForIsAceTypeTest")
     void isAceTypeTest(Card card, boolean expectedResult) {
         // given
 
@@ -48,7 +48,7 @@ class CardTest {
 
     }
 
-    private static Stream<Arguments> provideCardAndExpectedResult() {
+    private static Stream<Arguments> provideCardAndExpectedResultForIsAceTypeTest() {
         return Stream.of(
                 Arguments.of(new Card(Symbol.SPADE, Type.ACE), true),
                 Arguments.of(new Card(Symbol.HEART, Type.ACE), true),
@@ -61,5 +61,29 @@ class CardTest {
         );
     }
 
+    @DisplayName("Card 의 Type 이 숫자 10을 가지는지 판단하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardAndExpectedResultForIsTenNumberTypeTest")
+    void isTenNumberTypeTest(Card card, boolean expectedResult) {
+        // given
+
+        // when
+        boolean isTenNumberType = card.isTenNumberType();
+
+        // then
+        assertThat(isTenNumberType).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> provideCardAndExpectedResultForIsTenNumberTypeTest() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.DIAMOND, Type.KING), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.QUEEN), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.JACK), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.TEN), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.EIGHT), false),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), false)
+        );
+    }
 
 }
