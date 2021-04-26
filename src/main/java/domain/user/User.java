@@ -19,7 +19,17 @@ public class User {
     }
 
     public boolean isBlackJack() {
-        return calculateTotalCardNumber() == BLACK_JACK && cards.size() == INITIAL_CARDS_SIZE;
+        return hasAceTypeCard() && hasTenNumberTypeCard() && cards.size() == INITIAL_CARDS_SIZE;
+    }
+
+    private boolean hasAceTypeCard() {
+        return cards.stream()
+                .anyMatch(Card::isAceType);
+    }
+
+    private boolean hasTenNumberTypeCard() {
+        return cards.stream()
+                .anyMatch(Card::isTenNumberType);
     }
 
     public boolean isBust() {
@@ -31,15 +41,10 @@ public class User {
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
                 .sum();
-        if (cards.size() == INITIAL_CARDS_SIZE && sumOfCardNumbers == ACE_AND_TEN && hasAce()) {
+        if (cards.size() == INITIAL_CARDS_SIZE && sumOfCardNumbers == ACE_AND_TEN && hasAceTypeCard()) {
             return BLACK_JACK;
         }
         return sumOfCardNumbers;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getType().equals(Type.ACE));
     }
 
     public List<Card> getCards() {

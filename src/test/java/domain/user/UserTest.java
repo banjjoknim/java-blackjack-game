@@ -5,6 +5,9 @@ import domain.card.Symbol;
 import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,19 +43,18 @@ class UserTest {
 
     }
 
-    @DisplayName("유저의 카드 합이 블랙잭인 경우를 테스트한다.")
+    @DisplayName("유저의 카드 조합이 블랙잭인 경우를 테스트한다.")
     @Test
-    void calculateSumOfCardNumbersWhenBlackJackTest() {
+    void isBlackJackTest() {
         // given
         User user = new User();
         user.addCard(new Card(Symbol.SPADE, Type.ACE));
         user.addCard(new Card(Symbol.SPADE, Type.KING));
 
         // when
-        int sumOfCardNumbers = user.calculateTotalCardNumber();
 
         // then
-        assertThat(sumOfCardNumbers).isEqualTo(21);
+        assertThat(user.isBlackJack()).isTrue();
     }
 
     @DisplayName("유저의 카드 합이 21이하일 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
