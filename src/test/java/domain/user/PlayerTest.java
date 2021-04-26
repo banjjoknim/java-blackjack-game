@@ -47,26 +47,7 @@ class PlayerTest {
         assertThat(player.getCards()).hasSize(1);
     }
 
-    @DisplayName("플레이어의 카드 합 계산 기능을 테스트한다.")
-    @Test
-    void calculateSumOfCardNumbersTest() {
-        // given
-        PlayerName playerName = new PlayerName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
-        player.addCard(new Card(Symbol.HEART, Type.KING));
-        player.addCard(new Card(Symbol.CLUB, Type.KING));
-
-        // when
-        int totalCardNumber = player.calculateTotalCardNumber();
-
-        // then
-        assertThat(totalCardNumber).isEqualTo(30);
-
-    }
-
-    @DisplayName("플레이어의 카드 조합이 블랙잭인 경우를 테스트한다.")
+    @DisplayName("플레이어의 카드 조합이 블랙잭인지 판단하는 기능을 테스트한다.")
     @Test
     void isBlackJackTest() {
         // given
@@ -80,6 +61,40 @@ class PlayerTest {
 
         // then
         assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드 조합이 블랙잭이 아닌 경우 카드 합 계산 기능을 테스트한다.")
+    @Test
+    void calculateTotalCardNumberWhenIsNotBlackJackTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+        player.addCard(new Card(Symbol.HEART, Type.KING));
+        player.addCard(new Card(Symbol.CLUB, Type.KING));
+
+        // when
+        int totalCardNumber = player.calculateTotalCardNumber();
+
+        // then
+        assertThat(totalCardNumber).isEqualTo(30);
+    }
+
+    @DisplayName("플레이어의 카드 조합이 블랙잭인 경우 카드 합 계산 기능을 테스트한다.")
+    @Test
+    void calculateTotalCardNumberWhenIsBlackJackTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.ACE));
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+
+        // when
+
+        // then
+        assertThat(player.calculateTotalCardNumber()).isEqualTo(21);
     }
 
     @DisplayName("플레이어의 카드 합이 21이하일 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
