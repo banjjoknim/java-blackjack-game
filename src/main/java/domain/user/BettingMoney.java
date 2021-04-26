@@ -3,10 +3,12 @@ package domain.user;
 import domain.result.GameResult;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class BettingMoney {
     private static final int POSITIVE = 1;
+    private static final int SCALE = 0;
 
     private BigDecimal amount;
 
@@ -23,7 +25,8 @@ public class BettingMoney {
     }
 
     public BigDecimal calculateProfit(GameResult gameResult) {
-        return gameResult.multiplyDividendRate(amount);
+        return gameResult.multiplyDividendRate(amount)
+                .setScale(SCALE, RoundingMode.HALF_EVEN);
     }
 
     public BigDecimal getAmount() {
