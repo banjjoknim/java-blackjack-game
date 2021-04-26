@@ -46,7 +46,7 @@ class PlayerTest {
         dealer.addCard(new Card(Symbol.HEART, Type.KING));
 
         // when
-        GameResult gameResult = player.determineGameResult(dealer);
+        GameResult gameResult = player.determineWinOrDrawOrLose(dealer);
 
         // then
         assertThat(gameResult).isEqualTo(GameResult.WIN_WITH_BLACK_JACK);

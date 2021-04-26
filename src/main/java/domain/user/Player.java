@@ -15,13 +15,13 @@ public class Player extends User {
     }
 
     public BigDecimal calculateFinalProfit(Dealer dealer) {
-        GameResult gameResult = determineGameResult(dealer);
+        GameResult gameResult = determineWinOrDrawOrLose(dealer);
         return bettingMoney.calculateProfit(gameResult);
     }
 
-    public GameResult determineGameResult(Dealer dealer) {
-        int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
-        return GameResult.getGameResult(matchResultValue, super.isBlackJack());
+    public GameResult determineWinOrDrawOrLose(Dealer dealer) {
+        int matchResultValue = Integer.compare(super.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
+        return GameResult.determineGameResult(matchResultValue, super.isBlackJack());
     }
 
     public PlayerName getPlayerName() {

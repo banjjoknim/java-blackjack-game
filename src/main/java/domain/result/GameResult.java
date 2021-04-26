@@ -20,7 +20,7 @@ public enum GameResult {
         this.dividendRate = dividendRate;
     }
 
-    public static GameResult getGameResult(int gameResultValue, boolean isBlackJack) {
+    public static GameResult determineGameResult(int gameResultValue, boolean isBlackJack) {
         return Arrays.stream(GameResult.values())
                 .filter(gameResult -> gameResult.value == gameResultValue && gameResult.isBlackJack == isBlackJack)
                 .findFirst()

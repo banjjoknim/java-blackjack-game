@@ -29,11 +29,11 @@ class GameResultTest {
 
         // then
         assertAll(
-                () -> assertThat(GameResult.getGameResult(winValue, true)).isEqualTo(GameResult.WIN_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.getGameResult(winValue, false)).isEqualTo(GameResult.WIN),
-                () -> assertThat(GameResult.getGameResult(drawValue, true)).isEqualTo(GameResult.DRAW_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.getGameResult(drawValue, false)).isEqualTo(GameResult.DRAW),
-                () -> assertThat(GameResult.getGameResult(loseValue, false)).isEqualTo(GameResult.LOSE)
+                () -> assertThat(GameResult.determineGameResult(winValue, true)).isEqualTo(GameResult.WIN_WITH_BLACK_JACK),
+                () -> assertThat(GameResult.determineGameResult(winValue, false)).isEqualTo(GameResult.WIN),
+                () -> assertThat(GameResult.determineGameResult(drawValue, true)).isEqualTo(GameResult.DRAW_WITH_BLACK_JACK),
+                () -> assertThat(GameResult.determineGameResult(drawValue, false)).isEqualTo(GameResult.DRAW),
+                () -> assertThat(GameResult.determineGameResult(loseValue, false)).isEqualTo(GameResult.LOSE)
         );
     }
 
@@ -47,7 +47,7 @@ class GameResultTest {
 
         // then
         assertAll(
-                () -> assertThatThrownBy(() -> GameResult.getGameResult(gameResultValue, true))
+                () -> assertThatThrownBy(() -> GameResult.determineGameResult(gameResultValue, true))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("게임 결과는 승, 무, 패 중에서 하나여야 합니다.")
         );
