@@ -57,7 +57,7 @@ public class OutputView {
 
     public static void printCardsHeldByPlayer(Player player) {
         String cardTypeAndSymbols = getCardsInfo(player);
-        System.out.println(player.getPlayerName().getName() + "카드 : " + cardTypeAndSymbols);
+        System.out.println(player.getPlayerName().getName() + " 카드 : " + cardTypeAndSymbols);
     }
 
     private static String getCardsInfo(User dealer) {
