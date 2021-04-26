@@ -10,6 +10,10 @@ public class Card {
         this.type = type;
     }
 
+    public boolean isAce() {
+        return type.equals(Type.ACE);
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }
