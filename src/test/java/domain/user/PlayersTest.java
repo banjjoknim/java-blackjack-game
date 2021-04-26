@@ -70,7 +70,7 @@ class PlayersTest {
         Players players = new Players(playerList);
 
         // when
-        players.drawCardsEachOther();
+        players.drawCardEachPlayer();
 
         // then
         for (Player player : players.getPlayers()) {

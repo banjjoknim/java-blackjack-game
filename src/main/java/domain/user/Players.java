@@ -28,7 +28,7 @@ public class Players {
         }
     }
 
-    public void drawCardsEachOther() {
+    public void drawCardEachPlayer() {
         players.forEach(Deck::distributeCard);
     }
 
