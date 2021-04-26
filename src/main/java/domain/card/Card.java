@@ -14,6 +14,10 @@ public class Card {
         return type.equals(Type.ACE);
     }
 
+    public boolean isTenNumberType() {
+        return type.equals(Type.KING) || type.equals(Type.QUEEN) || type.equals(Type.JACK) || type.equals(Type.TEN);
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }
