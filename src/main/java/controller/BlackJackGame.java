@@ -27,7 +27,7 @@ public class BlackJackGame {
             Deck.distributeCard(dealer);
         }
         OutputView.printResults(players, dealer);
-        OutputView.printFinalProfits(players.producePlayersProfit(dealer));
+        OutputView.printFinalProfits(players.producePlayersFinalProfits(dealer));
     }
 
     private static PlayerNames inputPlayerNames() {

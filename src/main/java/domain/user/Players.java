@@ -22,10 +22,10 @@ public class Players {
         players.forEach(Deck::distributeCard);
     }
 
-    public Map<Player, BigDecimal> producePlayersProfit(Dealer dealer) {
+    public Map<Player, BigDecimal> producePlayersFinalProfits(Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player,
-                        player -> player.getBettingMoney().calculateProfit(player.determineGameResult(dealer))));
+                        player -> player.calculateFinalProfit(dealer)));
     }
 
     public List<Player> getPlayers() {
