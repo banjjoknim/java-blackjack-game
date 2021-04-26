@@ -45,8 +45,14 @@ public class OutputView {
     }
 
     private static void printPlayersResult(Players players) {
-        players.getPlayers()
-                .forEach(player -> System.out.println(player.getPlayerName().getName() + "카드 : " + getCardsInfo(player) + " - 결과 : " + player.calculateSumOfCardNumbers()));
+        players.getPlayers().forEach(OutputView::printPlayerResult);
+    }
+
+    private static void printPlayerResult(Player player) {
+        String playerName = player.getPlayerName().getName();
+        int sumOfCardNumbers = player.calculateSumOfCardNumbers();
+        String playerResultFormat = playerName + " 카드 : " + getCardsInfo(player) + " - 결과 : " + sumOfCardNumbers;
+        System.out.println(playerResultFormat);
     }
 
     public static void printCardsHeldByPlayer(Player player) {
