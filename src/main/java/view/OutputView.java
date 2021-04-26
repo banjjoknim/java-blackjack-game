@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        System.out.println("딜러 : " + getCardsInfo(dealer) + " - 결과 : " + dealer.calculateSumOfCardNumbers());
+        System.out.println("딜러 : " + getCardsInfo(dealer) + " - 결과 : " + dealer.calculateTotalCardNumber());
     }
 
     private static void printPlayersResult(Players players) {
@@ -50,7 +50,7 @@ public class OutputView {
 
     private static void printPlayerResult(Player player) {
         String playerName = player.getPlayerName().getName();
-        int sumOfCardNumbers = player.calculateSumOfCardNumbers();
+        int sumOfCardNumbers = player.calculateTotalCardNumber();
         String playerResultFormat = playerName + " 카드 : " + getCardsInfo(player) + " - 결과 : " + sumOfCardNumbers;
         System.out.println(playerResultFormat);
     }

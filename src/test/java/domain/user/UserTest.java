@@ -33,7 +33,7 @@ class UserTest {
         user.addCard(new Card(Symbol.CLUB, Type.KING));
 
         // when
-        int sumOfCardNumbers = user.calculateSumOfCardNumbers();
+        int sumOfCardNumbers = user.calculateTotalCardNumber();
 
         // then
         assertThat(sumOfCardNumbers).isEqualTo(30);
@@ -49,7 +49,7 @@ class UserTest {
         user.addCard(new Card(Symbol.SPADE, Type.KING));
 
         // when
-        int sumOfCardNumbers = user.calculateSumOfCardNumbers();
+        int sumOfCardNumbers = user.calculateTotalCardNumber();
 
         // then
         assertThat(sumOfCardNumbers).isEqualTo(21);

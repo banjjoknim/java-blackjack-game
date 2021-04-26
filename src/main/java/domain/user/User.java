@@ -8,9 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class User {
+    public static final int BLACK_JACK = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
     private static final int ACE_AND_TEN = 11;
-    private static final int BLACK_JACK = 21;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -19,14 +19,14 @@ public class User {
     }
 
     public boolean isBlackJack() {
-        return calculateSumOfCardNumbers() == BLACK_JACK && cards.size() == INITIAL_CARDS_SIZE;
+        return calculateTotalCardNumber() == BLACK_JACK && cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public boolean isBust() {
-        return calculateSumOfCardNumbers() > BLACK_JACK;
+        return calculateTotalCardNumber() > BLACK_JACK;
     }
 
-    public int calculateSumOfCardNumbers() {
+    public int calculateTotalCardNumber() {
         int sumOfCardNumbers = cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
