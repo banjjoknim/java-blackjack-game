@@ -49,7 +49,7 @@ class PlayerTest {
         GameResult gameResult = player.determineGameResult(dealer);
 
         // then
-        assertThat(gameResult).isEqualTo(GameResult.WIN);
+        assertThat(gameResult).isEqualTo(GameResult.WIN_WITH_BLACK_JACK);
     }
 
 }
