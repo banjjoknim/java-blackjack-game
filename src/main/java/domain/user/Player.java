@@ -2,6 +2,8 @@ package domain.user;
 
 import domain.result.GameResult;
 
+import java.math.BigDecimal;
+
 public class Player extends User {
 
     private final PlayerName playerName;
@@ -12,7 +14,12 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
-    public GameResult determineMatchResult(Dealer dealer) {
+    public BigDecimal calculateFinalProfit(Dealer dealer) {
+        GameResult gameResult = determineGameResult(dealer);
+        return bettingMoney.calculateProfit(gameResult);
+    }
+
+    public GameResult determineGameResult(Dealer dealer) {
         int matchResultValue = Integer.compare(super.calculateSumOfCardNumbers(), dealer.calculateSumOfCardNumbers());
         return GameResult.getGameResult(matchResultValue, super.isBlackJack());
     }

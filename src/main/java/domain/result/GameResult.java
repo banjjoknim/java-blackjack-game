@@ -27,6 +27,10 @@ public enum GameResult {
                 .orElseThrow(() -> new IllegalArgumentException("게임 결과는 승, 무, 패 중에서 하나여야 합니다."));
     }
 
+    public BigDecimal multiplyDividendRate(BigDecimal amount) {
+        return dividendRate.multiply(amount);
+    }
+
     public int getValue() {
         return value;
     }

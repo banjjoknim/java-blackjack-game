@@ -2,9 +2,13 @@ package domain.user;
 
 import domain.card.Deck;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 public class Players {
 
@@ -14,12 +18,18 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public void drawCardsEachOther() {
         players.forEach(Deck::distributeCard);
+    }
+
+    public Map<Player, BigDecimal> producePlayersProfit(Dealer dealer) {
+        return players.stream()
+                .collect(toMap(player -> player,
+                        player -> player.getBettingMoney().calculateProfit(player.determineGameResult(dealer))));
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
 }

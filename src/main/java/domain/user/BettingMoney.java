@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.result.GameResult;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -18,6 +20,10 @@ public class BettingMoney {
         if (bettingMoneyAmount != POSITIVE) {
             throw new IllegalArgumentException("배팅 금액은 0보다 커야 합니다.");
         }
+    }
+
+    public BigDecimal calculateProfit(GameResult gameResult) {
+        return gameResult.multiplyDividendRate(amount);
     }
 
     public BigDecimal getAmount() {

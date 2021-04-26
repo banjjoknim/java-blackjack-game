@@ -3,6 +3,10 @@ package view;
 import domain.card.Card;
 import domain.user.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
+
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
@@ -58,7 +62,7 @@ public class OutputView {
 
     private static void printCardsHeldByDealer(Dealer dealer) {
         Card firstCard = dealer.getCards().get(FIRST);
-        System.out.println("딜러 : " + firstCard.getType().getNumber() + firstCard.getSymbol().getSymbolName());
+        System.out.println("딜러 : " + firstCard.getType().getTypeName() + firstCard.getSymbol().getSymbolName());
     }
 
     public static void printDoYouWantOneMoreCard(Player player) {
@@ -69,6 +73,11 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printProfits(Players players, Dealer dealer) {
+    public static void printFinalProfits(Map<Player, BigDecimal> playersProfits) {
+        System.out.println("딜러 : " + playersProfits.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate()
+                .doubleValue());
+        playersProfits.entrySet().forEach(entry -> System.out.println(entry.getKey().getPlayerName().getName() + " : " + entry.getValue().setScale(0, RoundingMode.HALF_EVEN).doubleValue()));
     }
 }
