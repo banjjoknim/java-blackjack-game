@@ -4,7 +4,10 @@ import domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -47,4 +50,19 @@ class GameResultTest {
                         .hasMessage("게임 결과는 승, 무, 패 중에서 하나여야 합니다.")
         );
     }
+
+    @DisplayName("GameResult 의 배당률과 배팅 금액으로 결과 수익 계산 기능을 테스트한다.")
+    @ParameterizedTest
+    @EnumSource(value = GameResult.class)
+    void multiplyDividendRateTest(GameResult gameResult) {
+        // given
+        BigDecimal amount = new BigDecimal(1000);
+
+        // when
+        BigDecimal result = gameResult.multiplyDividendRate(amount);
+
+        // then
+        assertThat(result).isEqualTo(amount.multiply(gameResult.getDividendRate()));
+    }
+
 }
