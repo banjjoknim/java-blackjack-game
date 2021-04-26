@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    @DisplayName("Player 생성을 테스트한다.")
+    @DisplayName("플레이어 생성을 테스트한다.")
     @Test
     void createPlayerTest() {
         // given
@@ -32,7 +32,90 @@ class PlayerTest {
         );
     }
 
-    @DisplayName("Player 의 게임 결과 결정 기능을 테스트한다.")
+    @DisplayName("플레이어의 카드 추가 기능을 테스트한다.")
+    @Test
+    void addCardTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+
+        // when
+        player.addCard(new Card(Symbol.DIAMOND, Type.ACE));
+
+        // then
+        assertThat(player.getCards()).hasSize(1);
+    }
+
+    @DisplayName("플레이어의 카드 합 계산 기능을 테스트한다.")
+    @Test
+    void calculateSumOfCardNumbersTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+        player.addCard(new Card(Symbol.HEART, Type.KING));
+        player.addCard(new Card(Symbol.CLUB, Type.KING));
+
+        // when
+        int totalCardNumber = player.calculateTotalCardNumber();
+
+        // then
+        assertThat(totalCardNumber).isEqualTo(30);
+
+    }
+
+    @DisplayName("플레이어의 카드 조합이 블랙잭인 경우를 테스트한다.")
+    @Test
+    void isBlackJackTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.ACE));
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+
+        // when
+
+        // then
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드 합이 21이하일 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
+    @Test
+    void determineIsBustWhenSumLessThanBlackJackTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+
+        // when
+        boolean isBust = player.isBust();
+
+        // then
+        assertThat(isBust).isFalse();
+    }
+
+    @DisplayName("플레이어의 카드 합이 21을 초과할 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
+    @Test
+    void determineIsBustWhenSumExceededBlackJackTest() {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+        player.addCard(new Card(Symbol.HEART, Type.KING));
+        player.addCard(new Card(Symbol.CLUB, Type.KING));
+
+        // when
+        boolean isBust = player.isBust();
+
+        // then
+        assertThat(isBust).isTrue();
+    }
+
+    @DisplayName("플레이어의 게임 결과 결정 기능을 테스트한다.")
     @Test
     void determineGameResultTest() {
         // given
@@ -52,7 +135,7 @@ class PlayerTest {
         assertThat(gameResult).isEqualTo(GameResult.WIN_WITH_BLACK_JACK);
     }
 
-    @DisplayName("Player 의 최종 수익 계산 기능을 테스트한다.")
+    @DisplayName("플레이어의 최종 수익 계산 기능을 테스트한다.")
     @Test
     void calculateFinalProfitTest() {
         // given

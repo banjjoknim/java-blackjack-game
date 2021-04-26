@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class User {
-    public static final int BLACK_JACK = 21;
+public abstract class User {
+    private static final int BLACK_JACK = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
-    private static final int ACE_AND_TEN = 11;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -37,14 +36,10 @@ public class User {
     }
 
     public int calculateTotalCardNumber() {
-        int sumOfCardNumbers = cards.stream()
+        return cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
                 .sum();
-        if (cards.size() == INITIAL_CARDS_SIZE && sumOfCardNumbers == ACE_AND_TEN && hasAceTypeCard()) {
-            return BLACK_JACK;
-        }
-        return sumOfCardNumbers;
     }
 
     public List<Card> getCards() {
