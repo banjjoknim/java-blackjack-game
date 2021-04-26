@@ -12,16 +12,15 @@ public class Deck {
 
     private static List<Card> cards = new ArrayList<>();
 
-    static {
-        Arrays.stream(Symbol.values()).forEach(Deck::fillCards);
-        shuffle();
+    public static void initializeDeck() {
+        cards.clear();
+        for (Symbol symbol : Symbol.values()) {
+            Arrays.stream(Type.values()).forEach(type -> cards.add(new Card(symbol, type)));
+        }
+        shuffleCards();
     }
 
-    private static void fillCards(Symbol symbol) {
-        Arrays.stream(Type.values()).forEach(type -> cards.add(new Card(symbol, type)));
-    }
-
-    private static void shuffle() {
+    private static void shuffleCards() {
         Collections.shuffle(cards);
     }
 
