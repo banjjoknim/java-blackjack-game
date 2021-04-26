@@ -21,7 +21,7 @@ public class Player extends User {
 
     public GameResult determineWinOrDrawOrLose(Dealer dealer) {
         int gameResultValue = Integer.compare(super.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
-        return GameResult.determineGameResult(gameResultValue, super.isBlackJack());
+        return GameResult.determineGameResult(gameResultValue, this, dealer);
     }
 
     public PlayerName getPlayerName() {

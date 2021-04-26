@@ -1,6 +1,14 @@
-package domain.user;
+package domain.result;
 
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 import domain.result.GameResult;
+import domain.user.BettingMoney;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.PlayerName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,6 +25,19 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameResultTest {
 
+    private static Player player;
+    private static Dealer dealer;
+
+    @BeforeEach
+    void setUp() {
+        player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        player.addCard(new Card(Symbol.SPADE, Type.ACE));
+        player.addCard(new Card(Symbol.SPADE, Type.KING));
+        dealer = new Dealer();
+        dealer.addCard(new Card(Symbol.DIAMOND, Type.JACK));
+        dealer.addCard(new Card(Symbol.DIAMOND, Type.KING));
+    }
+
     @DisplayName("GameResult 의 입력값에 따른 결과 도출 기능을 테스트한다.")
     @Test
     void getGameResultTest() {
@@ -29,27 +50,11 @@ class GameResultTest {
 
         // then
         assertAll(
-                () -> assertThat(GameResult.determineGameResult(winValue, true)).isEqualTo(GameResult.WIN_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.determineGameResult(winValue, false)).isEqualTo(GameResult.WIN),
-                () -> assertThat(GameResult.determineGameResult(drawValue, true)).isEqualTo(GameResult.DRAW_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.determineGameResult(drawValue, false)).isEqualTo(GameResult.DRAW),
-                () -> assertThat(GameResult.determineGameResult(loseValue, false)).isEqualTo(GameResult.LOSE)
-        );
-    }
-
-    @DisplayName("GameResult 에 존재하지 않는 결과를 도출할때 예외 처리를 테스트한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {-3, 3, 4, 5})
-    void getGameResultWithNotExistValueTest(int gameResultValue) {
-        // given
-
-        // when
-
-        // then
-        assertAll(
-                () -> assertThatThrownBy(() -> GameResult.determineGameResult(gameResultValue, true))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("게임 결과는 승, 무, 패 중에서 하나여야 합니다.")
+                () -> assertThat(GameResult.determineGameResult(winValue, player, dealer)).isEqualTo(GameResult.WIN_WITH_BLACK_JACK),
+                () -> assertThat(GameResult.determineGameResult(winValue, player, dealer)).isEqualTo(GameResult.WIN),
+                () -> assertThat(GameResult.determineGameResult(drawValue, player, dealer)).isEqualTo(GameResult.DRAW_WITH_BLACK_JACK),
+                () -> assertThat(GameResult.determineGameResult(drawValue, player, dealer)).isEqualTo(GameResult.DRAW),
+                () -> assertThat(GameResult.determineGameResult(loseValue, player, dealer)).isEqualTo(GameResult.LOSE)
         );
     }
 
