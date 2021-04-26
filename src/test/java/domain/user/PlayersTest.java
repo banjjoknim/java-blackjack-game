@@ -9,11 +9,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
@@ -28,8 +30,22 @@ class PlayersTest {
         Player player2 = new Player(new PlayerName("player2"), new BettingMoney(new BigDecimal(1000)));
         player2.addCard(new Card(Symbol.HEART, Type.KING));
         player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
-        playerList = Arrays.asList(player1, player2);
+        playerList = new ArrayList<>(Arrays.asList(player1, player2));
         Deck.initializeDeck();
+    }
+
+    @DisplayName("중복되는 이름을 가진 Player 들로 Players 생성시 예외 처리를 테스트한다.")
+    @Test
+    void createPlayersWithDuplicateNameTest() {
+        // given
+        playerList.add(new Player(new PlayerName("player1"), new BettingMoney(new BigDecimal(1000))));
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> new Players(playerList))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }
 
     @DisplayName("Players 생성을 테스트한다.")
