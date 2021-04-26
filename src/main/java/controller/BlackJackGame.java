@@ -15,8 +15,7 @@ public class BlackJackGame {
     private static final int NUMBER_OF_CARDS_BY_RULE = 2;
 
     public static void main(String[] args) {
-        PlayerNames playerNames = inputPlayerNames();
-        Players players = inputPlayers(playerNames);
+        Players players = inputPlayers();
         Dealer dealer = new Dealer();
         Deck.initializeDeck();
         OutputView.printHandedOutTwoCardsToPlayers(players);
@@ -31,10 +30,17 @@ public class BlackJackGame {
         OutputView.printFinalProfits(players.producePlayersFinalProfits(dealer));
     }
 
-    private static PlayerNames inputPlayerNames() {
+    private static Players inputPlayers() {
+        List<PlayerName> playerNames = inputPlayerNames();
+        List<Player> players = playerNames.stream()
+                .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
+                .collect(toList());
+        return new Players(players);
+    }
+
+    private static List<PlayerName> inputPlayerNames() {
         OutputView.printPleaseInputNames();
-        List<PlayerName> playerNames = convertInputNamesIntoPlayerNames(InputView.inputNames());
-        return new PlayerNames(playerNames);
+        return convertInputNamesIntoPlayerNames(InputView.inputNames());
     }
 
     private static List<PlayerName> convertInputNamesIntoPlayerNames(List<String> playerNames) {
@@ -44,20 +50,13 @@ public class BlackJackGame {
                 .collect(toList());
     }
 
-    private static Players inputPlayers(PlayerNames playerNames) {
-        List<Player> players = playerNames.getPlayerNames().stream()
-                .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
-                .collect(toList());
-        return new Players(players);
-    }
-
     private static Player convertNamesAndBettingMoneyIntoPlayers(PlayerName playerName) {
         OutputView.printAskHowMuchBettingToPlayer(playerName);
-        BettingMoney bettingMoney = inputBettingMoneyFromInputAmount(InputView.inputAmount());
+        BettingMoney bettingMoney = convertAmountIntoBettingMoney(InputView.inputAmount());
         return new Player(playerName, bettingMoney);
     }
 
-    private static BettingMoney inputBettingMoneyFromInputAmount(BigDecimal amount) {
+    private static BettingMoney convertAmountIntoBettingMoney(BigDecimal amount) {
         return new BettingMoney(amount);
     }
 
