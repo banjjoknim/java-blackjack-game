@@ -18,6 +18,7 @@ public class BlackJackGame {
         PlayerNames playerNames = inputPlayerNames();
         Players players = inputPlayers(playerNames);
         Dealer dealer = new Dealer();
+        Deck.initializeDeck();
         OutputView.printHandedOutTwoCardsToPlayers(players);
         distributeCard(players, dealer);
         OutputView.printCards(players, dealer);
