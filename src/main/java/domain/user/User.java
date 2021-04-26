@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
+    private static final int ACE_AS_ELEVEN = 10;
     private static final int BLACK_JACK = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
 
@@ -36,10 +37,14 @@ public abstract class User {
     }
 
     public int calculateTotalCardNumber() {
-        return cards.stream()
+        int totalCardNumber = cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
                 .sum();
+        if (hasAceTypeCard() && totalCardNumber + ACE_AS_ELEVEN < BLACK_JACK) {
+            return totalCardNumber + ACE_AS_ELEVEN;
+        }
+        return totalCardNumber;
     }
 
     public List<Card> getCards() {
