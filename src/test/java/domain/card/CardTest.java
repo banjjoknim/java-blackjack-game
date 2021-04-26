@@ -37,14 +37,14 @@ class CardTest {
     @DisplayName("Card 의 Type 이 ACE 인지 판단하는 기능을 테스트한다.")
     @ParameterizedTest
     @MethodSource("provideCardAndExpectedResult")
-    void isAceTest(Card card, boolean expectedResult) {
+    void isAceTypeTest(Card card, boolean expectedResult) {
         // given
 
         // when
-        boolean isAce = card.isAce();
+        boolean isAceType = card.isAceType();
 
         // then
-        assertThat(isAce).isEqualTo(expectedResult);
+        assertThat(isAceType).isEqualTo(expectedResult);
 
     }
 
