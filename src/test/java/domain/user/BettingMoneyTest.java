@@ -2,11 +2,12 @@ package domain.user;
 
 import domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,19 +47,29 @@ class BettingMoneyTest {
                 .hasMessage("배팅 금액은 0보다 커야 합니다.");
     }
 
-    @DisplayName("게임 결과에 따른 BettingMoney의 수익 계산 기능을 테스트한다.")
+    @DisplayName("게임 결과에 따른 BettingMoney 의 수익 계산 기능을 테스트한다.")
     @ParameterizedTest
-    @EnumSource(value = GameResult.class)
-    void calculateProfitTest(GameResult gameResult) {
+    @MethodSource("provideGameResultAndDividendRate")
+    void calculateProfitTest(GameResult gameResult, BigDecimal expectedProfit) {
         // given
         BigDecimal amount = new BigDecimal(1000);
         BettingMoney bettingMoney = new BettingMoney(amount);
 
         // when
-        BigDecimal profit = bettingMoney.calculateProfit(gameResult);
+        BigDecimal calculatedProfit = bettingMoney.calculateProfit(gameResult);
 
         // then
-        assertThat(profit).isEqualTo(gameResult.getDividendRate().multiply(amount));
+        assertThat(calculatedProfit).isEqualTo(expectedProfit);
+    }
+
+    private static Stream<Arguments> provideGameResultAndDividendRate() {
+        return Stream.of(
+                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new BigDecimal("1500")),
+                Arguments.of(GameResult.WIN, new BigDecimal("1000")),
+                Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new BigDecimal("0")),
+                Arguments.of(GameResult.DRAW, new BigDecimal("0")),
+                Arguments.of(GameResult.LOSE, new BigDecimal("-1000"))
+        );
     }
 
 }
