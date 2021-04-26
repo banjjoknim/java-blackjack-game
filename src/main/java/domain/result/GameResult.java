@@ -31,16 +31,4 @@ public enum GameResult {
         return dividendRate.multiply(amount);
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public boolean isBlackJack() {
-        return isBlackJack;
-    }
-
-    public BigDecimal getDividendRate() {
-        return dividendRate;
-    }
-
 }
