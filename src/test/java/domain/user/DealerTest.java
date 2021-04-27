@@ -3,8 +3,13 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.result.PlayerProfitStatistics;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -96,6 +101,24 @@ class DealerTest {
 
         // then
         assertThat(isBust).isTrue();
+    }
+
+    @DisplayName("플레이어의 수익 통계로부터 딜러의 수익을 계산하는 기능을 테스트한다.")
+    @Test
+    void getDealerProfitFromPlayerProfitStatisticsTest() {
+        // given
+        Dealer dealer = new Dealer();
+        Map<Player, Profit> statistics = new HashMap<>();
+        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal("1000")));
+        Profit playerProfit = new Profit(new BigDecimal("1000"));
+        statistics.put(player, playerProfit);
+        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
+
+        // when
+        Profit dealerProfit = dealer.getDealerProfitFromPlayerProfitStatistics(playerProfitStatistics);
+
+        // then
+        assertThat(dealerProfit).isEqualTo(new Profit(new BigDecimal("-1000")));
     }
 
 }
