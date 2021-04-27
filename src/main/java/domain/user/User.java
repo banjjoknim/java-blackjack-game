@@ -41,6 +41,9 @@ public abstract class User {
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
                 .sum();
+        if (isBlackJack()) {
+            return BLACK_JACK;
+        }
         if (hasAceTypeCard() && totalCardNumber + ACE_AS_ELEVEN < BLACK_JACK) {
             return totalCardNumber + ACE_AS_ELEVEN;
         }
