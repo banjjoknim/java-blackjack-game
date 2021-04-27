@@ -2,8 +2,6 @@ package domain.user;
 
 import domain.result.GameResult;
 
-import java.math.BigDecimal;
-
 public class Player extends User {
 
     private final PlayerName playerName;
@@ -14,7 +12,7 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
-    public BigDecimal calculateFinalProfit(Dealer dealer) {
+    public Profit calculateFinalProfit(Dealer dealer) {
         GameResult gameResult = determineWinOrDrawOrLose(dealer);
         return bettingMoney.calculateProfit(gameResult);
     }

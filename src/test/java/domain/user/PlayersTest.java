@@ -85,13 +85,13 @@ class PlayersTest {
         dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
 
         // when
-        Map<Player, BigDecimal> playersFinalProfits = players.producePlayersProfitStatistics(dealer);
+        Map<Player, Profit> playersFinalProfits = players.producePlayersProfitStatistics(dealer);
 
         // then
         assertAll(
                 () -> assertThat(playersFinalProfits.size()).isEqualTo(2),
-                () -> assertThat(playersFinalProfits.get(playerList.get(0))).isEqualTo(new BigDecimal("1500")),
-                () -> assertThat(playersFinalProfits.get(playerList.get(1))).isEqualTo(new BigDecimal("-1000"))
+                () -> assertThat(playersFinalProfits.get(playerList.get(0))).isEqualTo(new Profit(new BigDecimal("1500"))),
+                () -> assertThat(playersFinalProfits.get(playerList.get(1))).isEqualTo(new Profit(new BigDecimal("-1000")))
         );
     }
 }

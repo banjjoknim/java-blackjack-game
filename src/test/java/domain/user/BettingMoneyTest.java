@@ -2,9 +2,10 @@ package domain.user;
 
 import domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
@@ -49,26 +50,27 @@ class BettingMoneyTest {
 
     @DisplayName("게임 결과에 따른 BettingMoney 의 수익 계산 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideGameResultAndDividendRate")
-    void calculateProfitTest(GameResult gameResult, BigDecimal expectedProfit) {
+    @MethodSource("provideGameResultAndProfit")
+    void calculateProfitTest(GameResult gameResult, Profit expectedProfit) {
         // given
         BigDecimal amount = new BigDecimal(1000);
         BettingMoney bettingMoney = new BettingMoney(amount);
 
         // when
-        BigDecimal calculatedProfit = bettingMoney.calculateProfit(gameResult);
+        Profit calculatedProfit = bettingMoney.calculateProfit(gameResult);
+        System.out.println(calculatedProfit.getAmount());
 
         // then
         assertThat(calculatedProfit).isEqualTo(expectedProfit);
     }
 
-    private static Stream<Arguments> provideGameResultAndDividendRate() {
+    private static Stream<Arguments> provideGameResultAndProfit() {
         return Stream.of(
-                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new BigDecimal("1500")),
-                Arguments.of(GameResult.WIN, new BigDecimal("1000")),
-                Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new BigDecimal("0")),
-                Arguments.of(GameResult.DRAW, new BigDecimal("0")),
-                Arguments.of(GameResult.LOSE, new BigDecimal("-1000"))
+                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new Profit(new BigDecimal("1500"))),
+                Arguments.of(GameResult.WIN, new Profit(new BigDecimal("1000"))),
+                Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new Profit(new BigDecimal("0"))),
+                Arguments.of(GameResult.DRAW, new Profit(new BigDecimal("0"))),
+                Arguments.of(GameResult.LOSE, new Profit(new BigDecimal("-1000")))
         );
     }
 

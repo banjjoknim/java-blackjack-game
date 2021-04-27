@@ -162,10 +162,10 @@ class PlayerTest {
         dealer.addCard(new Card(Symbol.HEART, Type.KING));
 
         // when
-        BigDecimal finalProfit = player.calculateFinalProfit(dealer);
+        Profit finalProfit = player.calculateFinalProfit(dealer);
 
         // then
-        assertThat(finalProfit).isEqualTo(new BigDecimal("1500"));
+        assertThat(finalProfit).isEqualTo(new Profit(new BigDecimal("1500")));
     }
 
 }

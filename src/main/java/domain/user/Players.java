@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Deck;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +34,7 @@ public class Players {
         players.forEach(Deck::distributeCard);
     }
 
-    public Map<Player, BigDecimal> producePlayersProfitStatistics(Dealer dealer) {
+    public Map<Player, Profit> producePlayersProfitStatistics(Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player,
                         player -> player.calculateFinalProfit(dealer)));

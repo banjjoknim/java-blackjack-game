@@ -1,31 +1,28 @@
 package domain.result;
 
 import domain.user.Player;
+import domain.user.Profit;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Map;
 
+import static domain.user.Profit.ZERO_PROFIT;
+
 public class PlayerProfitStatistics {
-    private static final int SCALE = 0;
 
-    private Map<Player, BigDecimal> playerProfitStatistics;
+    private Map<Player, Profit> playerProfitStatistics;
 
-    public PlayerProfitStatistics(Map<Player, BigDecimal> playerProfitStatistics) {
+    public PlayerProfitStatistics(Map<Player, Profit> playerProfitStatistics) {
         this.playerProfitStatistics = playerProfitStatistics;
     }
 
-    public double calculateDealerProfit() {
+    public Profit calculateDealerProfit() {
         return playerProfitStatistics.values().stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .negate()
-                .doubleValue();
+                .reduce(ZERO_PROFIT, Profit::addProfit)
+                .negate();
     }
 
-    public double getPlayerProfit(Player player) {
-        return playerProfitStatistics.get(player)
-                .setScale(SCALE, RoundingMode.HALF_EVEN)
-                .doubleValue();
+    public Profit getPlayerProfit(Player player) {
+        return playerProfitStatistics.get(player);
     }
 
 }

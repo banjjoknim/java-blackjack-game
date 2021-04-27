@@ -24,9 +24,8 @@ public class BettingMoney {
         }
     }
 
-    public BigDecimal calculateProfit(GameResult gameResult) {
-        return gameResult.multiplyDividendRate(amount)
-                .setScale(SCALE, RoundingMode.HALF_EVEN);
+    public Profit calculateProfit(GameResult gameResult) {
+        return new Profit(gameResult.multiplyDividendRate(amount).setScale(SCALE, RoundingMode.HALF_EVEN));
     }
 
     public BigDecimal getAmount() {

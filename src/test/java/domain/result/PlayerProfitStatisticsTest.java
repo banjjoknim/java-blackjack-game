@@ -1,11 +1,12 @@
 package domain.result;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.user.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayerProfitStatisticsTest {
 
@@ -41,13 +42,13 @@ class PlayerProfitStatisticsTest {
     void calculateDealerProfit() {
         // given
         Players players = new Players(playerList);
-        Map<Player, BigDecimal> statistics = players.producePlayersProfitStatistics(dealer);
+        Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);
 
         // when
         PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
 
         // then
-        assertThat(playerProfitStatistics.calculateDealerProfit()).isEqualTo(-500);
+        assertThat(playerProfitStatistics.calculateDealerProfit()).isEqualTo(new Profit(new BigDecimal("-500")));
     }
 
     @DisplayName("PlayerProfitStatistics 의 플레이어의 수익을 얻는 기능을 테스트한다.")
@@ -55,15 +56,15 @@ class PlayerProfitStatisticsTest {
     void getPlayerProfit() {
         // given
         Players players = new Players(playerList);
-        Map<Player, BigDecimal> statistics = players.producePlayersProfitStatistics(dealer);
+        Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);
 
         // when
         PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
 
         // then
         assertAll(
-                () -> assertThat(playerProfitStatistics.getPlayerProfit(player1)).isEqualTo(1500),
-                () -> assertThat(playerProfitStatistics.getPlayerProfit(player2)).isEqualTo(-1000)
+                () -> assertThat(playerProfitStatistics.getPlayerProfit(player1)).isEqualTo(new Profit(new BigDecimal("1500"))),
+                () -> assertThat(playerProfitStatistics.getPlayerProfit(player2)).isEqualTo(new Profit(new BigDecimal("-1000")))
         );
     }
 }
