@@ -8,9 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
-    private static final int ACE_AS_ELEVEN = 10;
-    private static final int BLACK_JACK = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
+    private static final int BLACK_JACK = 21;
+    private static final int ACE_AS_ELEVEN = 10;
 
     private final List<Card> cards = new ArrayList<>();
 
