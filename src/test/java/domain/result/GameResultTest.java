@@ -8,6 +8,7 @@ import domain.user.BettingMoney;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerName;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,30 +32,32 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.addCard(new Card(Symbol.SPADE, Type.ACE));
         player.addCard(new Card(Symbol.SPADE, Type.KING));
         dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.DIAMOND, Type.JACK));
         dealer.addCard(new Card(Symbol.DIAMOND, Type.KING));
     }
 
-    @DisplayName("GameResult 의 입력값에 따른 결과 도출 기능을 테스트한다.")
-    @Test
-    void getGameResultTest() {
+    @DisplayName("GameResult 의 결과 결정 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideGameResultValueAndPlayerCardAndDealerCardAndGameResult")
+    void determineGameResultTest(int gameResultValue, Card playerCard, Card dealerCard, GameResult gameResult) {
         // given
-        int winValue = 1;
-        int drawValue = 0;
-        int loseValue = -1;
+        player.addCard(playerCard);
+        dealer.addCard(dealerCard);
 
         // when
 
         // then
-        assertAll(
-                () -> assertThat(GameResult.determineGameResult(winValue, player, dealer)).isEqualTo(GameResult.WIN_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.determineGameResult(winValue, player, dealer)).isEqualTo(GameResult.WIN),
-                () -> assertThat(GameResult.determineGameResult(drawValue, player, dealer)).isEqualTo(GameResult.DRAW_WITH_BLACK_JACK),
-                () -> assertThat(GameResult.determineGameResult(drawValue, player, dealer)).isEqualTo(GameResult.DRAW),
-                () -> assertThat(GameResult.determineGameResult(loseValue, player, dealer)).isEqualTo(GameResult.LOSE)
+        assertThat(GameResult.determineGameResult(gameResultValue, player, dealer)).isEqualTo(gameResult);
+    }
+
+    private static Stream<Arguments> provideGameResultValueAndPlayerCardAndDealerCardAndGameResult() {
+        return Stream.of(
+                Arguments.of(1, new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.CLUB, Type.EIGHT), GameResult.WIN_WITH_BLACK_JACK),
+                Arguments.of(1, new Card(Symbol.DIAMOND, Type.JACK), new Card(Symbol.CLUB, Type.EIGHT), GameResult.WIN),
+                Arguments.of(0, new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.CLUB, Type.ACE), GameResult.DRAW_WITH_BLACK_JACK),
+                Arguments.of(0, new Card(Symbol.DIAMOND, Type.EIGHT), new Card(Symbol.CLUB, Type.EIGHT), GameResult.DRAW),
+                Arguments.of(-1, new Card(Symbol.DIAMOND, Type.SEVEN), new Card(Symbol.CLUB, Type.EIGHT), GameResult.LOSE)
         );
     }
 
