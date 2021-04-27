@@ -13,6 +13,13 @@ public class PlayerProfitStatistics {
         this.playerProfitStatistics = playerProfitStatistics;
     }
 
+    public double calculateDealerProfit() {
+        return playerProfitStatistics.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate()
+                .doubleValue();
+    }
+
     public BigDecimal getPlayerProfit(Player player) {
         return playerProfitStatistics.get(player);
     }
