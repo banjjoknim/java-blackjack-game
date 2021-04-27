@@ -1,9 +1,6 @@
 package domain.user;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +13,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayersTest {
 
@@ -31,7 +28,7 @@ class PlayersTest {
         player2.addCard(new Card(Symbol.HEART, Type.KING));
         player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
         playerList = new ArrayList<>(Arrays.asList(player1, player2));
-        Deck.initializeDeck();
+        Deck.initializeDeck(new RandomCardShuffler());
     }
 
     @DisplayName("중복되는 이름을 가진 Player 들로 Players 생성시 예외 처리를 테스트한다.")

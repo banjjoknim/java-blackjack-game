@@ -1,6 +1,8 @@
 package controller;
 
+import domain.card.CardShuffler;
 import domain.card.Deck;
+import domain.card.RandomCardShuffler;
 import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 import view.InputView;
@@ -18,7 +20,7 @@ public class BlackJackGame {
     public static void main(String[] args) {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
-        initializeCardsOfAllUsers(players, dealer);
+        initializeCardsOfAllUsers(players, dealer, new RandomCardShuffler());
         askWantMoreCardToAllPlayers(players);
         distributeCardToDealer(dealer);
         printResults(players, dealer);
@@ -56,8 +58,8 @@ public class BlackJackGame {
         return new BettingMoney(amount);
     }
 
-    private static void initializeCardsOfAllUsers(Players players, Dealer dealer) {
-        Deck.initializeDeck();
+    private static void initializeCardsOfAllUsers(Players players, Dealer dealer, CardShuffler cardShuffler) {
+        Deck.initializeDeck(cardShuffler);
         Deck.distributeCardsToPlayersAndDealer(players, dealer);
         OutputView.printHandedOutTwoCardsToPlayers(players);
         OutputView.printCards(players, dealer);
