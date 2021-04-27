@@ -96,10 +96,6 @@ public class OutputView {
     }
 
     private static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
-        System.out.println(player.getPlayerName().getName() +
-                " : " +
-                playerProfitStatistics.getPlayerProfit(player)
-                        .setScale(0, RoundingMode.HALF_EVEN)
-                        .doubleValue());
+        System.out.println(player.getPlayerName().getName() + " : " + playerProfitStatistics.getPlayerProfit(player));
     }
 }

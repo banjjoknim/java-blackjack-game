@@ -3,9 +3,11 @@ package domain.result;
 import domain.user.Player;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 
 public class PlayerProfitStatistics {
+    private static final int SCALE = 0;
 
     private Map<Player, BigDecimal> playerProfitStatistics;
 
@@ -20,8 +22,10 @@ public class PlayerProfitStatistics {
                 .doubleValue();
     }
 
-    public BigDecimal getPlayerProfit(Player player) {
-        return playerProfitStatistics.get(player);
+    public double getPlayerProfit(Player player) {
+        return playerProfitStatistics.get(player)
+                .setScale(SCALE, RoundingMode.HALF_EVEN)
+                .doubleValue();
     }
 
 }
