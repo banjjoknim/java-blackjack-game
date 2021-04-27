@@ -17,12 +17,9 @@ public class BlackJackGame {
         Dealer dealer = new Dealer();
         BlackJackGame.initializeCardsOfAllUsers(players, dealer);
         BlackJackGame.askWantMoreCardToAllPlayers(players);
-        while (dealer.hasSmallNumberLessThanRuleNumber()) {
-            OutputView.printDealerGetOneMoreCard();
-            Deck.distributeCard(dealer);
-        }
+        BlackJackGame.distributeCardToDealer(dealer);
         OutputView.printResults(players, dealer);
-        OutputView.printFinalProfits(players.producePlayersFinalProfits(dealer));
+        OutputView.printFinalProfits(players.producePlayersProfitStatistics(dealer));
     }
 
     private static Players inputPlayers() {
@@ -81,6 +78,14 @@ public class BlackJackGame {
         Deck.distributeCard(player);
         OutputView.printCardsHeldByPlayer(player);
         chooseAnswer(player);
+    }
+
+    private static void distributeCardToDealer(Dealer dealer) {
+        if (dealer.hasSmallNumberLessThanRuleNumber()) {
+            OutputView.printDealerGetOneMoreCard();
+            Deck.distributeCard(dealer);
+            distributeCardToDealer(dealer);
+        }
     }
 
 }
