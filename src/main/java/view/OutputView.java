@@ -78,13 +78,13 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerAndPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
-        printDealerProfit(playerProfitStatistics);
+    public static void printDealerAndPlayersProfit(Players players, Dealer dealer, PlayerProfitStatistics playerProfitStatistics) {
+        printDealerProfit(dealer, playerProfitStatistics);
         printPlayersProfit(players, playerProfitStatistics);
     }
 
-    private static void printDealerProfit(PlayerProfitStatistics playerProfitStatistics) {
-        System.out.println("딜러 : " + playerProfitStatistics.calculateDealerProfit());
+    private static void printDealerProfit(Dealer dealer, PlayerProfitStatistics playerProfitStatistics) {
+        System.out.println("딜러 : " + dealer.getDealerProfitFromPlayerProfitStatistics(playerProfitStatistics).getAmount());
     }
 
     private static void printPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {

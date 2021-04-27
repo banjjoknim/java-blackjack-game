@@ -37,9 +37,9 @@ class PlayerProfitStatisticsTest {
         dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
     }
 
-    @DisplayName("PlayerProfitStatistics 의 딜러의 수익 계산 기능을 테스트한다.")
+    @DisplayName("PlayerProfitStatistics 의 플레이어들의 총 수익 계산 기능을 테스트한다.")
     @Test
-    void calculateDealerProfit() {
+    void calculateTotalPlayerProfitsTest() {
         // given
         Players players = new Players(playerList);
         Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);
@@ -48,12 +48,12 @@ class PlayerProfitStatisticsTest {
         PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
 
         // then
-        assertThat(playerProfitStatistics.calculateDealerProfit()).isEqualTo(new Profit(new BigDecimal("-500")));
+        assertThat(playerProfitStatistics.calculateTotalPlayerProfits()).isEqualTo(new Profit(new BigDecimal("500")));
     }
 
     @DisplayName("PlayerProfitStatistics 의 플레이어의 수익을 얻는 기능을 테스트한다.")
     @Test
-    void getPlayerProfit() {
+    void getPlayerProfitTest() {
         // given
         Players players = new Players(playerList);
         Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);

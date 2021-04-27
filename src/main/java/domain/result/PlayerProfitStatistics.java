@@ -15,10 +15,9 @@ public class PlayerProfitStatistics {
         this.playerProfitStatistics = playerProfitStatistics;
     }
 
-    public Profit calculateDealerProfit() {
+    public Profit calculateTotalPlayerProfits() {
         return playerProfitStatistics.values().stream()
-                .reduce(ZERO_PROFIT, Profit::addProfit)
-                .negate();
+                .reduce(ZERO_PROFIT, Profit::addProfit);
     }
 
     public Profit getPlayerProfit(Player player) {

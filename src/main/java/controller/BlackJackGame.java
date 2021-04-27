@@ -25,7 +25,7 @@ public class BlackJackGame {
         distributeCardToDealer(dealer);
         printResults(players, dealer);
         PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(players.producePlayersProfitStatistics(dealer));
-        printDealerAndPlayersProfit(players, playerProfitStatistics);
+        printDealerAndPlayersProfit(players, dealer, playerProfitStatistics);
     }
 
     private static Players inputPlayers() {
