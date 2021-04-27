@@ -88,7 +88,7 @@ class PlayersTest {
         dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
 
         // when
-        Map<Player, BigDecimal> playersFinalProfits = players.producePlayersFinalProfits(dealer);
+        Map<Player, BigDecimal> playersFinalProfits = players.producePlayersProfitStatistics(dealer);
 
         // then
         assertAll(

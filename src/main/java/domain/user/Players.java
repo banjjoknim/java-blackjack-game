@@ -32,7 +32,7 @@ public class Players {
         players.forEach(Deck::distributeCard);
     }
 
-    public Map<Player, BigDecimal> producePlayersFinalProfits(Dealer dealer) {
+    public Map<Player, BigDecimal> producePlayersProfitStatistics(Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player,
                         player -> player.calculateFinalProfit(dealer)));
