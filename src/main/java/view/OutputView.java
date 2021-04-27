@@ -5,8 +5,6 @@ import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
 
@@ -96,6 +94,8 @@ public class OutputView {
     }
 
     private static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
-        System.out.println(player.getPlayerName().getName() + " : " + playerProfitStatistics.getPlayerProfit(player));
+        String playerName = player.getPlayerName().getName();
+        BigDecimal profitAmount = playerProfitStatistics.getPlayerProfit(player).getAmount();
+        System.out.println(playerName + " : " + profitAmount);
     }
 }
