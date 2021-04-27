@@ -22,13 +22,21 @@ public enum GameResult {
     }
 
     public static GameResult determineGameResult(int gameResultValue, Player player, Dealer dealer) {
-        if (gameResultValue == LOSE.value || player.isBust() || (!player.isBlackJack() && dealer.isBlackJack())) {
+        if (isLose(gameResultValue, player, dealer)) {
             return LOSE;
         }
-        if (gameResultValue == WIN.value || dealer.isBust() || (player.isBlackJack() && !dealer.isBlackJack())) {
+        if (isWin(gameResultValue, player, dealer)) {
             return determineWinOrWinWithBlackJack(player);
         }
         return determineDrawOrDrawWithBlackJack(player, dealer);
+    }
+
+    private static boolean isLose(int gameResultValue, Player player, Dealer dealer) {
+        return (!dealer.isBust() && gameResultValue == LOSE.value) || player.isBust() || (!player.isBlackJack() && dealer.isBlackJack());
+    }
+
+    private static boolean isWin(int gameResultValue, Player player, Dealer dealer) {
+        return gameResultValue == WIN.value || dealer.isBust() || (player.isBlackJack() && !dealer.isBlackJack());
     }
 
     private static GameResult determineWinOrWinWithBlackJack(Player player) {
