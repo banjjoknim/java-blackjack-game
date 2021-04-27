@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 
 import java.math.BigDecimal;
@@ -79,11 +80,26 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalProfits(Map<Player, BigDecimal> playersProfits) {
-        System.out.println("딜러 : " + playersProfits.values().stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .negate()
-                .doubleValue());
-        playersProfits.entrySet().forEach(entry -> System.out.println(entry.getKey().getPlayerName().getName() + " : " + entry.getValue().setScale(0, RoundingMode.HALF_EVEN).doubleValue()));
+    public static void printDealerAndPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
+        printDealerProfit(playerProfitStatistics);
+        printPlayersProfit(players, playerProfitStatistics);
+    }
+
+    private static void printDealerProfit(PlayerProfitStatistics playerProfitStatistics) {
+        System.out.println("딜러 : " + playerProfitStatistics.calculateDealerProfit());
+    }
+
+    private static void printPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
+        for (Player player : players.getPlayers()) {
+            printPlayerProfit(player, playerProfitStatistics);
+        }
+    }
+
+    private static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
+        System.out.println(player.getPlayerName().getName() +
+                " : " +
+                playerProfitStatistics.getPlayerProfit(player)
+                        .setScale(0, RoundingMode.HALF_EVEN)
+                        .doubleValue());
     }
 }

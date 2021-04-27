@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.Deck;
+import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 import view.InputView;
 import view.OutputView;
@@ -9,17 +10,20 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static view.OutputView.printDealerAndPlayersProfit;
+import static view.OutputView.printResults;
 
 public class BlackJackGame {
 
     public static void main(String[] args) {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
-        BlackJackGame.initializeCardsOfAllUsers(players, dealer);
-        BlackJackGame.askWantMoreCardToAllPlayers(players);
-        BlackJackGame.distributeCardToDealer(dealer);
-        OutputView.printResults(players, dealer);
-        OutputView.printFinalProfits(players.producePlayersProfitStatistics(dealer));
+        initializeCardsOfAllUsers(players, dealer);
+        askWantMoreCardToAllPlayers(players);
+        distributeCardToDealer(dealer);
+        printResults(players, dealer);
+        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(players.producePlayersProfitStatistics(dealer));
+        printDealerAndPlayersProfit(players, playerProfitStatistics);
     }
 
     private static Players inputPlayers() {
