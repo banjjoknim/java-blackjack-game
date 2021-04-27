@@ -18,8 +18,8 @@ public class BettingMoney {
     }
 
     private void validateBettingMoneyAmount(BigDecimal amount) {
-        int bettingMoneyAmount = amount.compareTo(BigDecimal.ZERO);
-        if (bettingMoneyAmount != POSITIVE) {
+        boolean isPositiveAmount = amount.compareTo(BigDecimal.ZERO) == POSITIVE;
+        if (!isPositiveAmount) {
             throw new IllegalArgumentException("배팅 금액은 0보다 커야 합니다.");
         }
     }
