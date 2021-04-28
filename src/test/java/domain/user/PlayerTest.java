@@ -6,8 +6,12 @@ import domain.card.Type;
 import domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -132,7 +136,7 @@ class PlayerTest {
 
     @DisplayName("플레이어의 게임 결과 결정 기능을 테스트한다.")
     @Test
-    void determineGameResultTest() {
+    void determineWinOrDrawOrLoseTest() {
         // given
         PlayerName playerName = new PlayerName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
@@ -166,6 +170,33 @@ class PlayerTest {
 
         // then
         assertThat(finalProfit).isEqualTo(new Profit(new BigDecimal("1500")));
+    }
+
+    @DisplayName("플레이어의 상태 결정 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndStatus")
+    void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
+        // given
+        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        player.addCard(firstCard);
+        player.addCard(secondCard);
+        if (thirdCard != null) {
+            player.addCard(thirdCard);
+        }
+
+        // when
+        Status playerStatus = player.determineStatus();
+
+        // then
+        assertThat(playerStatus).isEqualTo(status);
+    }
+
+    private static Stream<Arguments> provideCardsAndStatus() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.SPADE, Type.TWO), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.BUST),
+                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), null, Status.BLACK_JACK),
+                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.SURVIVAL)
+        );
     }
 
 }

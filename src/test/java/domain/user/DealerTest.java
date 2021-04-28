@@ -6,10 +6,14 @@ import domain.card.Type;
 import domain.result.PlayerProfitStatistics;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -119,6 +123,33 @@ class DealerTest {
 
         // then
         assertThat(dealerProfit).isEqualTo(new Profit(new BigDecimal("-1000")));
+    }
+
+    @DisplayName("딜러의 상태 결정 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndStatus")
+    void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(firstCard);
+        dealer.addCard(secondCard);
+        if (thirdCard != null) {
+            dealer.addCard(thirdCard);
+        }
+
+        // when
+        Status playerStatus = dealer.determineStatus();
+
+        // then
+        assertThat(playerStatus).isEqualTo(status);
+    }
+
+    private static Stream<Arguments> provideCardsAndStatus() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.SPADE, Type.TWO), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.BUST),
+                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), null, Status.BLACK_JACK),
+                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.SURVIVAL)
+        );
     }
 
 }
