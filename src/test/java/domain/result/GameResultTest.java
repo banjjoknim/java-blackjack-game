@@ -3,26 +3,17 @@ package domain.result;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.GameResult;
-import domain.user.BettingMoney;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.PlayerName;
-import org.junit.jupiter.api.AfterEach;
+import domain.user.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameResultTest {
 
@@ -44,11 +35,13 @@ class GameResultTest {
         // given
         player.addCard(playerCard);
         dealer.addCard(dealerCard);
+        Status playerStatus = player.determineStatus();
+        Status dealerStatus = dealer.determineStatus();
 
         // when
 
         // then
-        assertThat(GameResult.determineGameResult(gameResultValue, player, dealer)).isEqualTo(gameResult);
+        assertThat(GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus)).isEqualTo(gameResult);
     }
 
     private static Stream<Arguments> provideGameResultValueAndPlayerCardAndDealerCardAndGameResult() {

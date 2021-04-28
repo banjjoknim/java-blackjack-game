@@ -18,8 +18,10 @@ public class Player extends User {
     }
 
     public GameResult determineWinOrDrawOrLose(Dealer dealer) {
-        int gameResultValue = Integer.compare(super.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
-        return GameResult.determineGameResult(gameResultValue, this, dealer);
+        int gameResultValue = Integer.compare(this.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
+        Status playerStatus = this.determineStatus();
+        Status dealerStatus = dealer.determineStatus();
+        return GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus);
     }
 
     public PlayerName getPlayerName() {

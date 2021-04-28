@@ -1,7 +1,6 @@
 package domain.result;
 
-import domain.user.Dealer;
-import domain.user.Player;
+import domain.user.Status;
 
 import java.math.BigDecimal;
 
@@ -20,33 +19,33 @@ public enum GameResult {
         this.dividendRate = dividendRate;
     }
 
-    public static GameResult determineGameResult(int gameResultValue, Player player, Dealer dealer) {
-        if (isLose(gameResultValue, player, dealer)) {
+    public static GameResult determineGameResult(int gameResultValue, Status playerStatus, Status dealerStatus) {
+        if (isLose(gameResultValue, playerStatus, dealerStatus)) {
             return LOSE;
         }
-        if (isWin(gameResultValue, player, dealer)) {
-            return determineWinOrWinWithBlackJack(player);
+        if (isWin(gameResultValue, playerStatus, dealerStatus)) {
+            return determineWinOrWinWithBlackJack(playerStatus);
         }
-        return determineDrawOrDrawWithBlackJack(player, dealer);
+        return determineDrawOrDrawWithBlackJack(playerStatus, dealerStatus);
     }
 
-    private static boolean isLose(int gameResultValue, Player player, Dealer dealer) {
-        return (!dealer.isBust() && gameResultValue == LOSE.value) || player.isBust() || (!player.isBlackJack() && dealer.isBlackJack());
+    private static boolean isLose(int gameResultValue, Status playerStatus, Status dealerStatus) {
+        return (!dealerStatus.isBust() && gameResultValue == LOSE.value) || playerStatus.isBust() || (!playerStatus.isBlackJack() && dealerStatus.isBlackJack());
     }
 
-    private static boolean isWin(int gameResultValue, Player player, Dealer dealer) {
-        return gameResultValue == WIN.value || dealer.isBust() || (player.isBlackJack() && !dealer.isBlackJack());
+    private static boolean isWin(int gameResultValue, Status playerStatus, Status dealerStatus) {
+        return gameResultValue == WIN.value || dealerStatus.isBust() || (playerStatus.isBlackJack() && !dealerStatus.isBlackJack());
     }
 
-    private static GameResult determineWinOrWinWithBlackJack(Player player) {
-        if (player.isBlackJack()) {
+    private static GameResult determineWinOrWinWithBlackJack(Status playerStatus) {
+        if (playerStatus.isBlackJack()) {
             return WIN_WITH_BLACK_JACK;
         }
         return WIN;
     }
 
-    private static GameResult determineDrawOrDrawWithBlackJack(Player player, Dealer dealer) {
-        if (player.isBlackJack() && dealer.isBlackJack()) {
+    private static GameResult determineDrawOrDrawWithBlackJack(Status playerStatus, Status dealerStatus) {
+        if (playerStatus.isBlackJack() && dealerStatus.isBlackJack()) {
             return DRAW_WITH_BLACK_JACK;
         }
         return DRAW;
