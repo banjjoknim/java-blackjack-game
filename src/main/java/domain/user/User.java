@@ -18,6 +18,16 @@ public abstract class User {
         cards.add(card);
     }
 
+    public Status determineStatus() {
+        if (isBlackJack()) {
+            return Status.BLACK_JACK;
+        }
+        if (isBust()) {
+            return Status.BUST;
+        }
+        return Status.SURVIVAL;
+    }
+
     public boolean isBlackJack() {
         return hasAceTypeCard() && hasTenNumberTypeCard() && cards.size() == INITIAL_CARDS_SIZE;
     }
