@@ -40,7 +40,9 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        System.out.println("딜러 : " + getCardsInfo(dealer) + " - 결과 : " + dealer.calculateTotalCardNumber());
+        String dealerCardsInfo = convertUserToCardsInfo(dealer);
+        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
+        System.out.println("딜러 : " + dealerCardsInfo + " - 결과 : " + dealerTotalCardNumber);
     }
 
     private static void printPlayersResult(Players players) {
@@ -49,18 +51,19 @@ public class OutputView {
 
     private static void printPlayerResult(Player player) {
         String playerName = player.getPlayerName().getName();
-        int sumOfCardNumbers = player.calculateTotalCardNumber();
-        String playerResultFormat = playerName + " 카드 : " + getCardsInfo(player) + " - 결과 : " + sumOfCardNumbers;
+        String playerCardsInfo = convertUserToCardsInfo(player);
+        int playerTotalCardNumber = player.calculateTotalCardNumber();
+        String playerResultFormat = playerName + " 카드 : " + playerCardsInfo + " - 결과 : " + playerTotalCardNumber;
         System.out.println(playerResultFormat);
     }
 
     public static void printCardsHeldByPlayer(Player player) {
-        String cardTypeAndSymbols = getCardsInfo(player);
-        System.out.println(player.getPlayerName().getName() + " 카드 : " + cardTypeAndSymbols);
+        String playerCardsInfo = convertUserToCardsInfo(player);
+        System.out.println(player.getPlayerName().getName() + " 카드 : " + playerCardsInfo);
     }
 
-    private static String getCardsInfo(User dealer) {
-        return dealer.getCards().stream()
+    private static String convertUserToCardsInfo(User user) {
+        return user.getCards().stream()
                 .map(card -> card.getType().getTypeName() + card.getSymbol().getSymbolName())
                 .collect(joining(SEPARATOR));
     }
