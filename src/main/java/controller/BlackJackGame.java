@@ -66,13 +66,17 @@ public class BlackJackGame {
     }
 
     private static void askWantMoreCardToAllPlayers(Players players) {
-        players.getPlayers().forEach(BlackJackGame::chooseAnswer);
+        players.getPlayers().forEach(BlackJackGame::askWantMoreCardToPlayer);
     }
 
-    private static void chooseAnswer(Player player) {
+    private static void askWantMoreCardToPlayer(Player player) {
         if (player.isBust() || player.isBlackJack()) {
             return;
         }
+        chooseAnswer(player);
+    }
+
+    private static void chooseAnswer(Player player) {
         OutputView.printDoYouWantOneMoreCard(player);
         Answer answer = new Answer(InputView.inputAnswer());
         if (answer.isYes()) {
@@ -83,7 +87,7 @@ public class BlackJackGame {
     private static void distributeCardToPlayer(Player player) {
         Deck.distributeCard(player);
         OutputView.printCardsHeldByPlayer(player);
-        chooseAnswer(player);
+        askWantMoreCardToPlayer(player);
     }
 
     private static void distributeCardToDealer(Dealer dealer) {
