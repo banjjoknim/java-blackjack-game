@@ -51,13 +51,17 @@ public abstract class User {
                 .map(Card::getType)
                 .mapToInt(Type::getNumber)
                 .sum();
+        if (hasAceTypeCard()) {
+            return considerAceTypeCard(totalCardNumber);
+        }
+        return totalCardNumber;
+    }
+
+    private int considerAceTypeCard(int totalCardNumber) {
         if (isBlackJack()) {
             return BLACK_JACK;
         }
-        if (hasAceTypeCard()) {
-            return determineAceNumberIsOneOrEleven(totalCardNumber);
-        }
-        return totalCardNumber;
+        return determineAceNumberIsOneOrEleven(totalCardNumber);
     }
 
     private int determineAceNumberIsOneOrEleven(int totalCardNumber) {
