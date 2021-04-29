@@ -134,26 +134,6 @@ class PlayerTest {
         assertThat(isBust).isTrue();
     }
 
-    @DisplayName("플레이어의 게임 결과 결정 기능을 테스트한다.")
-    @Test
-    void determineWinOrDrawOrLoseTest() {
-        // given
-        PlayerName playerName = new PlayerName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.JACK));
-        player.addCard(new Card(Symbol.SPADE, Type.ACE));
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.KING));
-
-        // when
-        GameResult gameResult = player.determineWinOrDrawOrLose(dealer);
-
-        // then
-        assertThat(gameResult).isEqualTo(GameResult.WIN_WITH_BLACK_JACK);
-    }
-
     @DisplayName("플레이어의 최종 수익 계산 기능을 테스트한다.")
     @Test
     void calculateFinalProfitTest() {

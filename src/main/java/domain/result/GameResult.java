@@ -22,7 +22,7 @@ public enum GameResult {
         this.dividendRate = dividendRate;
     }
 
-    public static GameResult determineGameResult(int gameResultValue, Status playerStatus, Status dealerStatus) {
+    public static GameResult determineWinOrDrawOrLose(int gameResultValue, Status playerStatus, Status dealerStatus) {
         if (isLose(gameResultValue, playerStatus, dealerStatus)) {
             return LOSE;
         }
