@@ -56,8 +56,8 @@ class GameResultTest {
 
     @DisplayName("GameResult 의 배당률과 배팅 금액으로 결과 수익 계산 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideGameResultAndDividendRate")
-    void multiplyDividendRateTest(GameResult gameResult, BigDecimal dividendRate) {
+    @MethodSource("provideGameResultAndExpectedAmount")
+    void multiplyDividendRateTest(GameResult gameResult, BigDecimal expectedAmount) {
         // given
         BigDecimal amount = new BigDecimal(1000);
 
@@ -65,16 +65,16 @@ class GameResultTest {
         BigDecimal multipliedByDividendRateAmount = gameResult.multiplyDividendRate(amount);
 
         // then
-        assertThat(multipliedByDividendRateAmount).isEqualTo(amount.multiply(dividendRate));
+        assertThat(multipliedByDividendRateAmount).isEqualTo(expectedAmount);
     }
 
-    private static Stream<Arguments> provideGameResultAndDividendRate() {
+    private static Stream<Arguments> provideGameResultAndExpectedAmount() {
         return Stream.of(
-                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new BigDecimal("1.5")),
-                Arguments.of(GameResult.WIN, new BigDecimal("1")),
+                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new BigDecimal("1500")),
+                Arguments.of(GameResult.WIN, new BigDecimal("1000")),
                 Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new BigDecimal("0")),
                 Arguments.of(GameResult.DRAW, new BigDecimal("0")),
-                Arguments.of(GameResult.LOSE, new BigDecimal("-1"))
+                Arguments.of(GameResult.LOSE, new BigDecimal("-1000"))
         );
     }
 

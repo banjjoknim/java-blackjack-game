@@ -3,6 +3,7 @@ package domain.result;
 import domain.user.Status;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public enum GameResult {
     WIN(1, new BigDecimal("1")),
@@ -10,6 +11,8 @@ public enum GameResult {
     DRAW(0, new BigDecimal("0")),
     DRAW_WITH_BLACK_JACK(0, new BigDecimal("0")),
     LOSE(-1, new BigDecimal("-1"));
+
+    private static final int SCALE = 0;
 
     private int value;
     private BigDecimal dividendRate;
@@ -52,7 +55,8 @@ public enum GameResult {
     }
 
     public BigDecimal multiplyDividendRate(BigDecimal amount) {
-        return dividendRate.multiply(amount);
+        return dividendRate.multiply(amount)
+                .setScale(SCALE, RoundingMode.HALF_EVEN);
     }
 
 }
