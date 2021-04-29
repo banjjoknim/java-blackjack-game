@@ -9,10 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -49,6 +46,24 @@ class PlayerProfitStatisticsTest {
 
         // then
         assertThat(playerProfitStatistics.calculateTotalPlayerProfits()).isEqualTo(new Profit(new BigDecimal("500")));
+    }
+
+    @DisplayName("플레이어의 수익 통계로부터 딜러의 수익을 계산하는 기능을 테스트한다.")
+    @Test
+    void getDealerProfitFromPlayerProfitStatisticsTest() {
+        // given
+        Dealer dealer = new Dealer();
+        Map<Player, Profit> statistics = new HashMap<>();
+        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal("1000")));
+        Profit playerProfit = new Profit(new BigDecimal("1000"));
+        statistics.put(player, playerProfit);
+        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
+
+        // when
+        Profit dealerProfit = playerProfitStatistics.calculateDealerProfit();
+
+        // then
+        assertThat(dealerProfit).isEqualTo(new Profit(new BigDecimal("-1000")));
     }
 
     @DisplayName("PlayerProfitStatistics 의 플레이어의 수익을 얻는 기능을 테스트한다.")

@@ -1,7 +1,5 @@
 package domain.user;
 
-import domain.result.PlayerProfitStatistics;
-
 public class Dealer extends User {
     private static final int DEALER_RULE_NUMBER = 17;
 
@@ -10,10 +8,6 @@ public class Dealer extends User {
 
     public boolean hasSmallNumberLessThanRuleNumber() {
         return super.calculateTotalCardNumber() < DEALER_RULE_NUMBER;
-    }
-
-    public Profit getDealerProfitFromPlayerProfitStatistics(PlayerProfitStatistics playerProfitStatistics) {
-        return playerProfitStatistics.calculateTotalPlayerProfits().negate();
     }
 
 }

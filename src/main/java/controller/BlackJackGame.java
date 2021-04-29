@@ -155,7 +155,7 @@ public class BlackJackGame {
     }
 
     private static void showDealerProfit(Dealer dealer, PlayerProfitStatistics playerProfitStatistics) {
-        Profit dealerProfit = dealer.getDealerProfitFromPlayerProfitStatistics(playerProfitStatistics);
+        Profit dealerProfit = playerProfitStatistics.calculateDealerProfit();
         printDealerProfit(dealerProfit.getAmount());
     }
 
