@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
@@ -45,6 +46,22 @@ class PlayerTest {
 
         // when
         player.addCard(new Card(Symbol.DIAMOND, Type.ACE));
+
+        // then
+        assertThat(player.getCards()).hasSize(1);
+    }
+
+    @DisplayName("플레이어의 카드 뽑기 기능을 테스트한다.")
+    @Test
+    void hitTest() {
+        // given
+        Deck deck = new Deck();
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+
+        // when
+        player.hit(deck);
 
         // then
         assertThat(player.getCards()).hasSize(1);
