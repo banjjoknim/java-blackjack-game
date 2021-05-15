@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.game.BlackJackGame;
 import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 
@@ -18,7 +19,9 @@ public class OutputView {
         System.out.println(playerName.getName() + "의 배팅 금액은?");
     }
 
-    public static void printDistributeCardsMessageAndCardsOfAllUsers(Players players, Dealer dealer) {
+    public static void printDistributeCardsMessageAndCardsOfAllUsers(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
         printHandedOutTwoCardsToPlayers(players);
         printCardsOfAllUsers(players, dealer);
     }
@@ -73,7 +76,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
+    public static void printDealerAndPlayersResult(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
         printDealerResult(dealer);
         players.getPlayers()
                 .forEach(OutputView::printPlayerResult);
@@ -93,7 +98,9 @@ public class OutputView {
         System.out.println(playerResultFormat);
     }
 
-    public static void printDealerAndPlayersProfit(Players players, Dealer dealer) {
+    public static void printDealerAndPlayersProfit(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
         PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
         printDealerProfit(playerProfitStatistics);
         printPlayersProfit(players, playerProfitStatistics);

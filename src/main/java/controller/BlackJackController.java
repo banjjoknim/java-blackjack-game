@@ -12,17 +12,15 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class BlackJackController {
+
     public static void main(String[] args) {
-        Players players = inputPlayers();
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck();
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
+        BlackJackGame blackJackGame = new BlackJackGame(inputPlayers(), new Dealer(), new Deck());
         blackJackGame.proceedDistributeCardsToUsers();
-        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(blackJackGame);
         blackJackGame.proceedPlayersTurn();
         blackJackGame.proceedDealerTurn();
-        OutputView.printDealerAndPlayersResult(players, dealer);
-        OutputView.printDealerAndPlayersProfit(players, dealer);
+        OutputView.printDealerAndPlayersResult(blackJackGame);
+        OutputView.printDealerAndPlayersProfit(blackJackGame);
     }
 
     private static Players inputPlayers() {
