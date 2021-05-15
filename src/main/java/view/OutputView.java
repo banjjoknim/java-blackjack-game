@@ -1,15 +1,14 @@
 package view;
 
-import domain.user.Player;
-import domain.user.PlayerName;
-import domain.user.Players;
-
-import java.math.BigDecimal;
+import domain.card.Card;
+import domain.result.PlayerProfitStatistics;
+import domain.user.*;
 
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
-    public static final String SEPARATOR = ", ";
+    private static final String SEPARATOR = ", ";
+    private static final int FIRST = 0;
 
     public static void printPleaseInputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -27,24 +26,63 @@ public class OutputView {
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
 
-    public static void printDealerResult(String dealerCards, int dealerTotalCardNumber) {
+    public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
+        printDealerResult(dealer);
+        for (Player player : players.getPlayers()) {
+            printPlayerResult(player);
+        }
+    }
+
+    private static void printDealerResult(Dealer dealer) {
+        String dealerCards = convertUserToCards(dealer);
+        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
         System.out.println("딜러 : " + dealerCards + " - 결과 : " + dealerTotalCardNumber);
     }
 
-    public static void printPlayerResult(String playerName, String playerCards, int playerTotalCardNumber) {
+    private static void printPlayerResult(Player player) {
+        String playerName = player.getPlayerName().getName();
+        String playerCards = convertUserToCards(player);
+        int playerTotalCardNumber = player.calculateTotalCardNumber();
         String playerResultFormat = playerName + " 카드 : " + playerCards + " - 결과 : " + playerTotalCardNumber;
         System.out.println(playerResultFormat);
     }
 
-    public static void printCardsHeldByPlayer(String playerName, String playerCards) {
+    public static void printCardsOfAllUsers(Players players, Dealer dealer) {
+        printCardsOfDealer(dealer);
+        printCardsOfPlayers(players);
+    }
+
+    private static void printCardsOfDealer(Dealer dealer) {
+        Card firstCard = dealer.getCards().get(FIRST);
+        printCardsHeldByDealer(firstCard);
+    }
+
+    private static void printCardsOfPlayers(Players players) {
+        for (Player player : players.getPlayers()) {
+            printCardsHeldByPlayer(player);
+        }
+    }
+
+    public static void printCardsHeldByPlayer(Player player) {
+        String playerName = player.getPlayerName().getName();
+        String playerCards = convertUserToCards(player);
         System.out.println(playerName + " 카드 : " + playerCards);
     }
 
-    public static void printCardsHeldByDealer(String cardTypeName, String cardSymbolName) {
-        System.out.println("딜러 : " + cardTypeName + cardSymbolName);
+    private static String convertUserToCards(User user) {
+        return user.getCards().stream()
+                .map(card -> card.getType().getTypeName() + card.getSymbol().getSymbolName())
+                .collect(joining(SEPARATOR));
     }
 
-    public static void printDoYouWantOneMoreCard(String playerName) {
+    public static void printCardsHeldByDealer(Card card) {
+        String firstCardTypeName = card.getType().getTypeName();
+        String firstCardSymbolName = card.getSymbol().getSymbolName();
+        System.out.println("딜러 : " + firstCardTypeName + firstCardSymbolName);
+    }
+
+    public static void printDoYouWantOneMoreCard(Player player) {
+        String playerName = player.getPlayerName().getName();
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -52,12 +90,14 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerProfit(BigDecimal dealerProfitAmount) {
-        System.out.println("딜러 : " + dealerProfitAmount);
+    public static void printDealerProfit(Profit profit) {
+        System.out.println("딜러 : " + profit.getAmount());
     }
 
-    public static void printPlayerProfit(String playerName, BigDecimal profitAmount) {
-        System.out.println(playerName + " : " + profitAmount);
+    public static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
+        String playerName = player.getPlayerName().getName();
+        Profit playerProfit = playerProfitStatistics.getPlayerProfit(player);
+        System.out.println(playerName + " : " + playerProfit.getAmount());
     }
 
 }
