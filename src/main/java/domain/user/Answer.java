@@ -20,7 +20,7 @@ public class Answer {
     }
 
     public boolean isYes() {
-        return answer.equals(YES);
+        return YES.equals(answer);
     }
 
     public String getAnswer() {
