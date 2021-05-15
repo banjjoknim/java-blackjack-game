@@ -17,11 +17,7 @@ public class BlackJackGame {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        deck.distributeCardsToPlayersAndDealer(players, dealer);
-        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
         proceedGame(players, dealer, deck);
-        OutputView.printDealerAndPlayersResult(players, dealer);
-        OutputView.printDealerAndPlayersProfit(players, dealer);
     }
 
     private static Players inputPlayers() {
@@ -55,8 +51,12 @@ public class BlackJackGame {
     }
 
     private static void proceedGame(Players players, Dealer dealer, Deck deck) {
+        deck.distributeCardsToPlayersAndDealer(players, dealer);
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
         proceedPlayersTurn(deck, players);
         proceedDealerTurn(deck, dealer);
+        OutputView.printDealerAndPlayersResult(players, dealer);
+        OutputView.printDealerAndPlayersProfit(players, dealer);
     }
 
     private static void proceedPlayersTurn(Deck deck, Players players) {
