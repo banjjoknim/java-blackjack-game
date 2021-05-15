@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayersTest {
 
-    private static List<Player> playerList;
+    private List<Player> playerList;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,6 @@ class PlayersTest {
         player2.addCard(new Card(Symbol.HEART, Type.KING));
         player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
         playerList = new ArrayList<>(Arrays.asList(player1, player2));
-        Deck.initializeDeck();
     }
 
     @DisplayName("중복되는 이름을 가진 Player 들로 Players 생성시 예외 처리를 테스트한다.")
@@ -68,9 +67,10 @@ class PlayersTest {
     void drawCardsEachOtherTest() {
         // given
         Players players = new Players(playerList);
+        Deck deck = new Deck();
 
         // when
-        players.drawCardEachPlayer();
+        players.drawCardEachPlayer(deck);
 
         // then
         for (Player player : players.getPlayers()) {

@@ -31,8 +31,8 @@ public class Players {
         }
     }
 
-    public void drawCardEachPlayer() {
-        players.forEach(Deck::distributeCard);
+    public void drawCardEachPlayer(Deck deck) {
+        players.forEach(deck::distributeCard);
     }
 
     public PlayerProfitStatistics producePlayersProfitStatistics(Dealer dealer) {

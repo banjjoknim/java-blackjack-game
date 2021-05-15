@@ -16,19 +16,21 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DeckTest {
 
+    private Deck deck;
+
     @BeforeEach
     void setUp() {
-        Deck.initializeDeck();
+        deck = new Deck();
     }
 
-    @DisplayName("Deck 의 초기 카드 적재 기능을 테스트한다.")
+    @DisplayName("Deck 생성시 초기 카드 적재 기능을 테스트한다.")
     @ParameterizedTest
     @EnumSource(Symbol.class)
     void initializeDeckTest(Symbol symbol) {
         // given
 
         // when
-        List<Card> cards = Deck.getCards();
+        List<Card> cards = deck.getCards();
         long symbolCardCounts = cards.stream()
                 .filter(card -> card.getSymbol().equals(symbol))
                 .count();
@@ -51,7 +53,7 @@ class DeckTest {
         Dealer dealer = new Dealer();
 
         // when
-        Deck.distributeCardsToPlayersAndDealer(players, dealer);
+        deck.distributeCardsToPlayersAndDealer(players, dealer);
 
         // then
         assertAll(
@@ -68,11 +70,11 @@ class DeckTest {
         Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
 
         // when
-        Deck.distributeCard(player);
+        deck.distributeCard(player);
 
         // then
         assertThat(player.getCards()).hasSize(1);
-        assertThat(Deck.getCards().size()).isEqualTo(51);
+        assertThat(deck.getCards().size()).isEqualTo(51);
     }
 
 }

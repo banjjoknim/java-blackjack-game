@@ -14,32 +14,34 @@ public class Deck {
     private static final int NUMBER_OF_CARDS_BY_RULE = 2;
     private static final int TOP = 0;
 
-    private static List<Card> cards = new ArrayList<>();
+    private static final List<Card> CARDS_CACHE = new ArrayList<>();
 
-    private Deck() {
-    }
-
-    public static void initializeDeck() {
-        cards.clear();
+    static {
         for (Symbol symbol : Symbol.values()) {
             Arrays.stream(Type.values())
-                    .forEach(type -> cards.add(new Card(symbol, type)));
+                    .forEach(type -> CARDS_CACHE.add(new Card(symbol, type)));
         }
+    }
+
+    private final List<Card> cards;
+
+    public Deck() {
+        this.cards = new ArrayList<>(CARDS_CACHE);
         Collections.shuffle(cards);
     }
 
-    public static void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {
+    public void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {
         for (int i = ZERO; i < NUMBER_OF_CARDS_BY_RULE; i++) {
-            players.drawCardEachPlayer();
+            players.drawCardEachPlayer(this);
             distributeCard(dealer);
         }
     }
 
-    public static void distributeCard(User user) {
+    public void distributeCard(User user) {
         user.addCard(cards.remove(TOP));
     }
 
-    public static List<Card> getCards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 

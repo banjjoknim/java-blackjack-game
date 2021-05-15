@@ -18,10 +18,11 @@ public class BlackJackGame {
     public static void main(String[] args) {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
-        BlackJackGame.initializeCardsOfAllUsers(players, dealer);
+        Deck deck = new Deck();
+        BlackJackGame.initializeCardsOfAllUsers(deck, players, dealer);
         OutputView.printCardsOfAllUsers(players, dealer);
-        BlackJackGame.askWantMoreCardToAllPlayers(players);
-        BlackJackGame.distributeCardToDealer(dealer);
+        BlackJackGame.askWantMoreCardToAllPlayers(deck, players);
+        BlackJackGame.distributeCardToDealer(deck, dealer);
         OutputView.printDealerAndPlayersResult(players, dealer);
         BlackJackGame.showDealerAndPlayersProfit(players, dealer);
     }
@@ -56,43 +57,42 @@ public class BlackJackGame {
         return new BettingMoney(amount);
     }
 
-    private static void initializeCardsOfAllUsers(Players players, Dealer dealer) {
-        Deck.initializeDeck();
-        Deck.distributeCardsToPlayersAndDealer(players, dealer);
+    private static void initializeCardsOfAllUsers(Deck deck, Players players, Dealer dealer) {
+        deck.distributeCardsToPlayersAndDealer(players, dealer);
         OutputView.printHandedOutTwoCardsToPlayers(players);
     }
 
-    private static void askWantMoreCardToAllPlayers(Players players) {
+    private static void askWantMoreCardToAllPlayers(Deck deck, Players players) {
         players.getPlayers()
-                .forEach(BlackJackGame::askWantMoreCardToPlayer);
+                .forEach(player -> askWantMoreCardToPlayer(deck, player));
     }
 
-    private static void askWantMoreCardToPlayer(Player player) {
+    private static void askWantMoreCardToPlayer(Deck deck, Player player) {
         if (player.isBust() || player.isBlackJack()) {
             return;
         }
-        chooseAnswer(player);
+        chooseAnswer(deck, player);
     }
 
-    private static void chooseAnswer(Player player) {
+    private static void chooseAnswer(Deck deck, Player player) {
         OutputView.printDoYouWantOneMoreCard(player);
         Answer answer = new Answer(InputView.inputAnswer());
         if (answer.isYes()) {
-            distributeCardToPlayer(player);
+            distributeCardToPlayer(deck, player);
         }
     }
 
-    private static void distributeCardToPlayer(Player player) {
-        Deck.distributeCard(player);
+    private static void distributeCardToPlayer(Deck deck, Player player) {
+        deck.distributeCard(player);
         OutputView.printCardsHeldByPlayer(player);
-        BlackJackGame.askWantMoreCardToPlayer(player);
+        BlackJackGame.askWantMoreCardToPlayer(deck, player);
     }
 
-    private static void distributeCardToDealer(Dealer dealer) {
+    private static void distributeCardToDealer(Deck deck, Dealer dealer) {
         if (dealer.hasSmallNumberLessThanRuleNumber()) {
             OutputView.printDealerGetOneMoreCard();
-            Deck.distributeCard(dealer);
-            BlackJackGame.distributeCardToDealer(dealer);
+            deck.distributeCard(dealer);
+            BlackJackGame.distributeCardToDealer(deck, dealer);
         }
     }
 
