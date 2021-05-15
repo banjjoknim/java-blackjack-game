@@ -19,13 +19,13 @@ public class Deck {
     private Deck() {
     }
 
-    public static void initializeDeck(CardShuffler cardShuffler) {
+    public static void initializeDeck() {
         cards.clear();
         for (Symbol symbol : Symbol.values()) {
             Arrays.stream(Type.values())
                     .forEach(type -> cards.add(new Card(symbol, type)));
         }
-        cardShuffler.shuffle(cards);
+        Collections.shuffle(cards);
     }
 
     public static void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {

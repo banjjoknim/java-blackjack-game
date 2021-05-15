@@ -18,7 +18,7 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        Deck.initializeDeck(new RandomCardShuffler());
+        Deck.initializeDeck();
     }
 
     @DisplayName("Deck 의 초기 카드 적재 기능을 테스트한다.")
