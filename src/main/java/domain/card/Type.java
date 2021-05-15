@@ -15,12 +15,22 @@ public enum Type {
     TWO("2", 2),
     ACE("A", 1);
 
+    private static int TEN_NUMBER = 10;
+
     private String typeName;
     private int number;
 
     Type(String typeName, int number) {
         this.typeName = typeName;
         this.number = number;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
+    public boolean hasTenNumber() {
+        return number == TEN_NUMBER;
     }
 
     public String getTypeName() {

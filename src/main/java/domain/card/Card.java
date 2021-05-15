@@ -11,11 +11,11 @@ public class Card {
     }
 
     public boolean isAceType() {
-        return type.equals(Type.ACE);
+        return type.isAce();
     }
 
     public boolean isTenNumberType() {
-        return type.equals(Type.KING) || type.equals(Type.QUEEN) || type.equals(Type.JACK) || type.equals(Type.TEN);
+        return type.hasTenNumber();
     }
 
     public Symbol getSymbol() {
