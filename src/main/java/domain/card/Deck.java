@@ -16,10 +16,14 @@ public class Deck {
 
     private static List<Card> cards = new ArrayList<>();
 
+    private Deck() {
+    }
+
     public static void initializeDeck(CardShuffler cardShuffler) {
         cards.clear();
         for (Symbol symbol : Symbol.values()) {
-            Arrays.stream(Type.values()).forEach(type -> cards.add(new Card(symbol, type)));
+            Arrays.stream(Type.values())
+                    .forEach(type -> cards.add(new Card(symbol, type)));
         }
         cardShuffler.shuffle(cards);
     }
