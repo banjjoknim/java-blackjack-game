@@ -15,19 +15,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    @DisplayName("딜러의 카드 숫자 합이 규칙에 명시된 숫자보다 크거나 같은지 검증하는 기능을 테스트한다.")
+    @DisplayName("딜러의 카드 숫자 합이 규칙에 명시된 숫자보다 클 경우, Stay 여부를 테스트한다.")
     @Test
-    void hasSmallNumberLessThanRuleNumberTest() {
+    void isStayWhenHasNotSmallNumberLessThanRuleNumberTest() {
         // given
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Symbol.SPADE, Type.KING));
         dealer.addCard(new Card(Symbol.HEART, Type.KING));
 
         // when
-        boolean hasSmallNumberLessThanRuleNumber = dealer.hasSmallNumberLessThanRuleNumber();
+        boolean isStay = dealer.isStay();
 
         // then
-        assertThat(hasSmallNumberLessThanRuleNumber).isFalse();
+        assertThat(isStay).isTrue();
+    }
+
+    @DisplayName("딜러의 카드 숫자 합이 규칙에 명시된 숫자보다 작을 경우, Stay 여부를 테스트한다.")
+    @Test
+    void isStayWhenHasSmallNumberLessThanRuleNumberTest() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
+        dealer.addCard(new Card(Symbol.HEART, Type.THREE));
+
+        // when
+        boolean isStay = dealer.isStay();
+
+        // then
+        assertThat(isStay).isFalse();
     }
 
     @DisplayName("딜러의 카드 추가 기능을 테스트한다.")

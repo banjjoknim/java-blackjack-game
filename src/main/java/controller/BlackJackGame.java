@@ -78,7 +78,7 @@ public class BlackJackGame {
     }
 
     private static void distributeCardToDealer(Deck deck, Dealer dealer) {
-        while (dealer.hasSmallNumberLessThanRuleNumber()) {
+        while (!dealer.isStay()) {
             dealer.hit(deck);
             OutputView.printDealerGetOneMoreCard();
         }

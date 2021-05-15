@@ -6,8 +6,8 @@ public class Dealer extends User {
     public Dealer() {
     }
 
-    public boolean hasSmallNumberLessThanRuleNumber() {
-        return super.calculateTotalCardNumber() < DEALER_RULE_NUMBER;
+    public boolean isStay() {
+        return super.calculateTotalCardNumber() >= DEALER_RULE_NUMBER;
     }
 
 }
