@@ -97,7 +97,7 @@ public class BlackJackGame {
     }
 
     private static void showDealerAndPlayersProfit(Players players, Dealer dealer) {
-        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(players.producePlayersProfitStatistics(dealer));
+        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
         showDealerProfit(playerProfitStatistics);
         showPlayersProfit(players, playerProfitStatistics);
     }

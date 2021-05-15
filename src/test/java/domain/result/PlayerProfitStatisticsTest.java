@@ -39,10 +39,9 @@ class PlayerProfitStatisticsTest {
     void calculateTotalPlayerProfitsTest() {
         // given
         Players players = new Players(playerList);
-        Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);
 
         // when
-        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
+        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
 
         // then
         assertThat(playerProfitStatistics.calculateTotalPlayerProfits()).isEqualTo(new Profit(new BigDecimal("500")));
@@ -71,10 +70,9 @@ class PlayerProfitStatisticsTest {
     void getPlayerProfitTest() {
         // given
         Players players = new Players(playerList);
-        Map<Player, Profit> statistics = players.producePlayersProfitStatistics(dealer);
 
         // when
-        PlayerProfitStatistics playerProfitStatistics = new PlayerProfitStatistics(statistics);
+        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
 
         // then
         assertAll(

@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Deck;
+import domain.result.PlayerProfitStatistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,10 +35,11 @@ public class Players {
         players.forEach(Deck::distributeCard);
     }
 
-    public Map<Player, Profit> producePlayersProfitStatistics(Dealer dealer) {
-        return players.stream()
+    public PlayerProfitStatistics producePlayersProfitStatistics(Dealer dealer) {
+        Map<Player, Profit> playerProfit = players.stream()
                 .collect(toMap(player -> player,
                         player -> player.calculateFinalProfit(dealer)));
+        return new PlayerProfitStatistics(playerProfit);
     }
 
     public List<Player> getPlayers() {

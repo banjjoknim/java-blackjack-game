@@ -3,6 +3,7 @@ package domain.result;
 import domain.user.Player;
 import domain.user.Profit;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static domain.user.Profit.ZERO_PROFIT;
@@ -28,4 +29,7 @@ public class PlayerProfitStatistics {
         return playerProfitStatistics.get(player);
     }
 
+    public Map<Player, Profit> getPlayerProfitStatistics() {
+        return Collections.unmodifiableMap(playerProfitStatistics);
+    }
 }
