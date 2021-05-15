@@ -28,9 +28,8 @@ public class OutputView {
 
     public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
         printDealerResult(dealer);
-        for (Player player : players.getPlayers()) {
-            printPlayerResult(player);
-        }
+        players.getPlayers()
+                .forEach(OutputView::printPlayerResult);
     }
 
     private static void printDealerResult(Dealer dealer) {
@@ -58,9 +57,8 @@ public class OutputView {
     }
 
     private static void printCardsOfPlayers(Players players) {
-        for (Player player : players.getPlayers()) {
-            printCardsHeldByPlayer(player);
-        }
+        players.getPlayers()
+                .forEach(OutputView::printCardsHeldByPlayer);
     }
 
     public static void printCardsHeldByPlayer(Player player) {

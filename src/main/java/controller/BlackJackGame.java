@@ -63,7 +63,8 @@ public class BlackJackGame {
     }
 
     private static void askWantMoreCardToAllPlayers(Players players) {
-        players.getPlayers().forEach(BlackJackGame::askWantMoreCardToPlayer);
+        players.getPlayers()
+                .forEach(BlackJackGame::askWantMoreCardToPlayer);
     }
 
     private static void askWantMoreCardToPlayer(Player player) {
