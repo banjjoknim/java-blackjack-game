@@ -70,7 +70,7 @@ class PlayersTest {
         Deck deck = new Deck();
 
         // when
-        players.drawCardEachPlayer(deck);
+        players.hit(deck);
 
         // then
         for (Player player : players.getPlayers()) {

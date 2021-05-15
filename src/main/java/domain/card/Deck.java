@@ -32,7 +32,7 @@ public class Deck {
 
     public void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {
         for (int i = ZERO; i < NUMBER_OF_CARDS_BY_RULE; i++) {
-            players.drawCardEachPlayer(this);
+            players.hit(this);
             distributeCard(dealer);
         }
     }
