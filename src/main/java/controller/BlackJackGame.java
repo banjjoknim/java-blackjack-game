@@ -1,7 +1,6 @@
 package controller;
 
 import domain.card.Deck;
-import domain.result.PlayerProfitStatistics;
 import domain.user.*;
 import view.InputView;
 import view.OutputView;
@@ -10,8 +9,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static view.OutputView.printDealerProfit;
-import static view.OutputView.printPlayerProfit;
 
 public class BlackJackGame {
 
@@ -24,7 +21,7 @@ public class BlackJackGame {
         BlackJackGame.askWantMoreCardToAllPlayers(deck, players);
         BlackJackGame.distributeCardToDealer(deck, dealer);
         OutputView.printDealerAndPlayersResult(players, dealer);
-        BlackJackGame.showDealerAndPlayersProfit(players, dealer);
+        OutputView.printDealerAndPlayersProfit(players, dealer);
     }
 
     private static Players inputPlayers() {
@@ -93,23 +90,6 @@ public class BlackJackGame {
             OutputView.printDealerGetOneMoreCard();
             deck.distributeCard(dealer);
             BlackJackGame.distributeCardToDealer(deck, dealer);
-        }
-    }
-
-    private static void showDealerAndPlayersProfit(Players players, Dealer dealer) {
-        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
-        showDealerProfit(playerProfitStatistics);
-        showPlayersProfit(players, playerProfitStatistics);
-    }
-
-    private static void showDealerProfit(PlayerProfitStatistics playerProfitStatistics) {
-        Profit dealerProfit = playerProfitStatistics.calculateDealerProfit();
-        printDealerProfit(dealerProfit);
-    }
-
-    private static void showPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
-        for (Player player : players.getPlayers()) {
-            printPlayerProfit(player, playerProfitStatistics);
         }
     }
 

@@ -26,26 +26,6 @@ public class OutputView {
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
 
-    public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
-        printDealerResult(dealer);
-        players.getPlayers()
-                .forEach(OutputView::printPlayerResult);
-    }
-
-    private static void printDealerResult(Dealer dealer) {
-        String dealerCards = convertUserToCards(dealer);
-        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
-        System.out.println("딜러 : " + dealerCards + " - 결과 : " + dealerTotalCardNumber);
-    }
-
-    private static void printPlayerResult(Player player) {
-        String playerName = player.getPlayerName().getName();
-        String playerCards = convertUserToCards(player);
-        int playerTotalCardNumber = player.calculateTotalCardNumber();
-        String playerResultFormat = playerName + " 카드 : " + playerCards + " - 결과 : " + playerTotalCardNumber;
-        System.out.println(playerResultFormat);
-    }
-
     public static void printCardsOfAllUsers(Players players, Dealer dealer) {
         printCardsOfDealer(dealer);
         printCardsOfPlayers(players);
@@ -88,11 +68,43 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerProfit(Profit profit) {
-        System.out.println("딜러 : " + profit.getAmount());
+    public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
+        printDealerResult(dealer);
+        players.getPlayers()
+                .forEach(OutputView::printPlayerResult);
     }
 
-    public static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
+    private static void printDealerResult(Dealer dealer) {
+        String dealerCards = convertUserToCards(dealer);
+        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
+        System.out.println("딜러 : " + dealerCards + " - 결과 : " + dealerTotalCardNumber);
+    }
+
+    private static void printPlayerResult(Player player) {
+        String playerName = player.getPlayerName().getName();
+        String playerCards = convertUserToCards(player);
+        int playerTotalCardNumber = player.calculateTotalCardNumber();
+        String playerResultFormat = playerName + " 카드 : " + playerCards + " - 결과 : " + playerTotalCardNumber;
+        System.out.println(playerResultFormat);
+    }
+
+    public static void printDealerAndPlayersProfit(Players players, Dealer dealer) {
+        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
+        printDealerProfit(playerProfitStatistics);
+        printPlayersProfit(players, playerProfitStatistics);
+    }
+
+    private static void printDealerProfit(PlayerProfitStatistics playerProfitStatistics) {
+        Profit dealerProfit = playerProfitStatistics.calculateDealerProfit();
+        System.out.println("딜러 : " + dealerProfit.getAmount());
+    }
+
+    private static void printPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
+        players.getPlayers()
+                .forEach(player -> printPlayerProfit(player, playerProfitStatistics));
+    }
+
+    private static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
         String playerName = player.getPlayerName().getName();
         Profit playerProfit = playerProfitStatistics.getPlayerProfit(player);
         System.out.println(playerName + " : " + playerProfit.getAmount());
