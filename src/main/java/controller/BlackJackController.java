@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.Deck;
+import domain.game.BlackJackGame;
 import domain.user.*;
 import view.InputView;
 import view.OutputView;
@@ -9,21 +10,25 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static view.InputView.YES;
 
-public class BlackJackGame {
-
+public class BlackJackController {
     public static void main(String[] args) {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        proceedGame(players, dealer, deck);
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
+        blackJackGame.proceedDistributeCardsToUsers();
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
+        blackJackGame.proceedPlayersTurn();
+        blackJackGame.proceedDealerTurn();
+        OutputView.printDealerAndPlayersResult(players, dealer);
+        OutputView.printDealerAndPlayersProfit(players, dealer);
     }
 
     private static Players inputPlayers() {
         List<PlayerName> playerNames = inputPlayerNames();
         List<Player> players = playerNames.stream()
-                .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
+                .map(BlackJackController::convertNamesAndBettingMoneyIntoPlayers)
                 .collect(toList());
         return new Players(players);
     }
@@ -48,39 +53,6 @@ public class BlackJackGame {
 
     private static BettingMoney convertAmountIntoBettingMoney(BigDecimal amount) {
         return new BettingMoney(amount);
-    }
-
-    private static void proceedGame(Players players, Dealer dealer, Deck deck) {
-        deck.distributeCardsToPlayersAndDealer(players, dealer);
-        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
-        proceedPlayersTurn(deck, players);
-        proceedDealerTurn(deck, dealer);
-        OutputView.printDealerAndPlayersResult(players, dealer);
-        OutputView.printDealerAndPlayersProfit(players, dealer);
-    }
-
-    private static void proceedPlayersTurn(Deck deck, Players players) {
-        players.getPlayers()
-                .forEach(player -> chooseAnswer(deck, player));
-    }
-
-    private static void chooseAnswer(Deck deck, Player player) {
-        while (!player.isBust() && !player.isBlackJack()) {
-            OutputView.printDoYouWantOneMoreCard(player);
-            if (YES.equals(InputView.inputAnswer())) {
-                player.hit(deck);
-                OutputView.printCardsHeldByPlayer(player);
-                continue;
-            }
-            break;
-        }
-    }
-
-    private static void proceedDealerTurn(Deck deck, Dealer dealer) {
-        while (!dealer.isStay()) {
-            dealer.hit(deck);
-            OutputView.printDealerGetOneMoreCard();
-        }
     }
 
 }
