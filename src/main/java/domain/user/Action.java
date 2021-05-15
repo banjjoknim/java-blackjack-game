@@ -6,5 +6,4 @@ public interface Action {
 
     void hit(Deck deck);
 
-    void stay();
 }

@@ -14,7 +14,6 @@ public abstract class User implements JudgeAble {
     private static final int ACE_AS_ELEVEN = 10;
 
     private final List<Card> cards = new ArrayList<>();
-    private boolean isStay;
 
     public void addCard(Card card) {
         cards.add(card);
@@ -22,14 +21,6 @@ public abstract class User implements JudgeAble {
 
     public void hit(Deck deck) {
         deck.distributeCard(this);
-    }
-
-    public boolean isStay() {
-        return isStay;
-    }
-
-    public void stay() {
-        isStay = true;
     }
 
     public Status determineStatus() {

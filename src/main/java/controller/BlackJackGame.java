@@ -66,14 +66,14 @@ public class BlackJackGame {
     }
 
     private static void askWantMoreCardToPlayer(Deck deck, Player player) {
-        while (!player.isBust() && !player.isBlackJack() && !player.isStay()) {
+        while (!player.isBust() && !player.isBlackJack()) {
             OutputView.printDoYouWantOneMoreCard(player);
             if (YES.equals(InputView.inputAnswer())) {
                 player.hit(deck);
                 OutputView.printCardsHeldByPlayer(player);
                 continue;
             }
-            player.stay();
+            break;
         }
     }
 
