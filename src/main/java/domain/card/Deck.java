@@ -31,7 +31,7 @@ public class Deck {
     public static void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {
         for (int i = ZERO; i < NUMBER_OF_CARDS_BY_RULE; i++) {
             players.drawCardEachPlayer();
-            Deck.distributeCard(dealer);
+            distributeCard(dealer);
         }
     }
 
