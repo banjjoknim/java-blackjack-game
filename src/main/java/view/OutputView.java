@@ -18,7 +18,12 @@ public class OutputView {
         System.out.println(playerName.getName() + "의 배팅 금액은?");
     }
 
-    public static void printHandedOutTwoCardsToPlayers(Players players) {
+    public static void printDistributeCardsMessageAndCardsOfAllUsers(Players players, Dealer dealer) {
+        printHandedOutTwoCardsToPlayers(players);
+        printCardsOfAllUsers(players, dealer);
+    }
+
+    private static void printHandedOutTwoCardsToPlayers(Players players) {
         String playerNames = players.getPlayers().stream()
                 .map(Player::getPlayerName)
                 .map(PlayerName::getName)
@@ -26,7 +31,7 @@ public class OutputView {
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
 
-    public static void printCardsOfAllUsers(Players players, Dealer dealer) {
+    private static void printCardsOfAllUsers(Players players, Dealer dealer) {
         printCardsOfDealer(dealer);
         printCardsOfPlayers(players);
     }

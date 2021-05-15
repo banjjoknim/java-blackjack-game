@@ -17,9 +17,9 @@ public class BlackJackGame {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        initializeCardsOfAllUsers(deck, players, dealer);
-        askWantMoreCardToAllPlayers(deck, players);
-        distributeCardToDealer(deck, dealer);
+        deck.distributeCardsToPlayersAndDealer(players, dealer);
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
+        proceedGame(players, dealer, deck);
         OutputView.printDealerAndPlayersResult(players, dealer);
         OutputView.printDealerAndPlayersProfit(players, dealer);
     }
@@ -54,18 +54,17 @@ public class BlackJackGame {
         return new BettingMoney(amount);
     }
 
-    private static void initializeCardsOfAllUsers(Deck deck, Players players, Dealer dealer) {
-        deck.distributeCardsToPlayersAndDealer(players, dealer);
-        OutputView.printHandedOutTwoCardsToPlayers(players);
-        OutputView.printCardsOfAllUsers(players, dealer);
+    private static void proceedGame(Players players, Dealer dealer, Deck deck) {
+        proceedPlayersTurn(deck, players);
+        proceedDealerTurn(deck, dealer);
     }
 
-    private static void askWantMoreCardToAllPlayers(Deck deck, Players players) {
+    private static void proceedPlayersTurn(Deck deck, Players players) {
         players.getPlayers()
-                .forEach(player -> askWantMoreCardToPlayer(deck, player));
+                .forEach(player -> chooseAnswer(deck, player));
     }
 
-    private static void askWantMoreCardToPlayer(Deck deck, Player player) {
+    private static void chooseAnswer(Deck deck, Player player) {
         while (!player.isBust() && !player.isBlackJack()) {
             OutputView.printDoYouWantOneMoreCard(player);
             if (YES.equals(InputView.inputAnswer())) {
@@ -77,7 +76,7 @@ public class BlackJackGame {
         }
     }
 
-    private static void distributeCardToDealer(Deck deck, Dealer dealer) {
+    private static void proceedDealerTurn(Deck deck, Dealer dealer) {
         while (!dealer.isStay()) {
             dealer.hit(deck);
             OutputView.printDealerGetOneMoreCard();
