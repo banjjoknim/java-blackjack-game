@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static java.util.stream.Collectors.toList;
 
 public class InputView {
-    public static final String YES = "y";
+    private static final String YES = "y";
     private static final String SEPARATOR = ",";
 
     private static Scanner scanner = new Scanner(System.in);
@@ -22,8 +22,8 @@ public class InputView {
         return new BigDecimal(scanner.next());
     }
 
-    public static String inputAnswer() {
-        return scanner.next().toLowerCase();
+    public static boolean inputAnswer() {
+        return YES.equals(scanner.next().toLowerCase());
     }
 
 }

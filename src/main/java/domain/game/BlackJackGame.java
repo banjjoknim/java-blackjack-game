@@ -7,8 +7,6 @@ import domain.user.Players;
 import view.InputView;
 import view.OutputView;
 
-import static view.InputView.YES;
-
 public class BlackJackGame {
 
     private final Players players;
@@ -33,7 +31,7 @@ public class BlackJackGame {
     private void chooseAnswer(Player player) {
         while (!player.isBust() && !player.isBlackJack()) {
             OutputView.printDoYouWantOneMoreCard(player);
-            if (YES.equals(InputView.inputAnswer())) {
+            if (InputView.inputAnswer()) {
                 player.hit(deck);
                 OutputView.printCardsHeldByPlayer(player);
                 continue;
