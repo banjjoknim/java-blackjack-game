@@ -1,6 +1,6 @@
 package domain.user;
 
-public interface BlackJackRule {
+public interface JudgeAble {
 
     boolean isBust();
 

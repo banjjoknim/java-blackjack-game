@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class User implements BlackJackRule {
+public abstract class User implements JudgeAble {
     private static final int INITIAL_CARDS_SIZE = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_AS_ELEVEN = 10;
@@ -24,12 +24,12 @@ public class User implements BlackJackRule {
         deck.distributeCard(this);
     }
 
-    public void stay() {
-        isStay = true;
-    }
-
     public boolean isStay() {
         return isStay;
+    }
+
+    public void stay() {
+        isStay = true;
     }
 
     public Status determineStatus() {
