@@ -1,15 +1,26 @@
 package domain.user;
 
+import domain.card.Deck;
 import domain.result.GameResult;
 
 public class Player extends User {
+    private static final boolean STAY = true;
 
     private final PlayerName playerName;
     private final BettingMoney bettingMoney;
+    private boolean isStay = false;
 
     public Player(PlayerName playerName, BettingMoney bettingMoney) {
         this.playerName = playerName;
         this.bettingMoney = bettingMoney;
+    }
+
+    public void proceedOwnTurn(boolean isStay, Deck deck) {
+        if (isStay) {
+            this.isStay = STAY;
+            return;
+        }
+        super.hit(deck);
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {
@@ -30,6 +41,11 @@ public class Player extends User {
 
     public BettingMoney getBettingMoney() {
         return bettingMoney;
+    }
+
+    @Override
+    public boolean isStay() {
+        return isStay;
     }
 
 }

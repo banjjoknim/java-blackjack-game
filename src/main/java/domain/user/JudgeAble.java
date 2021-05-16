@@ -5,4 +5,6 @@ public interface JudgeAble {
     boolean isBust();
 
     boolean isBlackJack();
+
+    boolean isStay();
 }

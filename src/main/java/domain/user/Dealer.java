@@ -6,6 +6,7 @@ public class Dealer extends User {
     public Dealer() {
     }
 
+    @Override
     public boolean isStay() {
         return super.calculateTotalCardNumber() >= DEALER_RULE_NUMBER;
     }

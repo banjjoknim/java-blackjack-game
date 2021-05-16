@@ -18,19 +18,8 @@ public class BlackJackGame {
         Deck deck = new Deck();
         deck.distributeCardsToPlayersAndDealer(players, dealer);
         OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
-        for (Player player : players.getPlayers()) {
-            while (!player.isBust() && !player.isBlackJack()) {
-                OutputView.printDoYouWantOneMoreCard(player);
-                if ("y".equals(InputView.inputAnswer())) {
-                    player.hit(deck);
-                }
-                OutputView.printCardsHeldByPlayer(player);
-            }
-        }
-        while (!dealer.isStay()) {
-            dealer.hit(deck);
-            OutputView.printDealerGetOneMoreCard();
-        }
+        proceedPlayersTurn(players, deck);
+        proceedDealerTurn(dealer, deck);
         OutputView.printDealerAndPlayersResult(players, dealer);
         OutputView.printDealerAndPlayersProfit(players, dealer);
     }
@@ -65,4 +54,22 @@ public class BlackJackGame {
         return new BettingMoney(amount);
     }
 
+    private static void proceedPlayersTurn(Players players, Deck deck) {
+        players.getPlayers().forEach(player -> proceedPlayerTurn(player, deck));
+    }
+
+    private static void proceedPlayerTurn(Player player, Deck deck) {
+        while (!player.isBust() && !player.isBlackJack() && !player.isStay()) {
+            OutputView.printDoYouWantOneMoreCard(player);
+            player.proceedOwnTurn(InputView.inputIsStay(), deck);
+            OutputView.printCardsHeldByPlayer(player);
+        }
+    }
+
+    private static void proceedDealerTurn(Dealer dealer, Deck deck) {
+        while (!dealer.isStay()) {
+            dealer.hit(deck);
+            OutputView.printDealerGetOneMoreCard();
+        }
+    }
 }
