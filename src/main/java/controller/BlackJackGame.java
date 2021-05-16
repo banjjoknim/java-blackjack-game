@@ -1,7 +1,6 @@
 package controller;
 
 import domain.card.Deck;
-import domain.game.BlackJackGame;
 import domain.user.*;
 import view.InputView;
 import view.OutputView;
@@ -11,22 +10,35 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class BlackJackController {
+public class BlackJackGame {
 
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame(inputPlayers(), new Dealer(), new Deck());
-        blackJackGame.proceedDistributeCardsToUsers();
-        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(blackJackGame);
-        blackJackGame.proceedPlayersTurn();
-        blackJackGame.proceedDealerTurn();
-        OutputView.printDealerAndPlayersResult(blackJackGame);
-        OutputView.printDealerAndPlayersProfit(blackJackGame);
+        Players players = inputPlayers();
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+        deck.distributeCardsToPlayersAndDealer(players, dealer);
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
+        for (Player player : players.getPlayers()) {
+            while (!player.isBust() && !player.isBlackJack()) {
+                OutputView.printDoYouWantOneMoreCard(player);
+                if ("y".equals(InputView.inputAnswer())) {
+                    player.hit(deck);
+                }
+                OutputView.printCardsHeldByPlayer(player);
+            }
+        }
+        while (!dealer.isStay()) {
+            dealer.hit(deck);
+            OutputView.printDealerGetOneMoreCard();
+        }
+        OutputView.printDealerAndPlayersResult(players, dealer);
+        OutputView.printDealerAndPlayersProfit(players, dealer);
     }
 
     private static Players inputPlayers() {
         List<PlayerName> playerNames = inputPlayerNames();
         List<Player> players = playerNames.stream()
-                .map(BlackJackController::convertNamesAndBettingMoneyIntoPlayers)
+                .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
                 .collect(toList());
         return new Players(players);
     }
