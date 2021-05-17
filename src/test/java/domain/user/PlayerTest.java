@@ -67,6 +67,30 @@ class PlayerTest {
         assertThat(player.getCards()).hasSize(1);
     }
 
+    @DisplayName("플레이어가 자신의 턴을 수행하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideIsStayAndCardsSize")
+    void proceedOwnTurnTest(boolean isStay, int cardsSize) {
+        // given
+        PlayerName playerName = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
+        Player player = new Player(playerName, bettingMoney);
+        Deck deck = new Deck();
+
+        // when
+        player.proceedOwnTurn(isStay, deck);
+
+        // then
+        assertThat(player.getCards()).hasSize(cardsSize);
+    }
+
+    private static Stream<Arguments> provideIsStayAndCardsSize() {
+        return Stream.of(
+                Arguments.of(true, 0),
+                Arguments.of(false, 1)
+        );
+    }
+
     @DisplayName("플레이어의 카드 조합이 블랙잭인지 판단하는 기능을 테스트한다.")
     @Test
     void isBlackJackTest() {
