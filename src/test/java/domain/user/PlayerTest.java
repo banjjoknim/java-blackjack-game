@@ -32,7 +32,8 @@ class PlayerTest {
         assertAll(
                 () -> assertThat(player).isInstanceOf(Player.class),
                 () -> assertThat(player.getBettingMoney()).isEqualTo(bettingMoney),
-                () -> assertThat(player.getPlayerName()).isEqualTo(playerName)
+                () -> assertThat(player.getPlayerName()).isEqualTo(playerName),
+                () -> assertThat(player.isStay()).isFalse()
         );
     }
 
