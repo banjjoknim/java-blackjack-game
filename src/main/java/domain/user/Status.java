@@ -23,4 +23,8 @@ public enum Status {
         return this == BLACK_JACK;
     }
 
+    public boolean isSurvival() {
+        return this == SURVIVAL;
+    }
+
 }
