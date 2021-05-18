@@ -15,6 +15,10 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
+    public boolean isOwnTurn() {
+        return this.getStatus() == Status.SURVIVAL && !isStay;
+    }
+
     public void proceedOwnTurn(boolean isStay, Deck deck) {
         if (isStay) {
             this.isStay = STAY;
@@ -41,10 +45,6 @@ public class Player extends User {
 
     public BettingMoney getBettingMoney() {
         return bettingMoney;
-    }
-
-    public boolean isStay() {
-        return isStay;
     }
 
 }
