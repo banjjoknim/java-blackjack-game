@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class User implements JudgeAble {
+public abstract class User {
     private static final int INITIAL_CARDS_SIZE = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_AS_ELEVEN = 10;
@@ -23,14 +23,10 @@ public abstract class User implements JudgeAble {
         deck.distributeCard(this);
     }
 
-    public Status determineStatus() {
-        if (isBlackJack()) {
-            return Status.BLACK_JACK;
-        }
-        if (isBust()) {
-            return Status.BUST;
-        }
-        return Status.SURVIVAL;
+    public Status getStatus() {
+        int totalCardNumber = calculateTotalCardNumber();
+        boolean canBlackJack = cards.size() == INITIAL_CARDS_SIZE;
+        return Status.determineStatus(totalCardNumber, canBlackJack);
     }
 
     public int calculateTotalCardNumber() {
@@ -39,7 +35,7 @@ public abstract class User implements JudgeAble {
                 .mapToInt(Type::getNumber)
                 .sum();
         if (hasAceTypeCard()) {
-            return considerAceTypeCard(totalCardNumber);
+            totalCardNumber = determineAceNumberIsOneOrEleven(totalCardNumber);
         }
         return totalCardNumber;
     }
@@ -49,15 +45,8 @@ public abstract class User implements JudgeAble {
                 .anyMatch(Card::isAceType);
     }
 
-    private int considerAceTypeCard(int totalCardNumber) {
-        if (isBlackJack()) {
-            return BLACK_JACK;
-        }
-        return determineAceNumberIsOneOrEleven(totalCardNumber);
-    }
-
     private int determineAceNumberIsOneOrEleven(int totalCardNumber) {
-        if (totalCardNumber + ACE_AS_ELEVEN < BLACK_JACK) {
+        if (totalCardNumber + ACE_AS_ELEVEN <= BLACK_JACK) {
             return totalCardNumber + ACE_AS_ELEVEN;
         }
         return totalCardNumber;
@@ -65,21 +54,6 @@ public abstract class User implements JudgeAble {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    @Override
-    public boolean isBust() {
-        return calculateTotalCardNumber() > BLACK_JACK;
-    }
-
-    @Override
-    public boolean isBlackJack() {
-        return hasAceTypeCard() && hasTenNumberTypeCard() && cards.size() == INITIAL_CARDS_SIZE;
-    }
-
-    private boolean hasTenNumberTypeCard() {
-        return cards.stream()
-                .anyMatch(Card::isTenNumberType);
     }
 
 }

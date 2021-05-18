@@ -59,7 +59,7 @@ public class BlackJackGame {
     }
 
     private static void proceedPlayerTurn(Player player, Deck deck) {
-        while (!player.isBust() && !player.isBlackJack() && !player.isStay()) {
+        while (player.getStatus() == Status.SURVIVAL && !player.isStay()) {
             OutputView.printDoYouWantOneMoreCard(player);
             player.proceedOwnTurn(InputView.inputIsStay(), deck);
             OutputView.printCardsHeldByPlayer(player);

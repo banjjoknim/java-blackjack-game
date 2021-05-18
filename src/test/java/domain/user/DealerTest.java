@@ -75,49 +75,6 @@ class DealerTest {
 
     }
 
-    @DisplayName("딜러의 카드 조합이 블랙잭인 경우를 테스트한다.")
-    @Test
-    void isBlackJackTest() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.ACE));
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-
-        // when
-
-        // then
-        assertThat(dealer.isBlackJack()).isTrue();
-    }
-
-    @DisplayName("딜러의 카드 합이 21이하일 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
-    @Test
-    void determineIsBustWhenSumLessThanBlackJackTest() {
-        // given
-        Dealer dealer = new Dealer();
-
-        // when
-        boolean isBust = dealer.isBust();
-
-        // then
-        assertThat(isBust).isFalse();
-    }
-
-    @DisplayName("딜러의 카드 합이 21을 초과할 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
-    @Test
-    void determineIsBustWhenSumExceededBlackJackTest() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.KING));
-        dealer.addCard(new Card(Symbol.CLUB, Type.KING));
-
-        // when
-        boolean isBust = dealer.isBust();
-
-        // then
-        assertThat(isBust).isTrue();
-    }
-
     @DisplayName("딜러의 상태 결정 기능을 테스트한다.")
     @ParameterizedTest
     @MethodSource("provideCardsAndStatus")
@@ -131,7 +88,7 @@ class DealerTest {
         }
 
         // when
-        Status playerStatus = dealer.determineStatus();
+        Status playerStatus = dealer.getStatus();
 
         // then
         assertThat(playerStatus).isEqualTo(status);

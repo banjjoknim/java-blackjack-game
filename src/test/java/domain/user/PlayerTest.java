@@ -92,22 +92,6 @@ class PlayerTest {
         );
     }
 
-    @DisplayName("플레이어의 카드 조합이 블랙잭인지 판단하는 기능을 테스트한다.")
-    @Test
-    void isBlackJackTest() {
-        // given
-        PlayerName playerName = new PlayerName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.ACE));
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
-
-        // when
-
-        // then
-        assertThat(player.isBlackJack()).isTrue();
-    }
-
     @DisplayName("플레이어의 카드 조합이 블랙잭이 아닌 경우 카드 합 계산 기능을 테스트한다.")
     @Test
     void calculateTotalCardNumberWhenIsNotBlackJackTest() {
@@ -142,39 +126,6 @@ class PlayerTest {
         assertThat(player.calculateTotalCardNumber()).isEqualTo(21);
     }
 
-    @DisplayName("플레이어의 카드 합이 21이하일 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
-    @Test
-    void determineIsBustWhenSumLessThanBlackJackTest() {
-        // given
-        PlayerName playerName = new PlayerName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
-
-        // when
-        boolean isBust = player.isBust();
-
-        // then
-        assertThat(isBust).isFalse();
-    }
-
-    @DisplayName("플레이어의 카드 합이 21을 초과할 경우 Bust 되었는지 판단하는 기능을 테스트한다.")
-    @Test
-    void determineIsBustWhenSumExceededBlackJackTest() {
-        // given
-        PlayerName playerName = new PlayerName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
-        player.addCard(new Card(Symbol.HEART, Type.KING));
-        player.addCard(new Card(Symbol.CLUB, Type.KING));
-
-        // when
-        boolean isBust = player.isBust();
-
-        // then
-        assertThat(isBust).isTrue();
-    }
-
     @DisplayName("플레이어의 최종 수익 계산 기능을 테스트한다.")
     @Test
     void calculateFinalProfitTest() {
@@ -206,7 +157,7 @@ class PlayerTest {
         }
 
         // when
-        Status playerStatus = player.determineStatus();
+        Status playerStatus = player.getStatus();
 
         // then
         assertThat(playerStatus).isEqualTo(status);

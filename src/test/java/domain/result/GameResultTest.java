@@ -35,8 +35,8 @@ class GameResultTest {
         // given
         player.addCard(playerCard);
         dealer.addCard(dealerCard);
-        Status playerStatus = player.determineStatus();
-        Status dealerStatus = dealer.determineStatus();
+        Status playerStatus = player.getStatus();
+        Status dealerStatus = dealer.getStatus();
 
         // when
 

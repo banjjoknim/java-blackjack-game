@@ -30,8 +30,8 @@ public class Player extends User {
 
     private GameResult determineGameResult(Dealer dealer) {
         int gameResultValue = Integer.compare(this.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
-        Status playerStatus = this.determineStatus();
-        Status dealerStatus = dealer.determineStatus();
+        Status playerStatus = this.getStatus();
+        Status dealerStatus = dealer.getStatus();
         return GameResult.determineWinOrDrawOrLose(gameResultValue, playerStatus, dealerStatus);
     }
 
@@ -43,7 +43,6 @@ public class Player extends User {
         return bettingMoney;
     }
 
-    @Override
     public boolean isStay() {
         return isStay;
     }
