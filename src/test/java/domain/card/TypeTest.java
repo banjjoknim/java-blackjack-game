@@ -41,10 +41,10 @@ class TypeTest {
         // given
 
         // when
-        boolean hasTenNumber = type.hasTenNumber();
+        boolean isTenNumber = type.isTenNumber();
 
         // then
-        assertThat(hasTenNumber).isTrue();
+        assertThat(isTenNumber).isTrue();
     }
 
     @DisplayName("Type 이 숫자 10을 가지지 않는 경우를 테스트 한다.")
@@ -54,9 +54,9 @@ class TypeTest {
         // given
 
         // when
-        boolean hasTenNumber = type.hasTenNumber();
+        boolean isTenNumber = type.isTenNumber();
 
         // then
-        assertThat(hasTenNumber).isFalse();
+        assertThat(isTenNumber).isFalse();
     }
 }

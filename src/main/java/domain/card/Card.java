@@ -15,7 +15,7 @@ public class Card {
     }
 
     public boolean isTenNumberType() {
-        return type.hasTenNumber();
+        return type.isTenNumber();
     }
 
     public Symbol getSymbol() {

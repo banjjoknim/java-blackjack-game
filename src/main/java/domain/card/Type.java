@@ -29,7 +29,7 @@ public enum Type {
         return this == ACE;
     }
 
-    public boolean hasTenNumber() {
+    public boolean isTenNumber() {
         return number == TEN_NUMBER;
     }
 
