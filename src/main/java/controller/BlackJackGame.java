@@ -54,7 +54,7 @@ public class BlackJackGame {
 
     private static void proceedPlayerTurn(Player player, Deck deck) {
         while (player.isOwnTurn()) {
-            player.proceedOwnTurn(InputView.inputIsStay(player), deck);
+            player.proceedOwnTurn(InputView.inputAnswer(player), deck);
             OutputView.printCardsHeldByPlayer(player);
         }
     }

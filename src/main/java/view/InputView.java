@@ -27,7 +27,7 @@ public class InputView {
         return new BigDecimal(scanner.next());
     }
 
-    public static boolean inputIsStay(Player player) {
+    public static boolean inputAnswer(Player player) {
         OutputView.printDoYouWantOneMoreCard(player);
         return !YES.equals(scanner.next().toLowerCase());
     }
