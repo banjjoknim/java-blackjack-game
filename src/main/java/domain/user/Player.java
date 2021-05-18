@@ -24,15 +24,15 @@ public class Player extends User {
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {
-        GameResult gameResult = determineGameResult(dealer);
+        GameResult gameResult = getGameResult(dealer);
         return bettingMoney.calculateProfit(gameResult);
     }
 
-    private GameResult determineGameResult(Dealer dealer) {
+    private GameResult getGameResult(Dealer dealer) {
         int gameResultValue = Integer.compare(this.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
         Status playerStatus = this.getStatus();
         Status dealerStatus = dealer.getStatus();
-        return GameResult.determineWinOrDrawOrLose(gameResultValue, playerStatus, dealerStatus);
+        return GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus);
     }
 
     public PlayerName getPlayerName() {

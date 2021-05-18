@@ -41,7 +41,7 @@ class GameResultTest {
         // when
 
         // then
-        assertThat(GameResult.determineWinOrDrawOrLose(gameResultValue, playerStatus, dealerStatus)).isEqualTo(gameResult);
+        assertThat(GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus)).isEqualTo(gameResult);
     }
 
     private static Stream<Arguments> provideGameResultValueAndPlayerCardAndDealerCardAndGameResult() {
