@@ -33,20 +33,14 @@ public class BlackJackGame {
     }
 
     private static List<PlayerName> inputPlayerNames() {
-        OutputView.printPleaseInputNames();
-        return convertInputNamesIntoPlayerNames(InputView.inputNames());
-    }
-
-    private static List<PlayerName> convertInputNamesIntoPlayerNames(List<String> playerNames) {
-        return playerNames.stream()
+        return InputView.inputNames().stream()
                 .map(String::trim)
                 .map(PlayerName::new)
                 .collect(toList());
     }
 
     private static Player convertNamesAndBettingMoneyIntoPlayers(PlayerName playerName) {
-        OutputView.printAskHowMuchBettingToPlayer(playerName);
-        BettingMoney bettingMoney = convertAmountIntoBettingMoney(InputView.inputAmount());
+        BettingMoney bettingMoney = convertAmountIntoBettingMoney(InputView.inputAmount(playerName));
         return new Player(playerName, bettingMoney);
     }
 
@@ -60,8 +54,7 @@ public class BlackJackGame {
 
     private static void proceedPlayerTurn(Player player, Deck deck) {
         while (player.isOwnTurn()) {
-            OutputView.printDoYouWantOneMoreCard(player);
-            player.proceedOwnTurn(InputView.inputIsStay(), deck);
+            player.proceedOwnTurn(InputView.inputIsStay(player), deck);
             OutputView.printCardsHeldByPlayer(player);
         }
     }
@@ -72,4 +65,5 @@ public class BlackJackGame {
             OutputView.printDealerGetOneMoreCard();
         }
     }
+
 }

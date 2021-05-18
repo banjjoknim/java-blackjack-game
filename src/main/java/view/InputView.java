@@ -1,5 +1,8 @@
 package view;
 
+import domain.user.Player;
+import domain.user.PlayerName;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -14,15 +17,18 @@ public class InputView {
     private static Scanner scanner = new Scanner(System.in);
 
     public static List<String> inputNames() {
+        OutputView.printPleaseInputNames();
         return Arrays.stream(scanner.nextLine().split(SEPARATOR))
                 .collect(toList());
     }
 
-    public static BigDecimal inputAmount() {
+    public static BigDecimal inputAmount(PlayerName playerName) {
+        OutputView.printAskHowMuchBettingToPlayer(playerName);
         return new BigDecimal(scanner.next());
     }
 
-    public static boolean inputIsStay() {
+    public static boolean inputIsStay(Player player) {
+        OutputView.printDoYouWantOneMoreCard(player);
         return !YES.equals(scanner.next().toLowerCase());
     }
 
