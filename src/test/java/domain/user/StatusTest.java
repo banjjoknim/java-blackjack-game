@@ -77,4 +77,25 @@ class StatusTest {
         );
     }
 
+    @DisplayName("Status 가 Survival 인지 검증하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideStatusAndIsSurvivalResult")
+    void isSurvivalTest(Status status, boolean result) {
+        // given
+
+        // when
+        boolean isBust = status.isSurvival();
+
+        // then
+        assertThat(isBust).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> provideStatusAndIsSurvivalResult() {
+        return Stream.of(
+                Arguments.of(Status.BUST, false),
+                Arguments.of(Status.BLACK_JACK, false),
+                Arguments.of(Status.SURVIVAL, true)
+        );
+    }
+
 }
