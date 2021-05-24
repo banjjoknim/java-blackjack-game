@@ -16,6 +16,9 @@ public class InputView {
 
     private static Scanner scanner = new Scanner(System.in);
 
+    private InputView() {
+    }
+
     public static List<String> inputNames() {
         OutputView.printPleaseInputNames();
         return Arrays.stream(scanner.nextLine().split(SEPARATOR))
