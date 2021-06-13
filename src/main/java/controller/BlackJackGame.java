@@ -14,23 +14,23 @@ import static java.util.stream.Collectors.toList;
 public class BlackJackGame {
 
     public static void main(String[] args) {
-        Players players = inputPlayers();
-        Dealer dealer = new Dealer();
+        Users users = inputUsers();
         Deck deck = new Deck();
-        deck.distributeCardsToPlayersAndDealer(players, dealer);
-        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(players, dealer);
-        proceedPlayersTurn(players, deck);
-        proceedDealerTurn(dealer, deck);
-        OutputView.printDealerAndPlayersResult(players, dealer);
-        OutputView.printDealerAndPlayersProfit(players, dealer);
+        deck.distributeCardsToUsers(users);
+        OutputView.printDistributeCardsMessageAndCardsOfAllUsers(users);
+        proceedPlayersTurn(users.getPlayers(), deck);
+        proceedDealerTurn(users.getDealer(), deck);
+        OutputView.printAllUsersResult(users);
+        OutputView.printAllUsersProfit(users);
     }
 
-    private static Players inputPlayers() {
+    private static Users inputUsers() {
         List<UserName> userNames = inputPlayerNames();
-        List<Player> players = userNames.stream()
+        List<User> users = userNames.stream()
                 .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
                 .collect(toList());
-        return new Players(players);
+        users.add(new Dealer());
+        return new Users(users);
     }
 
     private static List<UserName> inputPlayerNames() {
@@ -50,7 +50,8 @@ public class BlackJackGame {
     }
 
     private static void proceedPlayersTurn(Players players, Deck deck) {
-        players.getPlayers().forEach(player -> proceedPlayerTurn(player, deck));
+        players.getPlayers()
+                .forEach(player -> proceedPlayerTurn(player, deck));
     }
 
     private static void proceedPlayerTurn(Player player, Deck deck) {

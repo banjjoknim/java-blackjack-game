@@ -21,20 +21,23 @@ public class OutputView {
         System.out.println(userName.getName() + "의 배팅 금액은?");
     }
 
-    public static void printDistributeCardsMessageAndCardsOfAllUsers(Players players, Dealer dealer) {
-        printHandedOutTwoCardsToPlayers(players);
-        printCardsOfAllUsers(players, dealer);
+    public static void printDistributeCardsMessageAndCardsOfAllUsers(Users users) {
+        printHandedOutTwoCardsToPlayers(users);
+        printCardsOfAllUsers(users);
     }
 
-    private static void printHandedOutTwoCardsToPlayers(Players players) {
-        String playerNames = players.getPlayers().stream()
-                .map(Player::getUserName)
+    private static void printHandedOutTwoCardsToPlayers(Users users) {
+        String playerNames = users.getUsers().stream()
+                .filter(user -> user instanceof Player)
+                .map(User::getUserName)
                 .map(UserName::getName)
                 .collect(joining(SEPARATOR));
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
 
-    private static void printCardsOfAllUsers(Players players, Dealer dealer) {
+    private static void printCardsOfAllUsers(Users users) {
+        Dealer dealer = users.getDealer();
+        Players players = users.getPlayers();
         printCardsOfDealer(dealer);
         printCardsOfPlayers(players);
     }
@@ -42,6 +45,12 @@ public class OutputView {
     private static void printCardsOfDealer(Dealer dealer) {
         Card firstCard = dealer.getCards().get(FIRST);
         printCardsHeldByDealer(firstCard);
+    }
+
+    public static void printCardsHeldByDealer(Card card) {
+        String firstCardTypeName = card.getType().getName();
+        String firstCardSymbolName = card.getSymbol().getSymbolName();
+        System.out.println("딜러 : " + firstCardTypeName + firstCardSymbolName);
     }
 
     private static void printCardsOfPlayers(Players players) {
@@ -61,12 +70,6 @@ public class OutputView {
                 .collect(joining(SEPARATOR));
     }
 
-    public static void printCardsHeldByDealer(Card card) {
-        String firstCardTypeName = card.getType().getName();
-        String firstCardSymbolName = card.getSymbol().getSymbolName();
-        System.out.println("딜러 : " + firstCardTypeName + firstCardSymbolName);
-    }
-
     public static void printDoYouWantOneMoreCard(Player player) {
         String playerName = player.getUserName().getName();
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
@@ -76,7 +79,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerAndPlayersResult(Players players, Dealer dealer) {
+    public static void printAllUsersResult(Users users) {
+        Dealer dealer = users.getDealer();
+        Players players = users.getPlayers();
         printDealerResult(dealer);
         players.getPlayers()
                 .forEach(OutputView::printPlayerResult);
@@ -96,7 +101,9 @@ public class OutputView {
         System.out.println(playerResultFormat);
     }
 
-    public static void printDealerAndPlayersProfit(Players players, Dealer dealer) {
+    public static void printAllUsersProfit(Users users) {
+        Players players = users.getPlayers();
+        Dealer dealer = users.getDealer();
         PlayerProfits playerProfits = players.producePlayersProfitStatistics(dealer);
         printDealerProfit(playerProfits);
         printPlayersProfit(players, playerProfits);
