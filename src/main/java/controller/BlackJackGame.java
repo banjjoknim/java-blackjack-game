@@ -18,8 +18,8 @@ public class BlackJackGame {
         Deck deck = new Deck();
         deck.distributeCardsToUsers(users);
         OutputView.printDistributeCardsMessageAndCardsOfAllUsers(users);
-        proceedPlayersTurn(users.getPlayers(), deck);
-        proceedDealerTurn(users.getDealer(), deck);
+        proceedPlayersTurn(users.findPlayers(), deck);
+        proceedDealerTurn(users.findDealer(), deck);
         OutputView.printAllUsersResult(users);
         OutputView.printAllUsersProfit(users);
     }

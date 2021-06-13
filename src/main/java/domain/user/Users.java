@@ -3,7 +3,6 @@ package domain.user;
 import domain.card.Deck;
 import domain.result.PlayerProfits;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,26 +34,25 @@ public class Users {
     }
 
     public PlayerProfits producePlayerProfits() {
-        Dealer dealer = getDealer();
-        Map<Player, Profit> playerProfits = getPlayers().stream()
+        Dealer dealer = findDealer();
+        Map<Player, Profit> playerProfits = findPlayers().stream()
                 .collect(toMap(player -> player, player -> player.calculateFinalProfit(dealer)));
         return new PlayerProfits(playerProfits);
     }
 
-    public Dealer getDealer() {
+    public Dealer findDealer() {
         return users.stream()
                 .filter(user -> user instanceof Dealer)
                 .map(user -> (Dealer) user)
                 .findFirst()
-                .get();
+                .orElseThrow(()-> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
 
-    public List<Player> getPlayers() {
-        List<Player> players = users.stream()
+    public List<Player> findPlayers() {
+        return users.stream()
                 .filter(user -> user instanceof Player)
                 .map(user -> (Player) user)
                 .collect(toList());
-        return new ArrayList<>(players);
     }
 
     public List<User> getUsers() {

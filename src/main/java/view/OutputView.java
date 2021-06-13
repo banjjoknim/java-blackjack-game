@@ -38,8 +38,8 @@ public class OutputView {
     }
 
     private static void printCardsOfAllUsers(Users users) {
-        Dealer dealer = users.getDealer();
-        List<Player> players = users.getPlayers();
+        Dealer dealer = users.findDealer();
+        List<Player> players = users.findPlayers();
         printCardsOfDealer(dealer);
         printCardsOfPlayers(players);
     }
@@ -81,8 +81,8 @@ public class OutputView {
     }
 
     public static void printAllUsersResult(Users users) {
-        Dealer dealer = users.getDealer();
-        List<Player> players = users.getPlayers();
+        Dealer dealer = users.findDealer();
+        List<Player> players = users.findPlayers();
         printDealerResult(dealer);
         players.forEach(OutputView::printPlayerResult);
     }
@@ -102,7 +102,7 @@ public class OutputView {
     }
 
     public static void printAllUsersProfit(Users users) {
-        List<Player> players = users.getPlayers();
+        List<Player> players = users.findPlayers();
         PlayerProfits playerProfits = users.producePlayerProfits();
         printDealerProfit(playerProfits);
         printPlayersProfit(players, playerProfits);
