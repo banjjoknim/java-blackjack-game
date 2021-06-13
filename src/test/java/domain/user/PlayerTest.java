@@ -120,9 +120,10 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Type.KING));
 
         // when
+        int actual = player.calculateTotalCardNumber();
 
         // then
-        assertThat(player.calculateTotalCardNumber()).isEqualTo(21);
+        assertThat(actual).isEqualTo(21);
     }
 
     @DisplayName("플레이어의 최종 수익 계산 기능을 테스트한다.")
