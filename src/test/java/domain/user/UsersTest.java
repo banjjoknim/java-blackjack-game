@@ -30,14 +30,14 @@ class UsersTest {
         userList = new ArrayList<>();
         userList.add(player1);
         userList.add(player2);
-        userList.add(dealer);
     }
 
     @DisplayName("중복되는 이름으로 Users 생성시 예외 처리를 테스트한다.")
     @Test
     void createPlayersWithDuplicateNameTest() {
         // given
-        userList.add(new Player(new UserName("player1"), new BettingMoney(new BigDecimal(1000))));
+        userList.add(dealer);
+        userList.add(new Player(new UserName("딜러"), new BettingMoney(new BigDecimal(1000))));
 
         // when
 
@@ -51,6 +51,7 @@ class UsersTest {
     @Test
     void createPlayersTest() {
         // given
+        userList.add(dealer);
 
         // when
 
@@ -62,6 +63,7 @@ class UsersTest {
     @Test
     void receiveCardsTest() {
         // given
+        userList.add(dealer);
         Users users = new Users(userList);
         Deck deck = new Deck();
 
@@ -78,6 +80,7 @@ class UsersTest {
     @Test
     void producePlayersFinalProfitTest() {
         // given
+        userList.add(dealer);
         Users users = new Users(userList);
         player1.addCard(new Card(Symbol.SPADE, Type.ACE));
         player1.addCard(new Card(Symbol.SPADE, Type.KING));
@@ -97,5 +100,45 @@ class UsersTest {
         );
     }
 
+    @DisplayName("딜러를 찾는 기능을 테스트 한다.")
+    @Test
+    void findDealerTest() {
+        // given
+        userList.add(dealer);
+        Users users = new Users(userList);
+
+
+        // when
+
+        // then
+        assertDoesNotThrow(() -> users.findDealer());
+    }
+
+    @DisplayName("딜러가 존재하지 않을 때 예외 처리를 테스트 한다.")
+    @Test
+    void findDealerWhenNotExistsDealerTest() {
+        // given
+        Users users = new Users(userList);
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> users.findDealer())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러가 존재하지 않습니다.");
+    }
+
+    @DisplayName("플레이어를 찾는 기능을 테스트 한다.")
+    @Test
+    void findPlayersTest() {
+        // given
+        Users users = new Users(userList);
+
+        // when
+        List<Player> players = users.findPlayers();
+
+        // then
+        assertThat(players).hasSize(2);
+    }
 
 }
