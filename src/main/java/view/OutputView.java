@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.result.PlayerProfitStatistics;
+import domain.result.PlayerProfits;
 import domain.user.*;
 
 import static java.util.stream.Collectors.joining;
@@ -97,24 +97,24 @@ public class OutputView {
     }
 
     public static void printDealerAndPlayersProfit(Players players, Dealer dealer) {
-        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
-        printDealerProfit(playerProfitStatistics);
-        printPlayersProfit(players, playerProfitStatistics);
+        PlayerProfits playerProfits = players.producePlayersProfitStatistics(dealer);
+        printDealerProfit(playerProfits);
+        printPlayersProfit(players, playerProfits);
     }
 
-    private static void printDealerProfit(PlayerProfitStatistics playerProfitStatistics) {
-        Profit dealerProfit = playerProfitStatistics.calculateDealerProfit();
+    private static void printDealerProfit(PlayerProfits playerProfits) {
+        Profit dealerProfit = playerProfits.calculateDealerProfit();
         System.out.println("딜러 : " + dealerProfit.getAmount());
     }
 
-    private static void printPlayersProfit(Players players, PlayerProfitStatistics playerProfitStatistics) {
+    private static void printPlayersProfit(Players players, PlayerProfits playerProfits) {
         players.getPlayers()
-                .forEach(player -> printPlayerProfit(player, playerProfitStatistics));
+                .forEach(player -> printPlayerProfit(player, playerProfits));
     }
 
-    private static void printPlayerProfit(Player player, PlayerProfitStatistics playerProfitStatistics) {
+    private static void printPlayerProfit(Player player, PlayerProfits playerProfits) {
         String playerName = player.getPlayerName().getName();
-        Profit playerProfit = playerProfitStatistics.getPlayerProfit(player);
+        Profit playerProfit = playerProfits.getPlayerProfit(player);
         System.out.println(playerName + " : " + playerProfit.getAmount());
     }
 

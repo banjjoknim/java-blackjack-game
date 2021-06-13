@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.PlayerProfitStatistics;
+import domain.result.PlayerProfits;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,13 +88,13 @@ class PlayersTest {
         dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
 
         // when
-        PlayerProfitStatistics playerProfitStatistics = players.producePlayersProfitStatistics(dealer);
+        PlayerProfits playerProfits = players.producePlayersProfitStatistics(dealer);
 
         // then
         assertAll(
-                () -> assertThat(playerProfitStatistics.getPlayerProfitStatistics()).hasSize(2),
-                () -> assertThat(playerProfitStatistics.getPlayerProfit(playerList.get(0))).isEqualTo(new Profit(new BigDecimal("1500"))),
-                () -> assertThat(playerProfitStatistics.getPlayerProfit(playerList.get(1))).isEqualTo(new Profit(new BigDecimal("-1000")))
+                () -> assertThat(playerProfits.getPlayerProfits()).hasSize(2),
+                () -> assertThat(playerProfits.getPlayerProfit(playerList.get(0))).isEqualTo(new Profit(new BigDecimal("1500"))),
+                () -> assertThat(playerProfits.getPlayerProfit(playerList.get(1))).isEqualTo(new Profit(new BigDecimal("-1000")))
         );
     }
 }
