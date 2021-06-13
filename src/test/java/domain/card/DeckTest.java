@@ -42,23 +42,25 @@ class DeckTest {
         );
     }
 
-    @DisplayName("Deck 의 플레이어들과 딜러에게 카드를 나누어주는 기능을 테스트한다.")
+    @DisplayName("Deck 의 유저들에게 카드를 나누어주는 기능을 테스트한다.")
     @Test
-    void distributeCardsToPlayersAndDealerTest() {
+    void distributeCardsToUsersTest() {
         // given
         Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
         List<Player> playerList = new ArrayList<>();
         playerList.add(player);
-        Players players = new Players(playerList);
-        Dealer dealer = new Dealer();
+        List<User> userList = new ArrayList<>();
+        userList.addAll(playerList);
+        userList.add(new Dealer());
+        Users users = new Users(userList);
 
         // when
-        deck.distributeCardsToPlayersAndDealer(players, dealer);
+        deck.distributeCardsToUsers(users);
 
         // then
         assertAll(
-                () -> assertThat(player.getCards()).hasSize(2),
-                () -> assertThat(dealer.getCards()).hasSize(2)
+                () -> assertThat(users.getUsers().get(0).getCards()).hasSize(2),
+                () -> assertThat(users.getUsers().get(1).getCards()).hasSize(2)
         );
 
     }

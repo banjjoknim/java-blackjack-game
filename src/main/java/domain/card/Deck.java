@@ -3,6 +3,7 @@ package domain.card;
 import domain.user.Dealer;
 import domain.user.Players;
 import domain.user.User;
+import domain.user.Users;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,10 +21,9 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public void distributeCardsToPlayersAndDealer(Players players, Dealer dealer) {
+    public void distributeCardsToUsers(Users users) {
         for (int i = ZERO; i < NUMBER_OF_CARDS_BY_RULE; i++) {
-            players.hit(this);
-            distributeCard(dealer);
+            users.receiveCards(this);
         }
     }
 
