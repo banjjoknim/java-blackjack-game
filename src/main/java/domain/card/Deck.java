@@ -5,7 +5,6 @@ import domain.user.Players;
 import domain.user.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,19 +13,10 @@ public class Deck {
     private static final int NUMBER_OF_CARDS_BY_RULE = 2;
     private static final int TOP = 0;
 
-    private static final List<Card> CARDS_CACHE = new ArrayList<>();
-
-    static {
-        for (Symbol symbol : Symbol.values()) {
-            Arrays.stream(Type.values())
-                    .forEach(type -> CARDS_CACHE.add(new Card(symbol, type)));
-        }
-    }
-
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = new ArrayList<>(CARDS_CACHE);
+        this.cards = new ArrayList<>(Card.getCachedCards());
         Collections.shuffle(cards);
     }
 

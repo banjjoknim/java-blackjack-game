@@ -1,6 +1,18 @@
 package domain.card;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Card {
+    private static final List<Card> CACHED_CARDS = new ArrayList<>();
+
+    static {
+        for (Symbol symbol : Symbol.values()) {
+            Arrays.stream(Type.values())
+                    .forEach(type -> CACHED_CARDS.add(new Card(symbol, type)));
+        }
+    }
 
     private final Symbol symbol;
     private final Type type;
@@ -26,4 +38,7 @@ public class Card {
         return type;
     }
 
+    public static List<Card> getCachedCards() {
+        return CACHED_CARDS;
+    }
 }
