@@ -11,7 +11,6 @@ import java.util.Scanner;
 import static java.util.stream.Collectors.toList;
 
 public class InputView {
-    private static final String YES = "y";
     private static final String SEPARATOR = ",";
 
     private static Scanner scanner = new Scanner(System.in);
@@ -30,9 +29,9 @@ public class InputView {
         return new BigDecimal(scanner.next());
     }
 
-    public static boolean inputAnswer(Player player) {
+    public static String inputAnswer(Player player) {
         OutputView.printDoYouWantOneMoreCard(player);
-        return !YES.equals(scanner.next().toLowerCase());
+        return scanner.next();
     }
 
 }

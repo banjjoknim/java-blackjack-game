@@ -69,8 +69,8 @@ class PlayerTest {
 
     @DisplayName("플레이어가 자신의 턴을 수행하는 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideIsStayAndCardsSize")
-    void proceedOwnTurnTest(boolean isStay, int cardsSize) {
+    @MethodSource("provideAnswerAndCardsSize")
+    void proceedOwnTurnTest(String answer, int cardsSize) {
         // given
         UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
@@ -78,16 +78,16 @@ class PlayerTest {
         Deck deck = new Deck();
 
         // when
-        player.proceedOwnTurn(isStay, deck);
+        player.proceedOwnTurn(answer, deck);
 
         // then
         assertThat(player.getCards()).hasSize(cardsSize);
     }
 
-    private static Stream<Arguments> provideIsStayAndCardsSize() {
+    private static Stream<Arguments> provideAnswerAndCardsSize() {
         return Stream.of(
-                Arguments.of(true, 0),
-                Arguments.of(false, 1)
+                Arguments.of("y", 1),
+                Arguments.of("n", 0)
         );
     }
 

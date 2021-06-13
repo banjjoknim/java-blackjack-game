@@ -4,6 +4,7 @@ import domain.card.Deck;
 import domain.result.GameResult;
 
 public class Player extends User {
+    private static final String YES = "y";
 
     private final BettingMoney bettingMoney;
     private boolean isStay = false;
@@ -17,12 +18,12 @@ public class Player extends User {
         return getStatus().isSurvival() && !isStay;
     }
 
-    public void proceedOwnTurn(boolean isStay, Deck deck) {
-        if (isStay) {
-            this.isStay = true;
+    public void proceedOwnTurn(String answer, Deck deck) {
+        if (YES.equals(answer) && !isStay) {
+            super.hit(deck);
             return;
         }
-        super.hit(deck);
+        this.isStay = true;
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {
