@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.result.PlayerProfits;
 import domain.user.*;
 
+import java.util.List;
+
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
@@ -37,7 +39,7 @@ public class OutputView {
 
     private static void printCardsOfAllUsers(Users users) {
         Dealer dealer = users.getDealer();
-        Players players = users.getPlayers();
+        List<Player> players = users.getPlayers();
         printCardsOfDealer(dealer);
         printCardsOfPlayers(players);
     }
@@ -53,9 +55,8 @@ public class OutputView {
         System.out.println("딜러 : " + firstCardTypeName + firstCardSymbolName);
     }
 
-    private static void printCardsOfPlayers(Players players) {
-        players.getPlayers()
-                .forEach(OutputView::printCardsHeldByPlayer);
+    private static void printCardsOfPlayers(List<Player> players) {
+        players.forEach(OutputView::printCardsHeldByPlayer);
     }
 
     public static void printCardsHeldByPlayer(Player player) {
@@ -81,10 +82,9 @@ public class OutputView {
 
     public static void printAllUsersResult(Users users) {
         Dealer dealer = users.getDealer();
-        Players players = users.getPlayers();
+        List<Player> players = users.getPlayers();
         printDealerResult(dealer);
-        players.getPlayers()
-                .forEach(OutputView::printPlayerResult);
+        players.forEach(OutputView::printPlayerResult);
     }
 
     private static void printDealerResult(Dealer dealer) {
@@ -102,9 +102,8 @@ public class OutputView {
     }
 
     public static void printAllUsersProfit(Users users) {
-        Players players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-        PlayerProfits playerProfits = players.producePlayersProfitStatistics(dealer);
+        List<Player> players = users.getPlayers();
+        PlayerProfits playerProfits = users.producePlayerProfits();
         printDealerProfit(playerProfits);
         printPlayersProfit(players, playerProfits);
     }
@@ -114,9 +113,8 @@ public class OutputView {
         System.out.println("딜러 : " + dealerProfit.getAmount());
     }
 
-    private static void printPlayersProfit(Players players, PlayerProfits playerProfits) {
-        players.getPlayers()
-                .forEach(player -> printPlayerProfit(player, playerProfits));
+    private static void printPlayersProfit(List<Player> players, PlayerProfits playerProfits) {
+        players.forEach(player -> printPlayerProfit(player, playerProfits));
     }
 
     private static void printPlayerProfit(Player player, PlayerProfits playerProfits) {

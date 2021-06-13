@@ -49,9 +49,8 @@ public class BlackJackGame {
         return new BettingMoney(amount);
     }
 
-    private static void proceedPlayersTurn(Players players, Deck deck) {
-        players.getPlayers()
-                .forEach(player -> proceedPlayerTurn(player, deck));
+    private static void proceedPlayersTurn(List<Player> players, Deck deck) {
+        players.forEach(player -> proceedPlayerTurn(player, deck));
     }
 
     private static void proceedPlayerTurn(Player player, Deck deck) {
