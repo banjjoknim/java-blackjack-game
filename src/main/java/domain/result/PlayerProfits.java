@@ -6,7 +6,7 @@ import domain.user.Profit;
 import java.util.Collections;
 import java.util.Map;
 
-import static domain.user.Profit.ZERO_PROFIT;
+import static domain.user.Profit.ZERO;
 
 public class PlayerProfits {
 
@@ -18,7 +18,7 @@ public class PlayerProfits {
 
     public Profit calculateDealerProfit() {
         return playerProfits.values().stream()
-                .reduce(ZERO_PROFIT, Profit::addProfit)
+                .reduce(ZERO, Profit::addProfit)
                 .negate();
     }
 

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Profit {
-    public static Profit ZERO_PROFIT = new Profit(new BigDecimal("0"));
+    public static final Profit ZERO = new Profit(new BigDecimal("0"));
 
     private BigDecimal amount;
 
