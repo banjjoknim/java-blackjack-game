@@ -1,7 +1,7 @@
 package view;
 
 import domain.user.Player;
-import domain.user.PlayerName;
+import domain.user.UserName;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -25,8 +25,8 @@ public class InputView {
                 .collect(toList());
     }
 
-    public static BigDecimal inputAmount(PlayerName playerName) {
-        OutputView.printAskHowMuchBettingToPlayer(playerName);
+    public static BigDecimal inputAmount(UserName userName) {
+        OutputView.printAskHowMuchBettingToPlayer(userName);
         return new BigDecimal(scanner.next());
     }
 

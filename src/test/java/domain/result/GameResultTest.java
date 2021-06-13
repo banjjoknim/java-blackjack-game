@@ -22,7 +22,7 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
         player.addCard(new Card(Symbol.SPADE, Type.KING));
         dealer = new Dealer();
         dealer.addCard(new Card(Symbol.DIAMOND, Type.KING));

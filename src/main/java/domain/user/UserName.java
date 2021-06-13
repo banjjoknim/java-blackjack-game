@@ -2,18 +2,18 @@ package domain.user;
 
 import java.util.Objects;
 
-public class PlayerName {
+public class UserName {
 
     private String name;
 
-    public PlayerName(String name) {
+    public UserName(String name) {
         validateName(name);
         this.name = name;
     }
 
     private void validateName(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어의 이름은 공백일 수 없습니다.");
+            throw new IllegalArgumentException("유저의 이름은 공백일 수 없습니다.");
         }
     }
 
@@ -25,7 +25,7 @@ public class PlayerName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PlayerName that = (PlayerName) o;
+        UserName that = (UserName) o;
         return Objects.equals(name, that.name);
     }
 

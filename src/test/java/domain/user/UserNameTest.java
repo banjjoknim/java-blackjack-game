@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class PlayerNameTest {
+class UserNameTest {
 
     @DisplayName("올바른 입력값으로 PlayerName 생성을 테스트한다.")
     @ParameterizedTest
@@ -18,12 +18,12 @@ class PlayerNameTest {
         // given
 
         // when
-        PlayerName playerName = new PlayerName(name);
+        UserName userName = new UserName(name);
 
         // then
         assertAll(
-                () -> assertThat(playerName).isInstanceOf(PlayerName.class),
-                () -> assertThat(playerName.getName()).isEqualTo(name)
+                () -> assertThat(userName).isInstanceOf(UserName.class),
+                () -> assertThat(userName.getName()).isEqualTo(name)
         );
     }
 
@@ -36,8 +36,8 @@ class PlayerNameTest {
         // when
 
         // then
-        assertThatThrownBy(() -> new PlayerName(name))
+        assertThatThrownBy(() -> new UserName(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 공백일 수 없습니다.");
+                .hasMessage("유저의 이름은 공백일 수 없습니다.");
     }
 }

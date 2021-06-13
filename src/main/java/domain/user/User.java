@@ -13,7 +13,12 @@ public abstract class User {
     private static final int BLACK_JACK = 21;
     private static final int ACE_AS_ELEVEN = 10;
 
+    private UserName userName;
     private final List<Card> cards = new ArrayList<>();
+
+    public User(UserName userName) {
+        this.userName = userName;
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -56,4 +61,7 @@ public abstract class User {
         return Collections.unmodifiableList(cards);
     }
 
+    public UserName getUserName() {
+        return userName;
+    }
 }

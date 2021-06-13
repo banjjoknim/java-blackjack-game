@@ -17,8 +17,8 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printAskHowMuchBettingToPlayer(PlayerName playerName) {
-        System.out.println(playerName.getName() + "의 배팅 금액은?");
+    public static void printAskHowMuchBettingToPlayer(UserName userName) {
+        System.out.println(userName.getName() + "의 배팅 금액은?");
     }
 
     public static void printDistributeCardsMessageAndCardsOfAllUsers(Players players, Dealer dealer) {
@@ -28,8 +28,8 @@ public class OutputView {
 
     private static void printHandedOutTwoCardsToPlayers(Players players) {
         String playerNames = players.getPlayers().stream()
-                .map(Player::getPlayerName)
-                .map(PlayerName::getName)
+                .map(Player::getUserName)
+                .map(UserName::getName)
                 .collect(joining(SEPARATOR));
         System.out.println("딜러와 " + playerNames + "에게 2장씩 나누어 주었습니다.");
     }
@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     public static void printCardsHeldByPlayer(Player player) {
-        String playerName = player.getPlayerName().getName();
+        String playerName = player.getUserName().getName();
         String playerCards = convertUserToCards(player);
         System.out.println(playerName + " 카드 : " + playerCards);
     }
@@ -68,7 +68,7 @@ public class OutputView {
     }
 
     public static void printDoYouWantOneMoreCard(Player player) {
-        String playerName = player.getPlayerName().getName();
+        String playerName = player.getUserName().getName();
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -89,7 +89,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(Player player) {
-        String playerName = player.getPlayerName().getName();
+        String playerName = player.getUserName().getName();
         String playerCards = convertUserToCards(player);
         int playerTotalCardNumber = player.calculateTotalCardNumber();
         String playerResultFormat = playerName + " 카드 : " + playerCards + " - 결과 : " + playerTotalCardNumber;
@@ -113,7 +113,7 @@ public class OutputView {
     }
 
     private static void printPlayerProfit(Player player, PlayerProfits playerProfits) {
-        String playerName = player.getPlayerName().getName();
+        String playerName = player.getUserName().getName();
         Profit playerProfit = playerProfits.getPlayerProfit(player);
         System.out.println(playerName + " : " + playerProfit.getAmount());
     }

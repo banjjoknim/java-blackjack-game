@@ -23,10 +23,10 @@ class PlayerProfitStatisticsTest {
 
     @BeforeAll
     static void setUp() {
-        player1 = new Player(new PlayerName("player1"), new BettingMoney(new BigDecimal(1000)));
+        player1 = new Player(new UserName("player1"), new BettingMoney(new BigDecimal(1000)));
         player1.addCard(new Card(Symbol.SPADE, Type.KING));
         player1.addCard(new Card(Symbol.SPADE, Type.ACE));
-        player2 = new Player(new PlayerName("player2"), new BettingMoney(new BigDecimal(1000)));
+        player2 = new Player(new UserName("player2"), new BettingMoney(new BigDecimal(1000)));
         player2.addCard(new Card(Symbol.HEART, Type.KING));
         player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
         playerList = new ArrayList<>(Arrays.asList(player1, player2));
@@ -40,7 +40,7 @@ class PlayerProfitStatisticsTest {
         // given
         Dealer dealer = new Dealer();
         Map<Player, Profit> statistics = new HashMap<>();
-        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal("1000")));
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal("1000")));
         Profit playerProfit = new Profit(new BigDecimal("1000"));
         statistics.put(player, playerProfit);
         PlayerProfits playerProfits = new PlayerProfits(statistics);

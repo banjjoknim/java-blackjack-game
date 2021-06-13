@@ -5,12 +5,11 @@ import domain.result.GameResult;
 
 public class Player extends User {
 
-    private final PlayerName playerName;
     private final BettingMoney bettingMoney;
     private boolean isStay = false;
 
-    public Player(PlayerName playerName, BettingMoney bettingMoney) {
-        this.playerName = playerName;
+    public Player(UserName userName, BettingMoney bettingMoney) {
+        super(userName);
         this.bettingMoney = bettingMoney;
     }
 
@@ -36,10 +35,6 @@ public class Player extends User {
         Status playerStatus = this.getStatus();
         Status dealerStatus = dealer.getStatus();
         return GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus);
-    }
-
-    public PlayerName getPlayerName() {
-        return playerName;
     }
 
     public BettingMoney getBettingMoney() {

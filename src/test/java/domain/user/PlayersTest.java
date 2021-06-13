@@ -24,10 +24,10 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        Player player1 = new Player(new PlayerName("player1"), new BettingMoney(new BigDecimal(1000)));
+        Player player1 = new Player(new UserName("player1"), new BettingMoney(new BigDecimal(1000)));
         player1.addCard(new Card(Symbol.SPADE, Type.KING));
         player1.addCard(new Card(Symbol.SPADE, Type.ACE));
-        Player player2 = new Player(new PlayerName("player2"), new BettingMoney(new BigDecimal(1000)));
+        Player player2 = new Player(new UserName("player2"), new BettingMoney(new BigDecimal(1000)));
         player2.addCard(new Card(Symbol.HEART, Type.KING));
         player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
         playerList = new ArrayList<>(Arrays.asList(player1, player2));
@@ -37,7 +37,7 @@ class PlayersTest {
     @Test
     void createPlayersWithDuplicateNameTest() {
         // given
-        playerList.add(new Player(new PlayerName("player1"), new BettingMoney(new BigDecimal(1000))));
+        playerList.add(new Player(new UserName("player1"), new BettingMoney(new BigDecimal(1000))));
 
         // when
 

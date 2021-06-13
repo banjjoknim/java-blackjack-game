@@ -46,7 +46,7 @@ class DeckTest {
     @Test
     void distributeCardsToPlayersAndDealerTest() {
         // given
-        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
         List<Player> playerList = new ArrayList<>();
         playerList.add(player);
         Players players = new Players(playerList);
@@ -67,7 +67,7 @@ class DeckTest {
     @Test
     void distributeCardTest() {
         // given
-        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
 
         // when
         deck.distributeCard(player);

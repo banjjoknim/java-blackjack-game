@@ -23,7 +23,7 @@ public class Players {
     private void validateDuplicatePlayerName(List<Player> players) {
         int playerCount = players.size();
         int deduplicatedPlayerNameCount = players.stream()
-                .map(Player::getPlayerName)
+                .map(Player::getUserName)
                 .collect(toSet())
                 .size();
         if (playerCount != deduplicatedPlayerNameCount) {

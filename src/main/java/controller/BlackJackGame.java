@@ -26,23 +26,23 @@ public class BlackJackGame {
     }
 
     private static Players inputPlayers() {
-        List<PlayerName> playerNames = inputPlayerNames();
-        List<Player> players = playerNames.stream()
+        List<UserName> userNames = inputPlayerNames();
+        List<Player> players = userNames.stream()
                 .map(BlackJackGame::convertNamesAndBettingMoneyIntoPlayers)
                 .collect(toList());
         return new Players(players);
     }
 
-    private static List<PlayerName> inputPlayerNames() {
+    private static List<UserName> inputPlayerNames() {
         return InputView.inputNames().stream()
                 .map(String::trim)
-                .map(PlayerName::new)
+                .map(UserName::new)
                 .collect(toList());
     }
 
-    private static Player convertNamesAndBettingMoneyIntoPlayers(PlayerName playerName) {
-        BettingMoney bettingMoney = convertAmountIntoBettingMoney(InputView.inputAmount(playerName));
-        return new Player(playerName, bettingMoney);
+    private static Player convertNamesAndBettingMoneyIntoPlayers(UserName userName) {
+        BettingMoney bettingMoney = convertAmountIntoBettingMoney(InputView.inputAmount(userName));
+        return new Player(userName, bettingMoney);
     }
 
     private static BettingMoney convertAmountIntoBettingMoney(BigDecimal amount) {

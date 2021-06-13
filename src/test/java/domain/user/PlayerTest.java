@@ -22,17 +22,17 @@ class PlayerTest {
     @Test
     void createPlayerTest() {
         // given
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
 
         // when
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
 
         // then
         assertAll(
                 () -> assertThat(player).isInstanceOf(Player.class),
                 () -> assertThat(player.getBettingMoney()).isEqualTo(bettingMoney),
-                () -> assertThat(player.getPlayerName()).isEqualTo(playerName)
+                () -> assertThat(player.getUserName()).isEqualTo(userName)
         );
     }
 
@@ -40,9 +40,9 @@ class PlayerTest {
     @Test
     void addCardTest() {
         // given
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
 
         // when
         player.addCard(new Card(Symbol.DIAMOND, Type.ACE));
@@ -56,9 +56,9 @@ class PlayerTest {
     void hitTest() {
         // given
         Deck deck = new Deck();
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
 
         // when
         player.hit(deck);
@@ -72,9 +72,9 @@ class PlayerTest {
     @MethodSource("provideIsStayAndCardsSize")
     void proceedOwnTurnTest(boolean isStay, int cardsSize) {
         // given
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
         Deck deck = new Deck();
 
         // when
@@ -95,9 +95,9 @@ class PlayerTest {
     @Test
     void calculateTotalCardNumberWhenIsNotBlackJackTest() {
         // given
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
         player.addCard(new Card(Symbol.SPADE, Type.KING));
         player.addCard(new Card(Symbol.HEART, Type.KING));
         player.addCard(new Card(Symbol.CLUB, Type.KING));
@@ -113,9 +113,9 @@ class PlayerTest {
     @Test
     void calculateTotalCardNumberWhenIsBlackJackTest() {
         // given
-        PlayerName playerName = new PlayerName("player");
+        UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(playerName, bettingMoney);
+        Player player = new Player(userName, bettingMoney);
         player.addCard(new Card(Symbol.SPADE, Type.ACE));
         player.addCard(new Card(Symbol.SPADE, Type.KING));
 
@@ -130,7 +130,7 @@ class PlayerTest {
     @Test
     void calculateFinalProfitTest() {
         // given
-        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
         player.addCard(new Card(Symbol.SPADE, Type.ACE));
         player.addCard(new Card(Symbol.HEART, Type.KING));
         Dealer dealer = new Dealer();
@@ -149,7 +149,7 @@ class PlayerTest {
     @MethodSource("provideCardsAndStatus")
     void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
         // given
-        Player player = new Player(new PlayerName("player"), new BettingMoney(new BigDecimal(1000)));
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
         player.addCard(firstCard);
         player.addCard(secondCard);
         if (thirdCard != null) {
