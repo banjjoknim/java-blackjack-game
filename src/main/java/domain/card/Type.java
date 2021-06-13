@@ -17,11 +17,11 @@ public enum Type {
 
     private static int TEN_NUMBER = 10;
 
-    private String typeName;
+    private String name;
     private int number;
 
     Type(String typeName, int number) {
-        this.typeName = typeName;
+        this.name = typeName;
         this.number = number;
     }
 
@@ -33,8 +33,8 @@ public enum Type {
         return number == TEN_NUMBER;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getName() {
+        return name;
     }
 
     public int getNumber() {

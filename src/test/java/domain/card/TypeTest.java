@@ -72,7 +72,7 @@ class TypeTest {
         // given
 
         // when
-        String typeName = type.getTypeName();
+        String typeName = type.getName();
         int typeNumber = type.getNumber();
 
         // then

@@ -57,12 +57,12 @@ public class OutputView {
 
     private static String convertUserToCards(User user) {
         return user.getCards().stream()
-                .map(card -> card.getType().getTypeName() + card.getSymbol().getSymbolName())
+                .map(card -> card.getType().getName() + card.getSymbol().getSymbolName())
                 .collect(joining(SEPARATOR));
     }
 
     public static void printCardsHeldByDealer(Card card) {
-        String firstCardTypeName = card.getType().getTypeName();
+        String firstCardTypeName = card.getType().getName();
         String firstCardSymbolName = card.getSymbol().getSymbolName();
         System.out.println("딜러 : " + firstCardTypeName + firstCardSymbolName);
     }
