@@ -13,7 +13,7 @@ public abstract class User {
     private static final int BLACK_JACK = 21;
     private static final int ACE_AS_ELEVEN = 10;
 
-    private UserName userName;
+    private final UserName userName;
     private final List<Card> cards = new ArrayList<>();
 
     public User(UserName userName) {
