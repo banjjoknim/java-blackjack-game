@@ -58,7 +58,6 @@ class BettingMoneyTest {
 
         // when
         Profit calculatedProfit = bettingMoney.calculateProfit(gameResult);
-        System.out.println(calculatedProfit.getAmount());
 
         // then
         assertThat(calculatedProfit).isEqualTo(expectedProfit);
