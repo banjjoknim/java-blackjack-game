@@ -4,7 +4,6 @@ import domain.card.Deck;
 import domain.result.GameResult;
 
 public class Player extends User {
-    private static final boolean STAY = true;
 
     private final PlayerName playerName;
     private final BettingMoney bettingMoney;
@@ -21,7 +20,7 @@ public class Player extends User {
 
     public void proceedOwnTurn(boolean isStay, Deck deck) {
         if (isStay) {
-            this.isStay = STAY;
+            this.isStay = true;
             return;
         }
         super.hit(deck);
