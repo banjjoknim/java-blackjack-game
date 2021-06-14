@@ -55,7 +55,7 @@ class DealerTest {
         dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
         // then
-        assertThat(dealer.getCards().getCards()).hasSize(1);
+        assertThat(dealer.getState().getCards().getCards()).hasSize(1);
     }
 
 }

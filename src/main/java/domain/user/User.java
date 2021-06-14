@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.Type;
+import domain.user.state.State;
+import domain.user.state.Survival;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,25 +14,26 @@ import java.util.List;
 public abstract class User {
 
     private final UserName userName;
-    protected final Cards cards = new Cards();
+    protected State state;
 
     public User(UserName userName) {
         this.userName = userName;
-    }
-
-    public void draw(Card card) {
-        cards.addCard(card);
+        this.state = new Survival(new Cards());
     }
 
     public void hit(Deck deck) {
         deck.distributeCard(this);
     }
 
+    public void draw(Card card) {
+        this.state = state.draw(card);
+    }
+
     public UserName getUserName() {
         return userName;
     }
 
-    public Cards getCards() {
-        return cards;
+    public State getState() {
+        return state;
     }
 }

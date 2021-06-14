@@ -28,13 +28,13 @@ public class Player extends User {
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {
-        GameResult gameResult = getGameResult(dealer);
+        GameResult gameResult = findGameResult(dealer);
         return bettingMoney.calculateProfit(gameResult);
     }
 
-    private GameResult getGameResult(Dealer dealer) {
-        Cards playerCards = this.cards;
-        Cards dealerCards = dealer.cards;
+    private GameResult findGameResult(Dealer dealer) {
+        Cards playerCards = state.getCards();
+        Cards dealerCards = dealer.state.getCards();
         int gameResultValue = Integer.compare(playerCards.calculateTotalCardNumber(), dealerCards.calculateTotalCardNumber());
         return GameResult.determineGameResult(gameResultValue);
     }

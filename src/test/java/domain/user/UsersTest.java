@@ -72,7 +72,7 @@ class UsersTest {
 
         // then
         for (User user : users.getUsers()) {
-            assertThat(user.getCards().getCards()).hasSize(1);
+            assertThat(user.getState().getCards().getCards()).hasSize(1);
         }
     }
 

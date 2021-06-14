@@ -59,8 +59,8 @@ class DeckTest {
 
         // then
         assertAll(
-                () -> assertThat(users.getUsers().get(0).getCards().getCards()).hasSize(2),
-                () -> assertThat(users.getUsers().get(1).getCards().getCards()).hasSize(2)
+                () -> assertThat(users.getUsers().get(0).getState().getCards().getCards()).hasSize(2),
+                () -> assertThat(users.getUsers().get(1).getState().getCards().getCards()).hasSize(2)
         );
 
     }
@@ -75,7 +75,7 @@ class DeckTest {
         deck.distributeCard(player);
 
         // then
-        assertThat(player.getCards().getCards()).hasSize(1);
+        assertThat(player.getState().getCards().getCards()).hasSize(1);
         assertThat(deck.getCards().size()).isEqualTo(51);
     }
 

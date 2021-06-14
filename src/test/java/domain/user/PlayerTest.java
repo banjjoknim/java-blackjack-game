@@ -38,7 +38,7 @@ class PlayerTest {
 
     @DisplayName("플레이어의 카드 추가 기능을 테스트한다.")
     @Test
-    void addCardTest() {
+    void drawTest() {
         // given
         UserName userName = new UserName("player");
         BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
@@ -48,7 +48,7 @@ class PlayerTest {
         player.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
         // then
-        assertThat(player.getCards().getCards()).hasSize(1);
+        assertThat(player.getState().getCards().getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어의 카드 뽑기 기능을 테스트한다.")
@@ -64,7 +64,7 @@ class PlayerTest {
         player.hit(deck);
 
         // then
-        assertThat(player.getCards().getCards()).hasSize(1);
+        assertThat(player.getState().getCards().getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어가 자신의 턴을 수행하는 기능을 테스트한다.")
@@ -81,7 +81,7 @@ class PlayerTest {
         player.proceedOwnTurn(answer, deck);
 
         // then
-        assertThat(player.getCards().getCards()).hasSize(cardsSize);
+        assertThat(player.getState().getCards().getCards()).hasSize(cardsSize);
     }
 
     private static Stream<Arguments> provideAnswerAndCardsSize() {
