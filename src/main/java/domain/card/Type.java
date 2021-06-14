@@ -16,18 +16,18 @@ public enum Type {
     ACE("A", 1);
 
     private String name;
-    private int number;
+    private int score;
 
-    Type(String name, int number) {
+    Type(String name, int score) {
         this.name = name;
-        this.number = number;
+        this.score = score;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getNumber() {
-        return number;
+    public int getScore() {
+        return score;
     }
 }

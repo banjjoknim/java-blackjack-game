@@ -28,23 +28,23 @@ class TypeTest {
 
     @DisplayName("Type 이름과 숫자가 잘 초기화 되었는지 테스트 한다.")
     @ParameterizedTest
-    @MethodSource("provideTypeAndNameAndNumber")
-    void 카드_타입의_이름과_숫자가_잘_초기화_되었는지_테스트_한다(Type type, String name, int number) {
+    @MethodSource("provideTypeAndNameAndScore")
+    void 카드_타입의_이름과_숫자가_잘_초기화_되었는지_테스트_한다(Type type, String name, int score) {
         // given
 
         // when
         String typeName = type.getName();
-        int typeNumber = type.getNumber();
+        int typeScore = type.getScore();
 
         // then
         assertAll(
                 () -> assertThat(typeName).isEqualTo(name),
-                () -> assertThat(typeNumber).isEqualTo(number)
+                () -> assertThat(typeScore).isEqualTo(score)
         );
 
     }
 
-    private static Stream<Arguments> provideTypeAndNameAndNumber() {
+    private static Stream<Arguments> provideTypeAndNameAndScore() {
         return Stream.of(
                 Arguments.of(Type.ACE, "A", 1),
                 Arguments.of(Type.TWO, "2", 2),
