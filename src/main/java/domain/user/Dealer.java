@@ -8,8 +8,9 @@ public class Dealer extends User {
         super(DEALER_NAME);
     }
 
-    public boolean isStay() {
-        return state.getTotalCardNumber() >= DEALER_RULE_NUMBER;
+    @Override
+    public boolean isOwnTurn() {
+        return super.state.getTotalCardNumber() < DEALER_RULE_NUMBER;
     }
 
 }

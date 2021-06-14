@@ -25,7 +25,7 @@ public class Survival extends State {
         if (isInitialCards && totalCardNumber == BLACK_JACK_NUMBER) {
             return new BlackJack(cards);
         }
-        if (totalCardNumber < BLACK_JACK_NUMBER) {
+        if (totalCardNumber <= BLACK_JACK_NUMBER) {
             return new Survival(cards);
         }
         throw new IllegalStateException("현재 상태는 정의될 수 없는 상태입니다.");

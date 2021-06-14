@@ -21,6 +21,8 @@ public abstract class User {
         this.state = new Survival(new Cards());
     }
 
+    public abstract boolean isOwnTurn();
+
     public void hit(Deck deck) {
         deck.distributeCard(this);
     }
@@ -28,6 +30,10 @@ public abstract class User {
     public void draw(Card card) {
         state.draw(card);
         this.state = state.determineState();
+    }
+
+    protected void stay(){
+        state = state.createStay();
     }
 
     public UserName getUserName() {

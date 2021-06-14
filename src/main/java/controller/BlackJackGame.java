@@ -61,7 +61,7 @@ public class BlackJackGame {
     }
 
     private static void proceedDealerTurn(Dealer dealer, Deck deck) {
-        while (!dealer.isStay()) {
+        while (dealer.isOwnTurn()) {
             dealer.hit(deck);
             OutputView.printDealerGetOneMoreCard();
         }

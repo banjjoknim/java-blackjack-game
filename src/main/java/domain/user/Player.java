@@ -17,6 +17,7 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
+    @Override
     public boolean isOwnTurn() {
         return !(super.state instanceof Bust) && !(super.state instanceof BlackJack) && !(super.state instanceof Stay);
     }
@@ -24,7 +25,9 @@ public class Player extends User {
     public void proceedOwnTurn(String answer, Deck deck) {
         if (YES.equals(answer) && !(super.state instanceof Stay)) {
             super.hit(deck);
+            return;
         }
+        stay();
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {

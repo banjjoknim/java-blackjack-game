@@ -15,6 +15,10 @@ public abstract class State {
 
     public abstract State determineState();
 
+    public State createStay() {
+        return new Stay(cards);
+    }
+
     public int getTotalCardNumber() {
         return cards.calculateTotalCardNumber();
     }
