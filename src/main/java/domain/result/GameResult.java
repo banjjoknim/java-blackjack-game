@@ -1,15 +1,12 @@
 package domain.result;
 
-import domain.user.Status;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 public enum GameResult {
     WIN(1, new BigDecimal("1")),
-    WIN_WITH_BLACK_JACK(1, new BigDecimal("1.5")),
     DRAW(0, new BigDecimal("0")),
-    DRAW_WITH_BLACK_JACK(0, new BigDecimal("0")),
     LOSE(-1, new BigDecimal("-1"));
 
     private static final int SCALE = 0;
@@ -22,38 +19,11 @@ public enum GameResult {
         this.dividendRate = dividendRate;
     }
 
-    public static GameResult determineGameResult(int gameResultValue, Status playerStatus, Status dealerStatus) {
-        if (isLose(gameResultValue, playerStatus, dealerStatus)) {
-            return LOSE;
-        }
-        if (isWin(gameResultValue, playerStatus, dealerStatus)) {
-            return determineWinOrWinWithBlackJack(playerStatus);
-        }
-        return determineDrawOrDrawWithBlackJack(playerStatus, dealerStatus);
-    }
-
-    private static boolean isLose(int gameResultValue, Status playerStatus, Status dealerStatus) {
-        return (dealerStatus != Status.BUST && gameResultValue == LOSE.value) || playerStatus == Status.BUST ||
-                (playerStatus != Status.BLACK_JACK && dealerStatus == Status.BLACK_JACK);
-    }
-
-    private static boolean isWin(int gameResultValue, Status playerStatus, Status dealerStatus) {
-        return gameResultValue == WIN.value || dealerStatus == Status.BUST ||
-                (playerStatus == Status.BLACK_JACK && dealerStatus != Status.BLACK_JACK);
-    }
-
-    private static GameResult determineWinOrWinWithBlackJack(Status playerStatus) {
-        if (playerStatus == Status.BLACK_JACK) {
-            return WIN_WITH_BLACK_JACK;
-        }
-        return WIN;
-    }
-
-    private static GameResult determineDrawOrDrawWithBlackJack(Status playerStatus, Status dealerStatus) {
-        if (playerStatus == Status.BLACK_JACK && dealerStatus == Status.BLACK_JACK) {
-            return DRAW_WITH_BLACK_JACK;
-        }
-        return DRAW;
+    public static GameResult determineGameResult(int gameResultValue) {
+        return Arrays.stream(GameResult.values())
+                .filter(gameResult -> gameResult.value == gameResultValue)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 결과입니다."));
     }
 
     public BigDecimal multiplyDividendRate(BigDecimal amount) {

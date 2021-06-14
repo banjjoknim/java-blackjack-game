@@ -35,20 +35,16 @@ class GameResultTest {
         // given
         player.draw(playerCard);
         dealer.draw(dealerCard);
-        Status playerStatus = player.getCards().getStatus();
-        Status dealerStatus = dealer.getCards().getStatus();
 
         // when
 
         // then
-        assertThat(GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus)).isEqualTo(gameResult);
+        assertThat(GameResult.determineGameResult(gameResultValue)).isEqualTo(gameResult);
     }
 
     private static Stream<Arguments> provideGameResultValueAndPlayerCardAndDealerCardAndGameResult() {
         return Stream.of(
-                Arguments.of(1, new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.CLUB, Type.EIGHT), GameResult.WIN_WITH_BLACK_JACK),
                 Arguments.of(1, new Card(Symbol.DIAMOND, Type.JACK), new Card(Symbol.CLUB, Type.EIGHT), GameResult.WIN),
-                Arguments.of(0, new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.CLUB, Type.ACE), GameResult.DRAW_WITH_BLACK_JACK),
                 Arguments.of(0, new Card(Symbol.DIAMOND, Type.EIGHT), new Card(Symbol.CLUB, Type.EIGHT), GameResult.DRAW),
                 Arguments.of(-1, new Card(Symbol.DIAMOND, Type.SEVEN), new Card(Symbol.CLUB, Type.EIGHT), GameResult.LOSE)
         );
@@ -70,9 +66,7 @@ class GameResultTest {
 
     private static Stream<Arguments> provideGameResultAndExpectedAmount() {
         return Stream.of(
-                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new BigDecimal("1500")),
                 Arguments.of(GameResult.WIN, new BigDecimal("1000")),
-                Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new BigDecimal("0")),
                 Arguments.of(GameResult.DRAW, new BigDecimal("0")),
                 Arguments.of(GameResult.LOSE, new BigDecimal("-1000"))
         );

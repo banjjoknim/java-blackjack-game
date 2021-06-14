@@ -1,7 +1,5 @@
 package domain.card;
 
-import domain.user.Status;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,10 +15,8 @@ public class Cards {
         cards.add(card);
     }
 
-    public Status getStatus() {
-        int totalCardNumber = calculateTotalCardNumber();
-        boolean canBlackJack = cards.size() == INITIAL_CARDS_SIZE;
-        return Status.determineStatus(totalCardNumber, canBlackJack);
+    public boolean isInitialCards() {
+        return cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public int calculateTotalCardNumber() {

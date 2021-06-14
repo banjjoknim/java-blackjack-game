@@ -96,44 +96,17 @@ class PlayerTest {
     void calculateFinalProfitTest() {
         // given
         Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.draw(new Card(Symbol.SPADE, Type.ACE));
+        player.draw(new Card(Symbol.SPADE, Type.KING));
         player.draw(new Card(Symbol.HEART, Type.KING));
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Symbol.SPADE, Type.KING));
-        dealer.draw(new Card(Symbol.HEART, Type.KING));
+        dealer.draw(new Card(Symbol.HEART, Type.SIX));
 
         // when
         Profit finalProfit = player.calculateFinalProfit(dealer);
 
         // then
-        assertThat(finalProfit).isEqualTo(new Profit(new BigDecimal("1500")));
-    }
-
-    @DisplayName("플레이어의 상태 결정 기능을 테스트한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsAndStatus")
-    void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
-        // given
-        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.draw(firstCard);
-        player.draw(secondCard);
-        if (thirdCard != null) {
-            player.draw(thirdCard);
-        }
-
-        // when
-        Status playerStatus = player.getCards().getStatus();
-
-        // then
-        assertThat(playerStatus).isEqualTo(status);
-    }
-
-    private static Stream<Arguments> provideCardsAndStatus() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.SPADE, Type.TWO), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.BUST),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), null, Status.BLACK_JACK),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.SURVIVAL)
-        );
+        assertThat(finalProfit).isEqualTo(new Profit(new BigDecimal("1000")));
     }
 
 }

@@ -82,12 +82,12 @@ class UsersTest {
         // given
         userList.add(dealer);
         Users users = new Users(userList);
-        player1.draw(new Card(Symbol.SPADE, Type.ACE));
+        player1.draw(new Card(Symbol.DIAMOND, Type.QUEEN));
         player1.draw(new Card(Symbol.SPADE, Type.KING));
         player2.draw(new Card(Symbol.CLUB, Type.QUEEN));
         player2.draw(new Card(Symbol.SPADE, Type.SIX));
         dealer.draw(new Card(Symbol.SPADE, Type.JACK));
-        dealer.draw(new Card(Symbol.HEART, Type.QUEEN));
+        dealer.draw(new Card(Symbol.HEART, Type.NINE));
 
         // when
         PlayerProfits playerProfits = users.producePlayerProfits();
@@ -95,7 +95,7 @@ class UsersTest {
         // then
         assertAll(
                 () -> assertThat(playerProfits.getPlayerProfits()).hasSize(2),
-                () -> assertThat(playerProfits.getPlayerProfit(player1)).isEqualTo(new Profit(new BigDecimal("1500"))),
+                () -> assertThat(playerProfits.getPlayerProfit(player1)).isEqualTo(new Profit(new BigDecimal("1000"))),
                 () -> assertThat(playerProfits.getPlayerProfit(player2)).isEqualTo(new Profit(new BigDecimal("-1000")))
         );
     }

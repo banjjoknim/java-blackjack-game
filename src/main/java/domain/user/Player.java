@@ -16,7 +16,7 @@ public class Player extends User {
     }
 
     public boolean isOwnTurn() {
-        return cards.getStatus() == Status.SURVIVAL && !isStay;
+        return !isStay;
     }
 
     public void proceedOwnTurn(String answer, Deck deck) {
@@ -36,9 +36,7 @@ public class Player extends User {
         Cards playerCards = this.cards;
         Cards dealerCards = dealer.cards;
         int gameResultValue = Integer.compare(playerCards.calculateTotalCardNumber(), dealerCards.calculateTotalCardNumber());
-        Status playerStatus = playerCards.getStatus();
-        Status dealerStatus = dealerCards.getStatus();
-        return GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus);
+        return GameResult.determineGameResult(gameResultValue);
     }
 
     public BettingMoney getBettingMoney() {

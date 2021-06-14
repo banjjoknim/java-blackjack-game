@@ -65,9 +65,7 @@ class BettingMoneyTest {
 
     private static Stream<Arguments> provideGameResultAndProfit() {
         return Stream.of(
-                Arguments.of(GameResult.WIN_WITH_BLACK_JACK, new Profit(new BigDecimal("1500"))),
                 Arguments.of(GameResult.WIN, new Profit(new BigDecimal("1000"))),
-                Arguments.of(GameResult.DRAW_WITH_BLACK_JACK, new Profit(new BigDecimal("0"))),
                 Arguments.of(GameResult.DRAW, new Profit(new BigDecimal("0"))),
                 Arguments.of(GameResult.LOSE, new Profit(new BigDecimal("-1000")))
         );

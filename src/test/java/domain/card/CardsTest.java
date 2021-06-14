@@ -31,33 +31,6 @@ class CardsTest {
 
     }
 
-    @DisplayName("딜러의 상태 결정 기능을 테스트한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsAndStatus")
-    void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.draw(firstCard);
-        dealer.draw(secondCard);
-        if (thirdCard != null) {
-            dealer.draw(thirdCard);
-        }
-
-        // when
-        Status playerStatus = dealer.getCards().getStatus();
-
-        // then
-        assertThat(playerStatus).isEqualTo(status);
-    }
-
-    private static Stream<Arguments> provideCardsAndStatus() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.SPADE, Type.TWO), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.BUST),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), null, Status.BLACK_JACK),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.SURVIVAL)
-        );
-    }
-
     @DisplayName("플레이어의 카드 조합이 블랙잭이 아닌 경우 카드 합 계산 기능을 테스트한다.")
     @Test
     void calculateTotalCardNumberWhenIsNotBlackJackTest() {
