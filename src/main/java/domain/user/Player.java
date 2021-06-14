@@ -1,18 +1,20 @@
 package domain.user;
 
-import domain.card.Card;
-
-import java.util.List;
-
 public class Player extends User {
 
-    private final String name;
-    private final double bettingMoney;
+    private final Name name;
+    private final BettingMoney bettingMoney;
 
-    public Player(List<Card> cards, String name, double bettingMoney) {
-        super(cards);
+    public Player(Name name, BettingMoney bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
     }
 
+    public Name getName() {
+        return name;
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
 }
