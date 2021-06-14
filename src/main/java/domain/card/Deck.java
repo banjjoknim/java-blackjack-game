@@ -12,6 +12,7 @@ public class Deck {
 
     public Deck() {
         this.cards = Card.getCACHE();
+        Collections.shuffle(cards);
     }
 
     public void distributeCard(User user) {
