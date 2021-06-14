@@ -23,7 +23,19 @@ public class Card {
         this.type = type;
     }
 
+    public boolean isAce() {
+        return type == Type.ACE;
+    }
+
     public static List<Card> getCACHE() {
         return new ArrayList<>(CACHE);
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public Type getType() {
+        return type;
     }
 }
