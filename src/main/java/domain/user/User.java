@@ -26,7 +26,8 @@ public abstract class User {
     }
 
     public void draw(Card card) {
-        this.state = state.draw(card);
+        state.draw(card);
+        this.state = state.determineState();
     }
 
     public UserName getUserName() {
