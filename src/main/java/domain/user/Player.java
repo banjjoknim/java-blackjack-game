@@ -16,7 +16,7 @@ public class Player extends User {
     }
 
     public boolean isOwnTurn() {
-        return cards.getStatus().isSurvival() && !isStay;
+        return cards.getStatus() == Status.SURVIVAL && !isStay;
     }
 
     public void proceedOwnTurn(String answer, Deck deck) {

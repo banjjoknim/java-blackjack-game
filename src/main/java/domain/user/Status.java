@@ -15,16 +15,4 @@ public enum Status {
         return SURVIVAL;
     }
 
-    public boolean isBust() {
-        return this == BUST;
-    }
-
-    public boolean isBlackJack() {
-        return this == BLACK_JACK;
-    }
-
-    public boolean isSurvival() {
-        return this == SURVIVAL;
-    }
-
 }

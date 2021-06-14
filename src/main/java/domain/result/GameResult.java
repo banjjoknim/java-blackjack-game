@@ -33,24 +33,24 @@ public enum GameResult {
     }
 
     private static boolean isLose(int gameResultValue, Status playerStatus, Status dealerStatus) {
-        return (!dealerStatus.isBust() && gameResultValue == LOSE.value) || playerStatus.isBust() ||
-                (!playerStatus.isBlackJack() && dealerStatus.isBlackJack());
+        return (dealerStatus != Status.BUST && gameResultValue == LOSE.value) || playerStatus == Status.BUST ||
+                (playerStatus != Status.BLACK_JACK && dealerStatus == Status.BLACK_JACK);
     }
 
     private static boolean isWin(int gameResultValue, Status playerStatus, Status dealerStatus) {
-        return gameResultValue == WIN.value || dealerStatus.isBust() ||
-                (playerStatus.isBlackJack() && !dealerStatus.isBlackJack());
+        return gameResultValue == WIN.value || dealerStatus == Status.BUST ||
+                (playerStatus == Status.BLACK_JACK && dealerStatus != Status.BLACK_JACK);
     }
 
     private static GameResult determineWinOrWinWithBlackJack(Status playerStatus) {
-        if (playerStatus.isBlackJack()) {
+        if (playerStatus == Status.BLACK_JACK) {
             return WIN_WITH_BLACK_JACK;
         }
         return WIN;
     }
 
     private static GameResult determineDrawOrDrawWithBlackJack(Status playerStatus, Status dealerStatus) {
-        if (playerStatus.isBlackJack() && dealerStatus.isBlackJack()) {
+        if (playerStatus == Status.BLACK_JACK && dealerStatus == Status.BLACK_JACK) {
             return DRAW_WITH_BLACK_JACK;
         }
         return DRAW;
