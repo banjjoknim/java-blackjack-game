@@ -1,19 +1,16 @@
 package domain.user;
 
-import domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class Dealer {
-
-    private final List<Card> cards = new ArrayList<>();
+public class Dealer extends User {
+    private static final UserName DEALER_NAME = new UserName("딜러");
+    private static final int DEALER_RULE_NUMBER = 17;
 
     public Dealer() {
+        super(DEALER_NAME);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    @Override
+    public boolean isOwnTurn() {
+        return super.state.getTotalCardNumber() < DEALER_RULE_NUMBER;
     }
 
 }

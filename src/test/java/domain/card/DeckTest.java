@@ -1,0 +1,82 @@
+package domain.card;
+
+import domain.user.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+class DeckTest {
+
+    private Deck deck;
+
+    @BeforeEach
+    void setUp() {
+        deck = new Deck();
+    }
+
+    @DisplayName("Deck 생성시 초기 카드 적재 기능을 테스트한다.")
+    @ParameterizedTest
+    @EnumSource(Symbol.class)
+    void initializeDeckTest(Symbol symbol) {
+        // given
+
+        // when
+        List<Card> cards = deck.getCards();
+        long symbolCardCounts = cards.stream()
+                .filter(card -> card.getSymbol().equals(symbol))
+                .count();
+
+        // then
+        assertAll(
+                () -> assertThat(cards).hasSize(52),
+                () -> assertThat(symbolCardCounts).isEqualTo(Type.values().length)
+        );
+    }
+
+    @DisplayName("Deck 의 유저들에게 카드를 나누어주는 기능을 테스트한다.")
+    @Test
+    void distributeCardsToUsersTest() {
+        // given
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(player);
+        List<User> userList = new ArrayList<>();
+        userList.addAll(playerList);
+        userList.add(new Dealer());
+        Users users = new Users(userList);
+
+        // when
+        deck.distributeCardsToUsers(users);
+
+        // then
+        assertAll(
+                () -> assertThat(users.getUsers().get(0).getState().getCards().getCards()).hasSize(2),
+                () -> assertThat(users.getUsers().get(1).getState().getCards().getCards()).hasSize(2)
+        );
+
+    }
+
+    @DisplayName("Deck 의 카드를 나누어주는 기능을 테스트한다.")
+    @Test
+    void distributeCardTest() {
+        // given
+        Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
+
+        // when
+        deck.distributeCard(player);
+
+        // then
+        assertThat(player.getState().getCards().getCards()).hasSize(1);
+        assertThat(deck.getCards().size()).isEqualTo(51);
+    }
+
+}
