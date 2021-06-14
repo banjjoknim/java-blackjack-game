@@ -26,7 +26,7 @@ public class Deck {
     }
 
     public void distributeCard(User user) {
-        user.addCard(cards.remove(TOP));
+        user.draw(cards.remove(TOP));
     }
 
     public List<Card> getCards() {

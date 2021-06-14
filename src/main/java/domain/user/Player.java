@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.GameResult;
 
@@ -15,7 +16,7 @@ public class Player extends User {
     }
 
     public boolean isOwnTurn() {
-        return getStatus().isSurvival() && !isStay;
+        return cards.getStatus().isSurvival() && !isStay;
     }
 
     public void proceedOwnTurn(String answer, Deck deck) {
@@ -32,9 +33,11 @@ public class Player extends User {
     }
 
     private GameResult getGameResult(Dealer dealer) {
-        int gameResultValue = Integer.compare(this.calculateTotalCardNumber(), dealer.calculateTotalCardNumber());
-        Status playerStatus = this.getStatus();
-        Status dealerStatus = dealer.getStatus();
+        Cards playerCards = this.cards;
+        Cards dealerCards = dealer.cards;
+        int gameResultValue = Integer.compare(playerCards.calculateTotalCardNumber(), dealerCards.calculateTotalCardNumber());
+        Status playerStatus = playerCards.getStatus();
+        Status dealerStatus = dealerCards.getStatus();
         return GameResult.determineGameResult(gameResultValue, playerStatus, dealerStatus);
     }
 

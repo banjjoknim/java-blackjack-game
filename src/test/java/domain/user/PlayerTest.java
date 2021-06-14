@@ -45,10 +45,10 @@ class PlayerTest {
         Player player = new Player(userName, bettingMoney);
 
         // when
-        player.addCard(new Card(Symbol.DIAMOND, Type.ACE));
+        player.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
         // then
-        assertThat(player.getCards()).hasSize(1);
+        assertThat(player.getCards().getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어의 카드 뽑기 기능을 테스트한다.")
@@ -64,7 +64,7 @@ class PlayerTest {
         player.hit(deck);
 
         // then
-        assertThat(player.getCards()).hasSize(1);
+        assertThat(player.getCards().getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어가 자신의 턴을 수행하는 기능을 테스트한다.")
@@ -81,7 +81,7 @@ class PlayerTest {
         player.proceedOwnTurn(answer, deck);
 
         // then
-        assertThat(player.getCards()).hasSize(cardsSize);
+        assertThat(player.getCards().getCards()).hasSize(cardsSize);
     }
 
     private static Stream<Arguments> provideAnswerAndCardsSize() {
@@ -91,51 +91,16 @@ class PlayerTest {
         );
     }
 
-    @DisplayName("플레이어의 카드 조합이 블랙잭이 아닌 경우 카드 합 계산 기능을 테스트한다.")
-    @Test
-    void calculateTotalCardNumberWhenIsNotBlackJackTest() {
-        // given
-        UserName userName = new UserName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(userName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
-        player.addCard(new Card(Symbol.HEART, Type.KING));
-        player.addCard(new Card(Symbol.CLUB, Type.KING));
-
-        // when
-        int totalCardNumber = player.calculateTotalCardNumber();
-
-        // then
-        assertThat(totalCardNumber).isEqualTo(30);
-    }
-
-    @DisplayName("플레이어의 카드 조합이 블랙잭인 경우 카드 합 계산 기능을 테스트한다.")
-    @Test
-    void calculateTotalCardNumberWhenIsBlackJackTest() {
-        // given
-        UserName userName = new UserName("player");
-        BettingMoney bettingMoney = new BettingMoney(new BigDecimal(1000));
-        Player player = new Player(userName, bettingMoney);
-        player.addCard(new Card(Symbol.SPADE, Type.ACE));
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
-
-        // when
-        int actual = player.calculateTotalCardNumber();
-
-        // then
-        assertThat(actual).isEqualTo(21);
-    }
-
     @DisplayName("플레이어의 최종 수익 계산 기능을 테스트한다.")
     @Test
     void calculateFinalProfitTest() {
         // given
         Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.addCard(new Card(Symbol.SPADE, Type.ACE));
-        player.addCard(new Card(Symbol.HEART, Type.KING));
+        player.draw(new Card(Symbol.SPADE, Type.ACE));
+        player.draw(new Card(Symbol.HEART, Type.KING));
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.KING));
+        dealer.draw(new Card(Symbol.SPADE, Type.KING));
+        dealer.draw(new Card(Symbol.HEART, Type.KING));
 
         // when
         Profit finalProfit = player.calculateFinalProfit(dealer);
@@ -150,14 +115,14 @@ class PlayerTest {
     void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
         // given
         Player player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.addCard(firstCard);
-        player.addCard(secondCard);
+        player.draw(firstCard);
+        player.draw(secondCard);
         if (thirdCard != null) {
-            player.addCard(thirdCard);
+            player.draw(thirdCard);
         }
 
         // when
-        Status playerStatus = player.getStatus();
+        Status playerStatus = player.getCards().getStatus();
 
         // then
         assertThat(playerStatus).isEqualTo(status);

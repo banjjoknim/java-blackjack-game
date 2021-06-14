@@ -24,14 +24,14 @@ class PlayerProfitsTest {
     @BeforeEach
     void setUp() {
         player1 = new Player(new UserName("player1"), new BettingMoney(new BigDecimal(1000)));
-        player1.addCard(new Card(Symbol.SPADE, Type.KING));
-        player1.addCard(new Card(Symbol.SPADE, Type.ACE));
+        player1.draw(new Card(Symbol.SPADE, Type.KING));
+        player1.draw(new Card(Symbol.SPADE, Type.ACE));
         player2 = new Player(new UserName("player2"), new BettingMoney(new BigDecimal(1000)));
-        player2.addCard(new Card(Symbol.HEART, Type.KING));
-        player2.addCard(new Card(Symbol.HEART, Type.SEVEN));
+        player2.draw(new Card(Symbol.HEART, Type.KING));
+        player2.draw(new Card(Symbol.HEART, Type.SEVEN));
         userList = new ArrayList<>(Arrays.asList(player1, player2, dealer));
-        dealer.addCard(new Card(Symbol.SPADE, Type.JACK));
-        dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
+        dealer.draw(new Card(Symbol.SPADE, Type.JACK));
+        dealer.draw(new Card(Symbol.HEART, Type.QUEEN));
     }
 
     @DisplayName("플레이어의 수익 통계로부터 딜러의 수익을 계산하는 기능을 테스트한다.")

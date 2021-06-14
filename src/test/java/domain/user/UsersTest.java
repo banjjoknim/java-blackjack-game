@@ -72,7 +72,7 @@ class UsersTest {
 
         // then
         for (User user : users.getUsers()) {
-            assertThat(user.getCards()).hasSize(1);
+            assertThat(user.getCards().getCards()).hasSize(1);
         }
     }
 
@@ -82,12 +82,12 @@ class UsersTest {
         // given
         userList.add(dealer);
         Users users = new Users(userList);
-        player1.addCard(new Card(Symbol.SPADE, Type.ACE));
-        player1.addCard(new Card(Symbol.SPADE, Type.KING));
-        player2.addCard(new Card(Symbol.CLUB, Type.QUEEN));
-        player2.addCard(new Card(Symbol.SPADE, Type.SIX));
-        dealer.addCard(new Card(Symbol.SPADE, Type.JACK));
-        dealer.addCard(new Card(Symbol.HEART, Type.QUEEN));
+        player1.draw(new Card(Symbol.SPADE, Type.ACE));
+        player1.draw(new Card(Symbol.SPADE, Type.KING));
+        player2.draw(new Card(Symbol.CLUB, Type.QUEEN));
+        player2.draw(new Card(Symbol.SPADE, Type.SIX));
+        dealer.draw(new Card(Symbol.SPADE, Type.JACK));
+        dealer.draw(new Card(Symbol.HEART, Type.QUEEN));
 
         // when
         PlayerProfits playerProfits = users.producePlayerProfits();

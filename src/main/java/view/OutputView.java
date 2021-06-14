@@ -45,7 +45,7 @@ public class OutputView {
     }
 
     private static void printCardsOfDealer(Dealer dealer) {
-        Card firstCard = dealer.getCards().get(FIRST);
+        Card firstCard = dealer.getCards().getCards().get(FIRST);
         printCardsHeldByDealer(firstCard);
     }
 
@@ -66,7 +66,7 @@ public class OutputView {
     }
 
     private static String convertUserToCards(User user) {
-        return user.getCards().stream()
+        return user.getCards().getCards().stream()
                 .map(card -> card.getType().getName() + card.getSymbol().getSymbolName())
                 .collect(joining(SEPARATOR));
     }
@@ -89,14 +89,14 @@ public class OutputView {
 
     private static void printDealerResult(Dealer dealer) {
         String dealerCards = convertUserToCards(dealer);
-        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
+        int dealerTotalCardNumber = dealer.getCards().calculateTotalCardNumber();
         System.out.println("딜러 : " + dealerCards + " - 결과 : " + dealerTotalCardNumber);
     }
 
     private static void printPlayerResult(Player player) {
         String playerName = player.getUserName().getName();
         String playerCards = convertUserToCards(player);
-        int playerTotalCardNumber = player.calculateTotalCardNumber();
+        int playerTotalCardNumber = player.getCards().calculateTotalCardNumber();
         String playerResultFormat = playerName + " 카드 : " + playerCards + " - 결과 : " + playerTotalCardNumber;
         System.out.println(playerResultFormat);
     }

@@ -9,7 +9,7 @@ public class Dealer extends User {
     }
 
     public boolean isStay() {
-        return super.calculateTotalCardNumber() >= DEALER_RULE_NUMBER;
+        return cards.calculateTotalCardNumber() >= DEALER_RULE_NUMBER;
     }
 
 }

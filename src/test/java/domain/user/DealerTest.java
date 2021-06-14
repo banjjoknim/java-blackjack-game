@@ -20,8 +20,8 @@ class DealerTest {
     void isStayWhenHasNotSmallNumberLessThanRuleNumberTest() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.KING));
+        dealer.draw(new Card(Symbol.SPADE, Type.KING));
+        dealer.draw(new Card(Symbol.HEART, Type.KING));
 
         // when
         boolean isStay = dealer.isStay();
@@ -35,8 +35,8 @@ class DealerTest {
     void isStayWhenHasSmallNumberLessThanRuleNumberTest() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.THREE));
+        dealer.draw(new Card(Symbol.SPADE, Type.KING));
+        dealer.draw(new Card(Symbol.HEART, Type.THREE));
 
         // when
         boolean isStay = dealer.isStay();
@@ -52,54 +52,10 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         // when
-        dealer.addCard(new Card(Symbol.DIAMOND, Type.ACE));
+        dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
         // then
-        assertThat(dealer.getCards()).hasSize(1);
-    }
-
-    @DisplayName("딜러의 카드 합 계산 기능을 테스트한다.")
-    @Test
-    void calculateSumOfCardNumbersTest() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.SPADE, Type.KING));
-        dealer.addCard(new Card(Symbol.HEART, Type.KING));
-        dealer.addCard(new Card(Symbol.CLUB, Type.KING));
-
-        // when
-        int totalCardNumber = dealer.calculateTotalCardNumber();
-
-        // then
-        assertThat(totalCardNumber).isEqualTo(30);
-
-    }
-
-    @DisplayName("딜러의 상태 결정 기능을 테스트한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsAndStatus")
-    void determineStatusTest(Card firstCard, Card secondCard, Card thirdCard, Status status) {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(firstCard);
-        dealer.addCard(secondCard);
-        if (thirdCard != null) {
-            dealer.addCard(thirdCard);
-        }
-
-        // when
-        Status playerStatus = dealer.getStatus();
-
-        // then
-        assertThat(playerStatus).isEqualTo(status);
-    }
-
-    private static Stream<Arguments> provideCardsAndStatus() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.SPADE, Type.TWO), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.BUST),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), null, Status.BLACK_JACK),
-                Arguments.of(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING), new Card(Symbol.HEART, Type.KING), Status.SURVIVAL)
-        );
+        assertThat(dealer.getCards().getCards()).hasSize(1);
     }
 
 }

@@ -23,9 +23,9 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         player = new Player(new UserName("player"), new BettingMoney(new BigDecimal(1000)));
-        player.addCard(new Card(Symbol.SPADE, Type.KING));
+        player.draw(new Card(Symbol.SPADE, Type.KING));
         dealer = new Dealer();
-        dealer.addCard(new Card(Symbol.DIAMOND, Type.KING));
+        dealer.draw(new Card(Symbol.DIAMOND, Type.KING));
     }
 
     @DisplayName("GameResult 의 결과 결정 기능을 테스트한다.")
@@ -33,10 +33,10 @@ class GameResultTest {
     @MethodSource("provideGameResultValueAndPlayerCardAndDealerCardAndGameResult")
     void determineGameResultTest(int gameResultValue, Card playerCard, Card dealerCard, GameResult gameResult) {
         // given
-        player.addCard(playerCard);
-        dealer.addCard(dealerCard);
-        Status playerStatus = player.getStatus();
-        Status dealerStatus = dealer.getStatus();
+        player.draw(playerCard);
+        dealer.draw(dealerCard);
+        Status playerStatus = player.getCards().getStatus();
+        Status dealerStatus = dealer.getCards().getStatus();
 
         // when
 
