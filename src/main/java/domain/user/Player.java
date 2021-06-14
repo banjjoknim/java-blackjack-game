@@ -3,12 +3,14 @@ package domain.user;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.GameResult;
+import domain.user.state.BlackJack;
+import domain.user.state.Bust;
+import domain.user.state.Stay;
 
 public class Player extends User {
     private static final String YES = "y";
 
     private final BettingMoney bettingMoney;
-    private boolean isStay = false;
 
     public Player(UserName userName, BettingMoney bettingMoney) {
         super(userName);
@@ -16,15 +18,13 @@ public class Player extends User {
     }
 
     public boolean isOwnTurn() {
-        return !isStay;
+        return !(super.state instanceof Bust) && !(super.state instanceof BlackJack) && !(super.state instanceof Stay);
     }
 
     public void proceedOwnTurn(String answer, Deck deck) {
-        if (YES.equals(answer) && !isStay) {
+        if (YES.equals(answer) && !(super.state instanceof Stay)) {
             super.hit(deck);
-            return;
         }
-        this.isStay = true;
     }
 
     public Profit calculateFinalProfit(Dealer dealer) {
