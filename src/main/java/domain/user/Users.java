@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class Users {
 
     private List<User> users;
@@ -23,6 +25,10 @@ public class Users {
         }
     }
 
+    public void receiveCards(Deck deck) {
+        users.forEach(deck::distributeCard);
+    }
+
     public User findDealer() {
         return users.stream()
                 .filter(user -> user instanceof Dealer)
@@ -30,8 +36,10 @@ public class Users {
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
 
-    public void receiveCards(Deck deck) {
-        users.forEach(deck::distributeCard);
+    public List<User> findPlayers() {
+        return users.stream()
+                .filter(user -> user instanceof Player)
+                .collect(toList());
     }
 
     public List<User> getUsers() {
