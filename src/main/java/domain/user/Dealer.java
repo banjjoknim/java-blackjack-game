@@ -11,6 +11,6 @@ public class Dealer extends User {
         if (super.hand.calculateScore() >= DEALER_RULE_SCORE) {
             return false;
         }
-        return !super.hand.hasEnded();
+        return true;
     }
 }
