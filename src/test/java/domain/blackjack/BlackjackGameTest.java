@@ -1,6 +1,9 @@
 package domain.blackjack;
 
+import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Symbol;
+import domain.card.Type;
 import domain.user.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,9 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -56,5 +61,66 @@ class BlackjackGameTest {
                 () -> assertThat(userList.get(1).getHand().getCards()).hasSize(2),
                 () -> assertThat(userList.get(2).getHand().getCards()).hasSize(2)
         );
+    }
+
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어의 존재 여부 판단 기능을 테스트한다.")
+    @Test
+    void 대기중인_플레이어가_존재한다() {
+        // given
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
+
+        // when
+        boolean isPlayersPhase = blackjackGame.isPlayersPhase();
+
+        // then
+        assertThat(isPlayersPhase).isTrue();
+    }
+
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어의 존재 여부 판단 기능을 테스트한다.")
+    @Test
+    void 대기중인_플레이어가_존재하지_않는다() {
+        // given
+        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        User user1 = users.getUsers().get(0);
+        User user2 = users.getUsers().get(1);
+        cards.forEach(user1::draw);
+        cards.forEach(user2::draw);
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
+
+        // when
+        boolean isPlayersPhase = blackjackGame.isPlayersPhase();
+
+        // then
+        assertThat(isPlayersPhase).isFalse();
+    }
+
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어를 찾는 기능을 테스트한다.")
+    @Test
+    void 대기중인_플레이어가_존재할때_대기중인_플레이어를_찾는다() {
+        // given
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
+
+        // when
+
+        // then
+        assertDoesNotThrow(blackjackGame::getWaitingPlayer);
+    }
+
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 없을 때 대기중인 플레이어를 찾는 기능을 테스트한다.")
+    @Test
+    void 대기중인_플레이어가_없을_때_대기중인_플레이어를_찾으면_예외가_발생한다() {
+        // given
+        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+        cards.forEach(user1::draw);
+        cards.forEach(user2::draw);
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
+
+        // when
+
+        // then
+        assertThatThrownBy(blackjackGame::getWaitingPlayer)
+                .isInstanceOf(IllegalStateException.class);
     }
 }
