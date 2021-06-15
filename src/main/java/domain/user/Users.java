@@ -39,6 +39,7 @@ public class Users {
 
     public boolean hasWaitingPlayer() {
         return users.stream()
+                .filter(user -> user instanceof Player)
                 .anyMatch(User::isWait);
     }
 
