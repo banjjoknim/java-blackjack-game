@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.card.Deck;
+
 public class Player extends User {
 
     private final Name name;
@@ -8,6 +10,10 @@ public class Player extends User {
     public Player(Name name, BettingMoney bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
+    }
+
+    public void hit(Deck deck) {
+        deck.distributeCard(this);
     }
 
     @Override
