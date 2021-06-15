@@ -72,10 +72,10 @@ class HandTest {
         }
 
         // when
-        State state = hand.determineState();
+        hand.changeState();
 
         // then
-        assertThat(state).isInstanceOf(expected);
+        assertThat(hand.getState()).isInstanceOf(expected);
     }
 
     private static Stream<Arguments> provideCardsAndExpected() {
