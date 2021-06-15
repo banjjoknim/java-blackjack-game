@@ -20,6 +20,10 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
         cards.add(card);
     }
 
+    public boolean hasEnded() {
+        return state instanceof Ended;
+    }
+
     public void changeState() {
         boolean isInitialCards = isInitialCards();
         int score = calculateScore();
@@ -53,4 +57,5 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
 }
