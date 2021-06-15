@@ -93,12 +93,10 @@ class UsersTest {
         Users users = new Users(userList);
 
         // when
-        List<User> players = users.findPlayers();
+        List<Player> players = users.findPlayers();
 
         // then
         assertThat(players).hasSize(2);
-        assertThat(players.get(0)).isInstanceOf(Player.class);
-        assertThat(players.get(1)).isInstanceOf(Player.class);
     }
 
 }

@@ -36,9 +36,10 @@ public class Users {
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
 
-    public List<User> findPlayers() {
+    public List<Player> findPlayers() {
         return users.stream()
                 .filter(user -> user instanceof Player)
+                .map(user -> (Player) user)
                 .collect(toList());
     }
 
