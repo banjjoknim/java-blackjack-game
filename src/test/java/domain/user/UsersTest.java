@@ -85,4 +85,20 @@ class UsersTest {
         );
     }
 
+    @DisplayName("유저들 중에서 플레이어들을 찾는 기능을 테스트한다.")
+    @Test
+    void 유저들_중에서_플레이어들을_찾는다() {
+        // given
+        userList.add(new Dealer());
+        Users users = new Users(userList);
+
+        // when
+        List<User> players = users.findPlayers();
+
+        // then
+        assertThat(players).hasSize(2);
+        assertThat(players.get(0)).isInstanceOf(Player.class);
+        assertThat(players.get(1)).isInstanceOf(Player.class);
+    }
+
 }
