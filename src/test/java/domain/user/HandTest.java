@@ -34,7 +34,7 @@ class HandTest {
 
     @DisplayName("손패의 상태를 결정하는 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideCardsAndExpected")
+    @MethodSource("provideCardsAndExpectedState")
     void 손패의_상태를_결정한다(List<Card> cards, Class expected) {
         // given
         Hand hand = new Hand();
@@ -49,7 +49,7 @@ class HandTest {
         assertThat(hand.getState()).isInstanceOf(expected);
     }
 
-    private static Stream<Arguments> provideCardsAndExpected() {
+    private static Stream<Arguments> provideCardsAndExpectedState() {
         return Stream.of(
                 Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.SIX), new Card(Symbol.DIAMOND, Type.KING), new Card(Symbol.SPADE, Type.JACK)), Bust.class),
                 Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.KING)), Blackjack.class),
@@ -57,4 +57,29 @@ class HandTest {
                 Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.SIX)), Wait.class)
         );
     }
+
+    @DisplayName("손패가 가진 상태의 차례가 끝났음을 의미하는지 검증하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedResult")
+    void 손패가_끝난_상태인지_검증한다(List<Card> cards, boolean expectedResult) {
+        // given
+        Hand hand = new Hand();
+        cards.forEach(hand::addCard);
+
+        // when
+        hand.changeState();
+
+        // then
+        assertThat(hand.hasEnded()).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedResult() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.SIX), new Card(Symbol.DIAMOND, Type.KING), new Card(Symbol.SPADE, Type.JACK)), true),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.KING)), true),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.KING)), true),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.SEVEN)), false)
+        );
+    }
+
 }
