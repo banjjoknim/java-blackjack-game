@@ -25,13 +25,9 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     }
 
     public void changeState() {
-        boolean isInitialCards = isInitialCards();
         int score = calculateScore();
+        boolean isInitialCards = isInitialCards();
         state = state.findNextState(score, isInitialCards);
-    }
-
-    private boolean isInitialCards() {
-        return cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public int calculateScore() {
@@ -48,6 +44,10 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     private boolean hasAceCard() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private boolean isInitialCards() {
+        return cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public State getState() {
