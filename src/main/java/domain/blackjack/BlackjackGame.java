@@ -3,6 +3,7 @@ package domain.blackjack;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.User;
 import domain.user.Users;
 
 public class BlackjackGame {
@@ -28,7 +29,7 @@ public class BlackjackGame {
         return dealer.isWait() && !isPlayersPhase();
     }
 
-    private Dealer getDealer() {
+    public Dealer getDealer() {
         return users.findDealer();
     }
 
@@ -40,7 +41,7 @@ public class BlackjackGame {
         return users.findWaitingPlayer();
     }
 
-    public void proceedHitPhase(Player player) {
-        player.hit(deck);
+    public void proceedHitPhase(User user) {
+        user.hit(deck);
     }
 }

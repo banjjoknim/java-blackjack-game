@@ -128,18 +128,23 @@ class BlackjackGameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("플레이어가 카드덱으로부터 카드를 뽑는 과정이 잘 수행되는지 테스트한다.")
+    @DisplayName("유저가 카드덱으로부터 카드를 뽑는 과정이 잘 수행되는지 테스트한다.")
     @Test
-    void 플레이어가_카드덱으로부터_카드를_뽑는_과정을_수행한다() {
+    void 유저가_카드덱으로부터_카드를_뽑는_과정을_수행한다() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(users, deck);
         Player player = blackjackGame.getWaitingPlayer();
+        Dealer dealer = blackjackGame.getDealer();
 
         // when
         blackjackGame.proceedHitPhase(player);
+        blackjackGame.proceedHitPhase(dealer);
 
         // then
-        assertThat(player.getHand().getCards()).hasSize(1);
+        assertAll(
+                () -> assertThat(player.getHand().getCards()).hasSize(1),
+                () -> assertThat(dealer.getHand().getCards()).hasSize(1)
+        );
     }
 
     @DisplayName("대기중인 플레이어가 없고 딜러의 점수가 17보다 클 때, 딜러의 차례인지 여부 판단을 테스트한다.")

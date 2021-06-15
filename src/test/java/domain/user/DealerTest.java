@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
@@ -56,6 +57,23 @@ class DealerTest {
                 Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.QUEEN),
                         new Card(Symbol.SPADE, Type.THREE)), false),
                 Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN)), false)
+        );
+    }
+
+    @DisplayName("딜러가 카드덱으로부터 카드를 뽑는 기능을 테스트한다.")
+    @Test
+    void 딜러가_카드덱으로부터_카드를_뽑는다() {
+        // given
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+
+        // when
+        dealer.hit(deck);
+
+        // then
+        assertAll(
+                () -> assertThat(dealer.getHand().getCards()).hasSize(1),
+                () -> assertThat(deck.getCards()).hasSize(51)
         );
     }
 }
