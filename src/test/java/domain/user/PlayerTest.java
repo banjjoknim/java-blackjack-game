@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,6 +71,23 @@ class PlayerTest {
                 Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN)), true),
                 Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN),
                         new Card(Symbol.HEART, Type.FOUR)), false)
+        );
+    }
+
+    @DisplayName("플레이어가 카드덱으로부터 카드를 뽑는 기능을 테스트한다.")
+    @Test
+    void 플레이어가_카드덱으로부터_카드를_뽑는다() {
+        // given
+        Player player = new Player(name, bettingMoney);
+        Deck deck = new Deck();
+
+        // when
+        player.hit(deck);
+
+        // then
+        assertAll(
+                () -> assertThat(player.getHand().getCards()).hasSize(1),
+                () -> assertThat(deck.getCards()).hasSize(51)
         );
     }
 
