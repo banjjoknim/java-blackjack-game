@@ -1,5 +1,9 @@
 package domain.user;
 
+import domain.card.Deck;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Users {
@@ -24,5 +28,13 @@ public class Users {
                 .filter(user -> user instanceof Dealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
+    }
+
+    public void receiveCards(Deck deck) {
+        users.forEach(deck::distributeCard);
+    }
+
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 }
