@@ -1,6 +1,8 @@
-package domain.card;
+package domain.user;
 
-import domain.user.Hand;
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
