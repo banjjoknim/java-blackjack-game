@@ -26,6 +26,12 @@ public class Users {
         users.forEach(deck::distributeCard);
     }
 
+    public boolean hasWaitingPlayer() {
+        return users.stream()
+                .filter(user -> user instanceof Player)
+                .anyMatch(User::isWait);
+    }
+
     public Player findWaitingPlayer() {
         return users.stream()
                 .filter(user -> user instanceof Player)
@@ -33,12 +39,6 @@ public class Users {
                 .filter(User::isWait)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
-    }
-
-    public boolean hasWaitingPlayer() {
-        return users.stream()
-                .filter(user -> user instanceof Player)
-                .anyMatch(User::isWait);
     }
 
     public List<User> getUsers() {
