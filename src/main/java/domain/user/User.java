@@ -8,6 +8,7 @@ public abstract class User {
 
     public void draw(Card card) {
         hand.addCard(card);
+        hand.changeState();
     }
 
     public abstract boolean isWait();
