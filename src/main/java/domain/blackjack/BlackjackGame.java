@@ -1,6 +1,7 @@
 package domain.blackjack;
 
 import domain.card.Deck;
+import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
 
@@ -20,6 +21,15 @@ public class BlackjackGame {
         for (int i = ZERO; i < INITIAL_CARDS_SIZE; i++) {
             users.receiveCards(deck);
         }
+    }
+
+    public boolean isDealerPhase() {
+        Dealer dealer = getDealer();
+        return dealer.isWait() && !isPlayersPhase();
+    }
+
+    private Dealer getDealer() {
+        return users.findDealer();
     }
 
     public boolean isPlayersPhase() {
