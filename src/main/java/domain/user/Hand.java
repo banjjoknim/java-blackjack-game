@@ -21,8 +21,8 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     }
 
     public void changeState() {
-        int score = calculateScore();
         boolean isInitialCards = isInitialCards();
+        int score = calculateScore();
         state = state.findNextState(score, isInitialCards);
     }
 
@@ -30,7 +30,7 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
         return cards.size() == INITIAL_CARDS_SIZE;
     }
 
-    public int calculateScore() {
+    private int calculateScore() {
         int sum = cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getScore)
