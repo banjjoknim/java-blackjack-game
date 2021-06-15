@@ -9,28 +9,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미도 갖는다고 함.
-    private static final int BLACKJACK = 21;
+    public static final int BLACKJACK = 21;
     private static final int ACE_IS_ELEVEN = 10;
     private static final int INITIAL_CARDS_SIZE = 2;
 
+    private State state = new Wait();
     private List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public State determineState() {
+    public void changeState() {
         int score = calculateScore();
-        if (score > BLACKJACK) {
-            return new Bust();
-        }
-        if (score == BLACKJACK && cards.size() == INITIAL_CARDS_SIZE) {
-            return new Blackjack();
-        }
-        if (score == BLACKJACK) {
-            return new Stay();
-        }
-        return new Wait();
+        boolean isInitialCards = isInitialCards();
+        state = state.findNextState(score, isInitialCards);
+    }
+
+    private boolean isInitialCards() {
+        return cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public int calculateScore() {
@@ -47,6 +44,10 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     private boolean hasAceCard() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public State getState() {
+        return state;
     }
 
     public List<Card> getCards() {
