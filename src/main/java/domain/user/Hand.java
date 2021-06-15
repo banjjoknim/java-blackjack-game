@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Type;
+import domain.user.state.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,11 +11,26 @@ import java.util.List;
 public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미도 갖는다고 함.
     private static final int BLACKJACK = 21;
     private static final int ACE_IS_ELEVEN = 10;
+    private static final int INITIAL_CARDS_SIZE = 2;
 
     private List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public State determineState() {
+        int score = calculateScore();
+        if (score > BLACKJACK) {
+            return new Bust();
+        }
+        if (score == BLACKJACK && cards.size() == INITIAL_CARDS_SIZE) {
+            return new Blackjack();
+        }
+        if (score == BLACKJACK) {
+            return new Stay();
+        }
+        return new Wait();
     }
 
     public int calculateScore() {
