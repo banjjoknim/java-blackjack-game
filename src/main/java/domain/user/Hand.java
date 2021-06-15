@@ -34,7 +34,7 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
         return cards.size() == INITIAL_CARDS_SIZE;
     }
 
-    private int calculateScore() {
+    public int calculateScore() {
         int sum = cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getScore)

@@ -4,15 +4,13 @@ import domain.card.Card;
 
 public abstract class User {
 
-    private Hand hand = new Hand();
+    protected Hand hand = new Hand();
 
     public void draw(Card card) {
         hand.addCard(card);
     }
 
-    public boolean isWaiting() {
-        return !hand.hasEnded();
-    }
+    public abstract boolean isWait();
 
     public Hand getHand() {
         return hand;

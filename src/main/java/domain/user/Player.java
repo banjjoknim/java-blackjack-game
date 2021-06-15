@@ -10,6 +10,11 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
+    @Override
+    public boolean isWait() {
+        return !super.hand.hasEnded();
+    }
+
     public Name getName() {
         return name;
     }

@@ -32,14 +32,14 @@ public class Users {
         return users.stream()
                 .filter(user -> user instanceof Player)
                 .map(user -> (Player) user)
-                .filter(User::isWaiting)
+                .filter(User::isWait)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
     }
 
     public boolean hasWaitingPlayer() {
         return users.stream()
-                .anyMatch(User::isWaiting);
+                .anyMatch(User::isWait);
     }
 
     public User findDealer() {
