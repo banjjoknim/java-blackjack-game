@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.user.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,6 +58,32 @@ class HandTest {
                 Arguments.of(Arrays.asList(new Card(Symbol.HEART, Type.TEN), new Card(Symbol.DIAMOND, Type.JACK)), 20),
                 Arguments.of(Arrays.asList(new Card(Symbol.HEART, Type.KING), new Card(Symbol.DIAMOND, Type.JACK),
                         new Card(Symbol.SPADE, Type.ACE)), 21)
+        );
+    }
+
+    @DisplayName("손패의 상태를 결정하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpected")
+    void 손패의_상태를_결정한다(List<Card> cards, Class expected) {
+        // given
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
+
+        // when
+        State state = hand.determineState();
+
+        // then
+        assertThat(state).isInstanceOf(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpected() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.SIX), new Card(Symbol.DIAMOND, Type.KING), new Card(Symbol.SPADE, Type.JACK)), Bust.class),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.KING)), Blackjack.class),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.KING), new Card(Symbol.SPADE, Type.JACK)), Stay.class),
+                Arguments.of(Arrays.asList(new Card(Symbol.DIAMOND, Type.ACE), new Card(Symbol.DIAMOND, Type.SIX)), Wait.class)
         );
     }
 }
