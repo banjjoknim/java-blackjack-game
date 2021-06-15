@@ -10,6 +10,10 @@ public abstract class User {
         hand.addCard(card);
     }
 
+    public boolean isWaiting() {
+        return !hand.hasEnded();
+    }
+
     public Hand getHand() {
         return hand;
     }

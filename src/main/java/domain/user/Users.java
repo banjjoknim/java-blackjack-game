@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Deck;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +26,20 @@ public class Users {
 
     public void receiveCards(Deck deck) {
         users.forEach(deck::distributeCard);
+    }
+
+    public Player findWaitingPlayer() {
+        return users.stream()
+                .filter(user -> user instanceof Player)
+                .map(user -> (Player) user)
+                .filter(User::isWaiting)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
+    }
+
+    public boolean hasWaitingPlayer() {
+        return users.stream()
+                .anyMatch(User::isWaiting);
     }
 
     public User findDealer() {
