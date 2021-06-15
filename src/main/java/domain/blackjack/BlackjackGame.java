@@ -29,4 +29,8 @@ public class BlackjackGame {
     public Player getWaitingPlayer() {
         return users.findWaitingPlayer();
     }
+
+    public void proceedHitPhase(Player player) {
+        player.hit(deck);
+    }
 }
