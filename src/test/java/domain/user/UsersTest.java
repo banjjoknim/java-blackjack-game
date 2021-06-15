@@ -139,4 +139,17 @@ class UsersTest {
         assertThatThrownBy(users::findWaitingPlayer)
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @DisplayName("유저들 중에서 딜러를 찾는 기능을 테스트한다.")
+    @Test
+    void 유저들_중에서_딜러를_찾는다() {
+        // given
+        userList.add(new Dealer());
+        Users users = new Users(userList);
+
+        // when
+
+        // then
+        assertDoesNotThrow(users::findDealer);
+    }
 }
