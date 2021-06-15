@@ -41,6 +41,14 @@ public class Users {
                 .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
     }
 
+    public Dealer findDealer() {
+        return users.stream()
+                .filter(user -> user instanceof Dealer)
+                .map(user -> (Dealer) user)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
+    }
+
     public List<User> getUsers() {
         return Collections.unmodifiableList(users);
     }
