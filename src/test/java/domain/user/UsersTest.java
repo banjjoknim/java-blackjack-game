@@ -51,20 +51,6 @@ class UsersTest {
         );
     }
 
-    @DisplayName("유저들 중에서 딜러를 찾는 기능을 테스트한다.")
-    @Test
-    void 유저들_중에서_딜러를_찾는다() {
-        // given
-        userList.add(new Dealer());
-
-        // when
-        Users users = new Users(userList);
-        User user = users.findDealer();
-
-        // then
-        assertThat(user).isInstanceOf(Dealer.class);
-    }
-
     @DisplayName("딜러와 유저들이 각각 덱으로부터 카드를 나눠받는 기능을 테스트한다.")
     @Test
     void 딜러와_유저들이_각각_카드를_받는다() {
@@ -83,20 +69,6 @@ class UsersTest {
                 ()-> assertThat(list.get(1).getHand().getCards()).hasSize(1),
                 ()-> assertThat(list.get(2).getHand().getCards()).hasSize(1)
         );
-    }
-
-    @DisplayName("유저들 중에서 플레이어들을 찾는 기능을 테스트한다.")
-    @Test
-    void 유저들_중에서_플레이어들을_찾는다() {
-        // given
-        userList.add(new Dealer());
-        Users users = new Users(userList);
-
-        // when
-        List<Player> players = users.findPlayers();
-
-        // then
-        assertThat(players).hasSize(2);
     }
 
 }
