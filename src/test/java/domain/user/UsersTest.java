@@ -69,9 +69,9 @@ class UsersTest {
         // then
         List<User> list = users.getUsers();
         assertAll(
-                () -> assertThat(list.get(0).getHand().getCards()).hasSize(1),
-                () -> assertThat(list.get(1).getHand().getCards()).hasSize(1),
-                () -> assertThat(list.get(2).getHand().getCards()).hasSize(1)
+                () -> assertThat(list.get(0).getHand().getState().getCards()).hasSize(1),
+                () -> assertThat(list.get(1).getHand().getState().getCards()).hasSize(1),
+                () -> assertThat(list.get(2).getHand().getState().getCards()).hasSize(1)
         );
     }
 

@@ -86,7 +86,7 @@ class PlayerTest {
 
         // then
         assertAll(
-                () -> assertThat(player.getHand().getCards()).hasSize(1),
+                () -> assertThat(player.getHand().getState().getCards()).hasSize(1),
                 () -> assertThat(deck.getCards()).hasSize(51)
         );
     }

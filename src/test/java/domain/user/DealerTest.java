@@ -30,7 +30,7 @@ class DealerTest {
         // then
         assertAll(
                 () -> assertDoesNotThrow(Dealer::new),
-                () -> assertThat(new Dealer().getHand().getCards()).hasSize(0)
+                () -> assertThat(new Dealer().getHand().getState().getCards()).hasSize(0)
         );
     }
 
@@ -72,7 +72,7 @@ class DealerTest {
 
         // then
         assertAll(
-                () -> assertThat(dealer.getHand().getCards()).hasSize(1),
+                () -> assertThat(dealer.getHand().getState().getCards()).hasSize(1),
                 () -> assertThat(deck.getCards()).hasSize(51)
         );
     }

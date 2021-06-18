@@ -1,21 +1,29 @@
 package domain.user.state;
 
-import static domain.user.Hand.BLACKJACK;
+import domain.card.Card;
+
+import java.util.List;
 
 public class Wait extends State {
 
+    public Wait(List<Card> cards) {
+        super(cards);
+    }
+
     @Override
-    public State findNextState(int score, boolean isInitialCards) {
+    public State findNextState() {
+        int score = super.calculateScore();
+        boolean isInitialCards = super.isInitialCards();
         if (score > BLACKJACK) {
-            return new Bust();
+            return new Bust(cards);
         }
         if (score == BLACKJACK && isInitialCards) {
-            return new Blackjack();
+            return new Blackjack(cards);
         }
         if (score == BLACKJACK) {
-            return new Stay();
+            return new Stay(cards);
         }
-        return new Wait();
+        return new Wait(cards);
     }
 
     @Override

@@ -3,7 +3,10 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.user.state.*;
+import domain.user.state.Blackjack;
+import domain.user.state.Bust;
+import domain.user.state.Stay;
+import domain.user.state.Wait;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,9 +32,7 @@ class HandTest {
 
         // then
         assertAll(
-                () -> assertThat(hand.getState()).isInstanceOf(Wait.class),
-                () -> assertThat(hand.getCards()).hasSize(0),
-                () -> assertThat(hand.getScore()).isEqualTo(0)
+                () -> assertThat(hand.getState()).isInstanceOf(Wait.class)
         );
     }
 
@@ -46,7 +47,7 @@ class HandTest {
         hand.addCard(card);
 
         // then
-        assertThat(hand.getCards()).hasSize(1);
+        assertThat(hand.getState().getCards()).hasSize(1);
     }
 
     @DisplayName("손패의 상태를 결정하는 기능을 테스트한다.")

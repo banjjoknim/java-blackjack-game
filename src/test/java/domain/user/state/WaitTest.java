@@ -1,18 +1,31 @@
 package domain.user.state;
 
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class WaitTest {
+
+    private List<Card> cards;
+
+    @BeforeEach
+    void setUp() {
+        cards = new ArrayList<>();
+    }
 
     @DisplayName("대기 상태 생성을 테스트한다.")
     @Test
@@ -22,30 +35,51 @@ class WaitTest {
         // when
 
         // then
-        assertDoesNotThrow(Wait::new);
+        assertDoesNotThrow(() -> new Wait(cards));
     }
 
     @DisplayName("대기 상태일 때 다음 상태를 찾는 기능을 테스트한다.")
     @ParameterizedTest
-    @MethodSource("provideScoreAndIsInitialCardsAndExpected")
-    void 대기_상태에서_다음_상태를_찾는다(int score, boolean isInitialCards, Class expected) {
+    @MethodSource("provideCardsAndExpected")
+    void 대기_상태에서_다음_상태를_찾는다(List<Card> cards, Class expected) {
         // given
-        State state = new Wait();
+        State state = new Wait(this.cards);
+        cards.forEach(state::add);
 
         // when
-        State nextState = state.findNextState(score, isInitialCards);
+        State nextState = state.findNextState();
 
         assertThat(nextState).isInstanceOf(expected);
-
     }
 
-    private static Stream<Arguments> provideScoreAndIsInitialCardsAndExpected() {
+    private static Stream<Arguments> provideCardsAndExpected() {
         return Stream.of(
-                Arguments.of(21, true, Blackjack.class),
-                Arguments.of(21, false, Stay.class),
-                Arguments.of(20, true, Wait.class),
-                Arguments.of(20, false, Wait.class),
-                Arguments.of(22, false, Bust.class)
+                Arguments.of(
+                        Arrays.asList(
+                                new Card(Symbol.SPADE, Type.KING),
+                                new Card(Symbol.SPADE, Type.JACK)
+                        ),
+                        Wait.class),
+                Arguments.of(
+                        Arrays.asList(
+                                new Card(Symbol.SPADE, Type.KING),
+                                new Card(Symbol.SPADE, Type.ACE)
+                        ),
+                        Blackjack.class),
+                Arguments.of(
+                        Arrays.asList(
+                                new Card(Symbol.SPADE, Type.KING),
+                                new Card(Symbol.SPADE, Type.QUEEN),
+                                new Card(Symbol.SPADE, Type.TWO)
+                        ),
+                        Bust.class),
+                Arguments.of(
+                        Arrays.asList(
+                                new Card(Symbol.SPADE, Type.KING),
+                                new Card(Symbol.SPADE, Type.QUEEN),
+                                new Card(Symbol.SPADE, Type.ACE)
+                        ),
+                        Stay.class)
         );
     }
 
@@ -53,7 +87,7 @@ class WaitTest {
     @Test
     void 대기_상태는_차례가_끝난_상태가_아니다() {
         // given
-        State state = new Wait();
+        State state = new Wait(cards);
 
         // when
         boolean isEnded = state.isEnded();

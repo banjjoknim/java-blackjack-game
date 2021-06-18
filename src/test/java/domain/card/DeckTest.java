@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DeckTest {
 
@@ -26,7 +26,7 @@ class DeckTest {
 
         // then
         assertAll(
-                ()->assertThat(user.getHand().getCards()).hasSize(1),
+                ()->assertThat(user.getHand().getState().getCards()).hasSize(1),
                 ()->assertThat(deck.getCards()).hasSize(51)
         );
     }

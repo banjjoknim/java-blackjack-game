@@ -1,25 +1,17 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Type;
-import domain.user.state.*;
+import domain.user.state.State;
+import domain.user.state.Wait;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미도 갖는다고 함.
-    public static final int BLACKJACK = 21;
-    private static final int ACE_IS_ELEVEN = 10;
-    private static final int INITIAL_CARDS_SIZE = 2;
-    private static final int INITIAL_SCORE = 0;
 
-    private State state = new Wait();
-    private List<Card> cards = new ArrayList<>();
-    private int score = INITIAL_SCORE;
+    private State state = new Wait(new ArrayList<>());
 
     public void addCard(Card card) {
-        cards.add(card);
+        state.add(card);
     }
 
     public boolean hasEnded() {
@@ -27,40 +19,11 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     }
 
     public void update() {
-        score = calculateScore();
-        boolean isInitialCards = isInitialCards();
-        state = state.findNextState(score, isInitialCards);
-    }
-
-    public int calculateScore() {
-        int sum = cards.stream()
-                .map(Card::getType)
-                .mapToInt(Type::getScore)
-                .sum();
-        if (sum + ACE_IS_ELEVEN <= BLACKJACK && hasAceCard()) {
-            sum = sum + ACE_IS_ELEVEN;
-        }
-        return sum;
-    }
-
-    private boolean hasAceCard() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    private boolean isInitialCards() {
-        return cards.size() == INITIAL_CARDS_SIZE;
+        state = state.findNextState();
     }
 
     public State getState() {
         return state;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public int getScore() {
-        return score;
-    }
 }

@@ -61,9 +61,9 @@ class BlackjackGameTest {
 
         // then
         assertAll(
-                () -> assertThat(userList.get(0).getHand().getCards()).hasSize(2),
-                () -> assertThat(userList.get(1).getHand().getCards()).hasSize(2),
-                () -> assertThat(userList.get(2).getHand().getCards()).hasSize(2)
+                () -> assertThat(userList.get(0).getHand().getState().getCards()).hasSize(2),
+                () -> assertThat(userList.get(1).getHand().getState().getCards()).hasSize(2),
+                () -> assertThat(userList.get(2).getHand().getState().getCards()).hasSize(2)
         );
     }
 
@@ -142,8 +142,8 @@ class BlackjackGameTest {
 
         // then
         assertAll(
-                () -> assertThat(player.getHand().getCards()).hasSize(1),
-                () -> assertThat(dealer.getHand().getCards()).hasSize(1)
+                () -> assertThat(player.getHand().getState().getCards()).hasSize(1),
+                () -> assertThat(dealer.getHand().getState().getCards()).hasSize(1)
         );
     }
 
