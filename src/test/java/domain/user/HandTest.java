@@ -15,8 +15,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class HandTest {
+
+    @DisplayName("손패 생성을 테스트한다.")
+    @Test
+    void 손패가_생성된다() {
+        // given
+        Hand hand = new Hand();
+
+        // when
+
+        // then
+        assertAll(
+                () -> assertThat(hand.getState()).isInstanceOf(Wait.class),
+                () -> assertThat(hand.getCards()).hasSize(0),
+                () -> assertThat(hand.getScore()).isEqualTo(0)
+        );
+    }
 
     @DisplayName("손패에 카드를 추가하는 기능을 테스트한다.")
     @Test
