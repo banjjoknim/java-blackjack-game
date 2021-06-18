@@ -14,4 +14,9 @@ public abstract class Ended extends State {
     public State findNextState() {
         throw new IllegalStateException("차례가 끝났습니다.");
     }
+
+    @Override
+    public boolean isEnded() {
+        return true;
+    }
 }

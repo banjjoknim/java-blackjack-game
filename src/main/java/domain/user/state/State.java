@@ -33,7 +33,7 @@ public abstract class State {
         return sum;
     }
 
-    public boolean hasAceCard() {
+    private boolean hasAceCard() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }

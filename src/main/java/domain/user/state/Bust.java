@@ -10,8 +10,4 @@ public class Bust extends Ended {
         super(cards);
     }
 
-    @Override
-    public boolean isEnded() {
-        return true;
-    }
 }
