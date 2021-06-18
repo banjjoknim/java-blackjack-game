@@ -13,4 +13,14 @@ public class Dealer extends User {
         }
         return true;
     }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }

@@ -18,6 +18,10 @@ public abstract class User {
 
     public abstract boolean isWait();
 
+    public abstract boolean isPlayer();
+
+    public abstract boolean isDealer();
+
     public Hand getHand() {
         return hand;
     }

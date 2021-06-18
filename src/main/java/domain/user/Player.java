@@ -15,6 +15,16 @@ public class Player extends User {
         return !super.hand.hasEnded();
     }
 
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
     public Name getName() {
         return name;
     }

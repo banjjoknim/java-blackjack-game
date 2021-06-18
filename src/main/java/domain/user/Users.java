@@ -16,7 +16,7 @@ public class Users {
 
     private void validateDealerIsExists(List<User> users) {
         boolean isExistsDealer = users.stream()
-                .anyMatch(user -> user instanceof Dealer);
+                .anyMatch(User::isDealer);
         if (!isExistsDealer) {
             throw new IllegalArgumentException("유저들에 딜러가 포함되어 있지 않습니다.");
         }
@@ -28,13 +28,13 @@ public class Users {
 
     public boolean hasWaitingPlayer() {
         return users.stream()
-                .filter(user -> user instanceof Player)
+                .filter(User::isPlayer)
                 .anyMatch(User::isWait);
     }
 
     public Player findWaitingPlayer() {
         return users.stream()
-                .filter(user -> user instanceof Player)
+                .filter(User::isPlayer)
                 .map(user -> (Player) user)
                 .filter(User::isWait)
                 .findFirst()
@@ -43,7 +43,7 @@ public class Users {
 
     public Dealer findDealer() {
         return users.stream()
-                .filter(user -> user instanceof Dealer)
+                .filter(User::isDealer)
                 .map(user -> (Dealer) user)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
