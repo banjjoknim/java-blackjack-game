@@ -76,4 +76,30 @@ class DealerTest {
                 () -> assertThat(deck.getCards()).hasSize(51)
         );
     }
+
+    @DisplayName("딜러가 플레이어인지 여부를 검사하는 기능을 테스트한다.")
+    @Test
+    void 딜러는_딜러이다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        boolean isPlayer = dealer.isPlayer();
+
+        // then
+        assertThat(isPlayer).isFalse();
+    }
+
+    @DisplayName("딜러가 딜러인지 여부를 검사하는 기능을 테스트한다.")
+    @Test
+    void 플레이어는_딜러가_아니다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        boolean isDealer = dealer.isDealer();
+
+        // then
+        assertThat(isDealer).isTrue();
+    }
 }

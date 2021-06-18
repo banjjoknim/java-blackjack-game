@@ -91,4 +91,30 @@ class PlayerTest {
         );
     }
 
+    @DisplayName("플레이어가 플레이어인지 여부를 검사하는 기능을 테스트한다.")
+    @Test
+    void 플레이어는_플레이어이다() {
+        // given
+        Player player = new Player(name, bettingMoney);
+
+        // when
+        boolean isPlayer = player.isPlayer();
+
+        // then
+        assertThat(isPlayer).isTrue();
+    }
+
+    @DisplayName("플레이어가 딜러인지 여부를 검사하는 기능을 테스트한다.")
+    @Test
+    void 플레이어는_딜러가_아니다() {
+        // given
+        Player player = new Player(name, bettingMoney);
+
+        // when
+        boolean isDealer = player.isDealer();
+
+        // then
+        assertThat(isDealer).isFalse();
+    }
+
 }
