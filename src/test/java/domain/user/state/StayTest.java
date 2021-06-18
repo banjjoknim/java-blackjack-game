@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,5 +46,18 @@ class StayTest {
                 Arguments.of(20, false),
                 Arguments.of(22, false)
         );
+    }
+
+    @DisplayName("스테이 상태일 때 차례가 끝난 상태인지 여부를 검사하는 기능을 테스트한다.")
+    @Test
+    void 스테이_상태는_차례가_끝난_상태이다() {
+        // given
+        State state = new Stay();
+
+        // when
+        boolean isEnded = state.isEnded();
+
+        // then
+        assertThat(isEnded).isTrue();
     }
 }
