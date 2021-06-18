@@ -12,7 +12,7 @@ public class Player extends User {
 
     @Override
     public boolean isWait() {
-        return !super.hand.hasEnded();
+        return !super.state.isEnded();
     }
 
     @Override

@@ -2,18 +2,22 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.user.state.State;
+import domain.user.state.Wait;
+
+import java.util.ArrayList;
 
 public abstract class User {
 
-    protected Hand hand = new Hand();
+    protected State state = new Wait(new ArrayList<>());
 
     public void hit(Deck deck) {
         deck.distributeCard(this);
     }
 
     public void draw(Card card) {
-        hand.addCard(card);
-        hand.update();
+        state.add(card);
+        state = state.findNextState();
     }
 
     public abstract boolean isWait();
@@ -22,7 +26,7 @@ public abstract class User {
 
     public abstract boolean isDealer();
 
-    public Hand getHand() {
-        return hand;
+    public State getState() {
+        return state;
     }
 }

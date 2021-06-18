@@ -23,7 +23,7 @@ class UserTest {
         user.draw(card);
 
         // then
-        assertThat(user.getHand().getState().getCards()).hasSize(1);
+        assertThat(user.getState().getCards()).hasSize(1);
     }
 
 }

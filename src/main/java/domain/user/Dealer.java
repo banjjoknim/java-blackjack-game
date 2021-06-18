@@ -8,7 +8,7 @@ public class Dealer extends User {
 
     @Override
     public boolean isWait() {
-        if (super.hand.getState().calculateScore() >= DEALER_RULE_SCORE) {
+        if (super.state.calculateScore() >= DEALER_RULE_SCORE) {
             return false;
         }
         return true;
