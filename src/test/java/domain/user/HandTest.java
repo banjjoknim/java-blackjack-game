@@ -43,7 +43,7 @@ class HandTest {
         }
 
         // when
-        hand.changeState();
+        hand.update();
 
         // then
         assertThat(hand.getState()).isInstanceOf(expected);
@@ -67,7 +67,7 @@ class HandTest {
         cards.forEach(hand::addCard);
 
         // when
-        hand.changeState();
+        hand.update();
 
         // then
         assertThat(hand.hasEnded()).isEqualTo(expectedResult);

@@ -13,7 +13,7 @@ public abstract class User {
 
     public void draw(Card card) {
         hand.addCard(card);
-        hand.changeState();
+        hand.update();
     }
 
     public abstract boolean isWait();

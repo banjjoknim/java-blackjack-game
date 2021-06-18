@@ -12,9 +12,11 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     public static final int BLACKJACK = 21;
     private static final int ACE_IS_ELEVEN = 10;
     private static final int INITIAL_CARDS_SIZE = 2;
+    private static final int INITIAL_SCORE = 0;
 
     private State state = new Wait();
     private List<Card> cards = new ArrayList<>();
+    private int score = INITIAL_SCORE;
 
     public void addCard(Card card) {
         cards.add(card);
@@ -24,8 +26,8 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
         return state.isEnded();
     }
 
-    public void changeState() {
-        int score = calculateScore();
+    public void update() {
+        score = calculateScore();
         boolean isInitialCards = isInitialCards();
         state = state.findNextState(score, isInitialCards);
     }
@@ -58,4 +60,7 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
         return Collections.unmodifiableList(cards);
     }
 
+    public int getScore() {
+        return score;
+    }
 }
