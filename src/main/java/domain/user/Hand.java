@@ -21,7 +21,7 @@ public class Hand { // 영문을 의역하면 `Hand`는 '손패' 라는 의미�
     }
 
     public boolean hasEnded() {
-        return state instanceof Ended;
+        return state.isEnded();
     }
 
     public void changeState() {

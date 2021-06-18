@@ -17,4 +17,9 @@ public class Wait extends State {
         }
         return new Wait();
     }
+
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
 }
