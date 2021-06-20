@@ -13,6 +13,9 @@ public class Stay extends Ended {
 
     @Override
     protected GameResult determineResult(State state) {
+        if (state.isBust()) {
+            return GameResult.WIN;
+        }
         if (state.isBlackjack()) {
             return GameResult.LOSE;
         }
