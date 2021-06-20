@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.result.GameResult;
 import domain.user.state.State;
 import domain.user.state.Wait;
 
@@ -18,6 +19,10 @@ public class Player extends User {
         super(state);
         this.name = name;
         this.bettingMoney = bettingMoney;
+    }
+
+    public GameResult produceGameResult(Dealer dealer) {
+        return state.findResult(dealer.state);
     }
 
     public void stay() {
