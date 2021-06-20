@@ -18,6 +18,8 @@ public abstract class State {
         this.cards = new ArrayList<>(cards);
     }
 
+    public abstract State toStay();
+
     public void add(Card card) {
         cards.add(card);
     }

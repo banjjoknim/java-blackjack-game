@@ -11,6 +11,11 @@ public abstract class Ended extends State {
     }
 
     @Override
+    public State toStay() {
+        throw new IllegalStateException("차례가 끝난 상태이므로 스테이 상태를 반환할 수 없습니다.");
+    }
+
+    @Override
     public State findNextState() {
         throw new IllegalStateException("차례가 끝났습니다.");
     }

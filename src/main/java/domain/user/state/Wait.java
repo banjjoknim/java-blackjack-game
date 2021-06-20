@@ -11,6 +11,11 @@ public class Wait extends State {
     }
 
     @Override
+    public State toStay() {
+        return new Stay(cards);
+    }
+
+    @Override
     public State findNextState() {
         int score = super.calculateScore();
         boolean isInitialCards = super.isInitialCards();
