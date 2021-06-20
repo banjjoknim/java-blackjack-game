@@ -11,6 +11,21 @@ public class Wait extends State {
     }
 
     @Override
+    protected boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    protected boolean isBust() {
+        return false;
+    }
+
+    @Override
+    protected boolean isStay() {
+        return false;
+    }
+
+    @Override
     public State toStay() {
         return new Stay(cards);
     }

@@ -10,4 +10,19 @@ public class Blackjack extends Ended {
         super(cards);
     }
 
+    @Override
+    protected boolean isBlackjack() {
+        return true;
+    }
+
+    @Override
+    protected boolean isBust() {
+        return false;
+    }
+
+    @Override
+    protected boolean isStay() {
+        return false;
+    }
+
 }

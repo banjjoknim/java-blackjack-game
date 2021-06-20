@@ -10,4 +10,19 @@ public class Bust extends Ended {
         super(cards);
     }
 
+    @Override
+    protected boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    protected boolean isBust() {
+        return true;
+    }
+
+    @Override
+    protected boolean isStay() {
+        return false;
+    }
+
 }

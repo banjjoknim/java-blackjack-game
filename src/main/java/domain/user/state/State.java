@@ -18,6 +18,12 @@ public abstract class State {
         this.cards = new ArrayList<>(cards);
     }
 
+    protected abstract boolean isBlackjack();
+
+    protected abstract boolean isBust();
+
+    protected abstract boolean isStay();
+
     public abstract State toStay();
 
     public void add(Card card) {
