@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class WaitTest {
@@ -94,5 +95,18 @@ class WaitTest {
 
         // then
         assertThat(isEnded).isFalse();
+    }
+
+    @DisplayName("대기에서 스테이 상태를 반환할 경우를 테스트한다.")
+    @Test
+    void 대기_상태에서_스테이_상태를_반환한다() {
+        // given
+        State state = new Wait(cards);
+
+        // when
+        State actualState = state.toStay();
+
+        // then
+        assertThat(actualState).isInstanceOf(Stay.class);
     }
 }

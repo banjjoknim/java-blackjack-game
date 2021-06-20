@@ -50,4 +50,16 @@ class BustTest {
         // then
         assertThat(isEnded).isTrue();
     }
+
+    @DisplayName("차례가 끝난 상태에서 스테이 상태를 반환할 경우를 테스트한다.")
+    @Test
+    void 버스트_상태에서_스테이_상태를_반환하려고_할때_예외가_발생한다() {
+        // given
+        State state = new Bust(cards);
+
+        // when
+
+        // then
+        assertThatThrownBy(state::toStay).isInstanceOf(IllegalStateException.class);
+    }
 }
