@@ -1,6 +1,7 @@
 package domain.user.state;
 
 import domain.card.Card;
+import domain.result.GameResult;
 
 import java.util.List;
 
@@ -9,6 +10,13 @@ public abstract class Ended extends State {
     public Ended(List<Card> cards) {
         super(cards);
     }
+
+    @Override
+    public GameResult findResult(State state) {
+        return determineResult(state);
+    }
+
+    protected abstract GameResult determineResult(State state);
 
     @Override
     public State toStay() {

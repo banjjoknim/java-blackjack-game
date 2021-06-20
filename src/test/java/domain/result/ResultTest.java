@@ -14,21 +14,21 @@ class ResultTest {
     @DisplayName("입력값에 해당하는 게임 결과를 찾는 기능을 테스트한다.")
     @ParameterizedTest
     @MethodSource("provideValueAndExpected")
-    void 입력에_해당하는_게임_결과를_찾는다(int value, Result expected) {
+    void 입력에_해당하는_게임_결과를_찾는다(int value, GameResult expected) {
         // given
 
         // when
-        Result result = Result.from(value);
+        GameResult gameResult = GameResult.from(value);
 
         // then
-        assertThat(result).isEqualTo(expected);
+        assertThat(gameResult).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideValueAndExpected() {
         return Stream.of(
-                Arguments.of(-1, Result.LOSE),
-                Arguments.of(0, Result.DRAW),
-                Arguments.of(1, Result.WIN)
+                Arguments.of(-1, GameResult.LOSE),
+                Arguments.of(0, GameResult.DRAW),
+                Arguments.of(1, GameResult.WIN)
         );
     }
 }

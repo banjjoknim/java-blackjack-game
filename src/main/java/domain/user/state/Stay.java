@@ -1,6 +1,7 @@
 package domain.user.state;
 
 import domain.card.Card;
+import domain.result.GameResult;
 
 import java.util.List;
 
@@ -8,6 +9,14 @@ public class Stay extends Ended {
 
     public Stay(List<Card> cards) {
         super(cards);
+    }
+
+    @Override
+    protected GameResult determineResult(State state) {
+        if (state.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.from(Integer.compare(this.calculateScore(), state.calculateScore()));
     }
 
     @Override

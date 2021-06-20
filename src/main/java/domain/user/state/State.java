@@ -2,6 +2,7 @@ package domain.user.state;
 
 import domain.card.Card;
 import domain.card.Type;
+import domain.result.GameResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,8 @@ public abstract class State {
     public State(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
+
+    public abstract GameResult findResult(State state);
 
     protected abstract boolean isBlackjack();
 

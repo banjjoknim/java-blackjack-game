@@ -1,6 +1,7 @@
 package domain.user.state;
 
 import domain.card.Card;
+import domain.result.GameResult;
 
 import java.util.List;
 
@@ -8,6 +9,11 @@ public class Wait extends State {
 
     public Wait(List<Card> cards) {
         super(cards);
+    }
+
+    @Override
+    public GameResult findResult(State state) {
+        throw new IllegalStateException("현재 차례를 마치지 않아, 결과를 찾을 수 없습니다.");
     }
 
     @Override
