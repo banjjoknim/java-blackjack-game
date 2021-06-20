@@ -109,4 +109,43 @@ class WaitTest {
         // then
         assertThat(actualState).isInstanceOf(Stay.class);
     }
+
+    @DisplayName("현재 상태가 블랙잭 상태인지 아닌지 검사하는 기능을 테스트한다.")
+    @Test
+    void 대기_상태는_블랙잭_상태이다() {
+        // given
+        State state = new Wait(new ArrayList<>());
+
+        // when
+        boolean isBlackjack = state.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isFalse();
+    }
+
+    @DisplayName("현재 상태가 버스트 상태인지 아닌지 검사하는 기능을 테스트한다.")
+    @Test
+    void 대기_상태는_버스트_상태가_아니다() {
+        // given
+        State state = new Wait(new ArrayList<>());
+
+        // when
+        boolean isBust = state.isBust();
+
+        // then
+        assertThat(isBust).isFalse();
+    }
+
+    @DisplayName("현재 상태가 스테이 상태인지 아닌지 검사하는 기능을 테스트한다.")
+    @Test
+    void 대기_상태는_스테이_상태가_아니다() {
+        // given
+        State state = new Wait(new ArrayList<>());
+
+        // when
+        boolean isStay = state.isStay();
+
+        // then
+        assertThat(isStay).isFalse();
+    }
 }
