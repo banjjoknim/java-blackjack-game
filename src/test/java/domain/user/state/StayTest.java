@@ -1,11 +1,19 @@
 package domain.user.state;
 
 import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -100,5 +108,32 @@ class StayTest {
 
         // then
         assertThat(isStay).isTrue();
+    }
+
+    @DisplayName("스테이 상태일 때 결과를 찾는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideStateAndGameResult")
+    void 스테이_상태일_때_결과를_결정한다(State state, GameResult expected) {
+        // given
+        State stay = new Stay(Arrays.asList(Card.of(Symbol.HEART, Type.KING), Card.of(Symbol.HEART, Type.EIGHT)));
+
+        // when
+        GameResult gameResult = stay.findResult(state);
+
+        // then
+        assertThat(gameResult).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideStateAndGameResult() {
+        return Stream.of(
+                Arguments.of(new Bust(new ArrayList<>()), GameResult.WIN),
+                Arguments.of(new Blackjack(new ArrayList<>()), GameResult.LOSE),
+                Arguments.of(new Stay(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SEVEN))),
+                        GameResult.WIN),
+                Arguments.of(new Stay(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.EIGHT))),
+                        GameResult.DRAW),
+                Arguments.of(new Stay(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.NINE))),
+                        GameResult.LOSE)
+        );
     }
 }

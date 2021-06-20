@@ -148,4 +148,25 @@ class WaitTest {
         // then
         assertThat(isStay).isFalse();
     }
+
+    @DisplayName("대기 상태일 때 결과를 찾는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideStateAndGameResult")
+    void 대기_상태일_때_결과를_결정하려고_하면_예외가_발생한다(State state) {
+        // given
+        State wait = new Wait(new ArrayList<>());
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> wait.findResult(state)).isInstanceOf(IllegalStateException.class);
+    }
+
+    private static Stream<Arguments> provideStateAndGameResult() {
+        return Stream.of(
+                Arguments.of(new Bust(new ArrayList<>())),
+                Arguments.of(new Blackjack(new ArrayList<>())),
+                Arguments.of(new Stay(new ArrayList<>()))
+        );
+    }
 }
