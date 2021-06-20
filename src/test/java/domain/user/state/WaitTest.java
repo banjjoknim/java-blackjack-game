@@ -56,28 +56,28 @@ class WaitTest {
         return Stream.of(
                 Arguments.of(
                         Arrays.asList(
-                                new Card(Symbol.SPADE, Type.KING),
-                                new Card(Symbol.SPADE, Type.JACK)
+                                Card.of(Symbol.SPADE, Type.KING),
+                                Card.of(Symbol.SPADE, Type.JACK)
                         ),
                         Wait.class),
                 Arguments.of(
                         Arrays.asList(
-                                new Card(Symbol.SPADE, Type.KING),
-                                new Card(Symbol.SPADE, Type.ACE)
+                                Card.of(Symbol.SPADE, Type.KING),
+                                Card.of(Symbol.SPADE, Type.ACE)
                         ),
                         Blackjack.class),
                 Arguments.of(
                         Arrays.asList(
-                                new Card(Symbol.SPADE, Type.KING),
-                                new Card(Symbol.SPADE, Type.QUEEN),
-                                new Card(Symbol.SPADE, Type.TWO)
+                                Card.of(Symbol.SPADE, Type.KING),
+                                Card.of(Symbol.SPADE, Type.QUEEN),
+                                Card.of(Symbol.SPADE, Type.TWO)
                         ),
                         Bust.class),
                 Arguments.of(
                         Arrays.asList(
-                                new Card(Symbol.SPADE, Type.KING),
-                                new Card(Symbol.SPADE, Type.QUEEN),
-                                new Card(Symbol.SPADE, Type.ACE)
+                                Card.of(Symbol.SPADE, Type.KING),
+                                Card.of(Symbol.SPADE, Type.QUEEN),
+                                Card.of(Symbol.SPADE, Type.ACE)
                         ),
                         Stay.class)
         );

@@ -94,7 +94,7 @@ class UsersTest {
     void 대기중인_플레이어가_존재하지_않는다() {
         // given
         userList.add(new Dealer());
-        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        List<Card> cards = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.SPADE, Type.KING));
         User user1 = userList.get(0);
         User user2 = userList.get(1);
         cards.forEach(user1::draw);
@@ -126,7 +126,7 @@ class UsersTest {
     void 대기중인_플레이어가_존재하지_않을_때_대기중인_플레이어를_찾으면_예외가_발생한다() {
         // given
         userList.add(new Dealer());
-        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        List<Card> cards = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.SPADE, Type.KING));
         User user1 = userList.get(0);
         User user2 = userList.get(1);
         cards.forEach(user1::draw);

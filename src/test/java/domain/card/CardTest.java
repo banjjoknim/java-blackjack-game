@@ -20,7 +20,7 @@ class CardTest {
         Type type = Type.QUEEN;
 
         // when
-        Card card = new Card(symbol, type);
+        Card card = Card.of(symbol, type);
 
         // then
         assertAll(
@@ -53,7 +53,7 @@ class CardTest {
     @Test
     void 카드가_ACE_타입이다() {
         // given
-        Card card = new Card(Symbol.DIAMOND, Type.ACE);
+        Card card = Card.of(Symbol.DIAMOND, Type.ACE);
 
         // when
         boolean isAce = card.isAce();
@@ -66,7 +66,7 @@ class CardTest {
     @Test
     void 카드가_ACE_타입이_아니다() {
         // given
-        Card card = new Card(Symbol.DIAMOND, Type.KING);
+        Card card = Card.of(Symbol.DIAMOND, Type.KING);
 
         // when
         boolean isAce = card.isAce();

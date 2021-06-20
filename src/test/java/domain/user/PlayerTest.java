@@ -63,14 +63,14 @@ class PlayerTest {
 
     private static Stream<Arguments> provideCardsAndExpected() {
         return Stream.of(
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.ACE)), false),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.QUEEN)), true),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.FIVE)), true),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.SPADE, Type.THREE)), false),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN)), true),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN),
-                        new Card(Symbol.HEART, Type.FOUR)), false)
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.ACE)), false),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.QUEEN)), true),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.FIVE)), true),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.QUEEN),
+                        Card.of(Symbol.SPADE, Type.THREE)), false),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SEVEN)), true),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SEVEN),
+                        Card.of(Symbol.HEART, Type.FOUR)), false)
         );
     }
 

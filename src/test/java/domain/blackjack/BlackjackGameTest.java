@@ -84,7 +84,7 @@ class BlackjackGameTest {
     @Test
     void 대기중인_플레이어가_존재하지_않는다() {
         // given
-        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        List<Card> cards = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.SPADE, Type.KING));
         User user1 = users.getUsers().get(0);
         User user2 = users.getUsers().get(1);
         cards.forEach(user1::draw);
@@ -114,7 +114,7 @@ class BlackjackGameTest {
     @Test
     void 대기중인_플레이어가_없을_때_대기중인_플레이어를_찾으면_예외가_발생한다() {
         // given
-        List<Card> cards = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.SPADE, Type.KING));
+        List<Card> cards = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.SPADE, Type.KING));
         User user1 = userList.get(0);
         User user2 = userList.get(1);
         cards.forEach(user1::draw);
@@ -152,7 +152,7 @@ class BlackjackGameTest {
     @MethodSource("provideCardsOfOverRuleScore")
     void 대기중인_플레이어가_없고_딜러의_점수가_룰로_지정된_점수보다_크면_딜러의_차례가_아니다(List<Card> cards) {
         // given
-        List<Card> cardList = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING));
+        List<Card> cardList = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.HEART, Type.KING));
         User user1 = userList.get(0);
         User user2 = userList.get(1);
         cardList.forEach(user1::draw);
@@ -170,11 +170,11 @@ class BlackjackGameTest {
 
     private static Stream<Arguments> provideCardsOfOverRuleScore() {
         return Stream.of(
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.ACE))),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN),
-                        new Card(Symbol.HEART, Type.FOUR))),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.QUEEN))),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SEVEN)))
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.ACE))),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SEVEN),
+                        Card.of(Symbol.HEART, Type.FOUR))),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.QUEEN))),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SEVEN)))
         );
     }
 
@@ -183,7 +183,7 @@ class BlackjackGameTest {
     @MethodSource("provideCardsOfUnderRuleScore")
     void 대기중인_플레이어가_없고_딜러의_점수가_룰로_지정된_점수보다_작으면_딜러의_차례이다(List<Card> cards) {
         // given
-        List<Card> cardList = Arrays.asList(new Card(Symbol.SPADE, Type.ACE), new Card(Symbol.HEART, Type.KING));
+        List<Card> cardList = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.HEART, Type.KING));
         User user1 = userList.get(0);
         User user2 = userList.get(1);
         cardList.forEach(user1::draw);
@@ -201,9 +201,9 @@ class BlackjackGameTest {
 
     private static Stream<Arguments> provideCardsOfUnderRuleScore() {
         return Stream.of(
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.SIX))),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.KING), new Card(Symbol.SPADE, Type.FIVE))),
-                Arguments.of(Arrays.asList(new Card(Symbol.SPADE, Type.FIVE), new Card(Symbol.SPADE, Type.ACE))));
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.SIX))),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.KING), Card.of(Symbol.SPADE, Type.FIVE))),
+                Arguments.of(Arrays.asList(Card.of(Symbol.SPADE, Type.FIVE), Card.of(Symbol.SPADE, Type.ACE))));
     }
 
     @DisplayName("대기중인 플레이어가 있을 때, 딜러가 카드를 뽑을 차례인지 여부 판단을 테스트한다.")

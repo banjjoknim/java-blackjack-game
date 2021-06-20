@@ -16,7 +16,7 @@ class UserTest {
     @Test
     void 유저의_손패에_카드가_추가된다() {
         // given
-        Card card = new Card(Symbol.HEART, Type.ACE);
+        Card card = Card.of(Symbol.HEART, Type.ACE);
 
         // when
         User user = new Player(new Name("name"), new BettingMoney(new BigDecimal("1000")));
