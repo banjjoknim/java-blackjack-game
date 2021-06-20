@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.user.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -115,6 +118,40 @@ class PlayerTest {
 
         // then
         assertThat(isDealer).isFalse();
+    }
+
+    @DisplayName("플레이어가 대기 상태일 때, 스테이로 차례를 마치는 기능을 테스트한다.")
+    @Test
+    void 플레이어가_대기_상태일_때_스테이를_선택하면_스테이_상태가_된다() {
+        // given
+        Player player = new Player(name, bettingMoney, new Wait(new ArrayList<>()));
+
+        // when
+        player.stay();
+
+        // then
+        assertThat(player.getState()).isInstanceOf(Stay.class);
+    }
+
+    @DisplayName("플레이어의 차례가 끝난 상태일 때, 스테이로 차례를 마치는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideState")
+    void 플레이어의_차례가_끝난_상태일_때_스테이를_선택하면_예외가_발생한다(State state) {
+        // given
+        Player player = new Player(name, bettingMoney, state);
+
+        // when
+
+        // then
+        assertThatThrownBy(player::stay).isInstanceOf(IllegalStateException.class);
+    }
+
+    private static Stream<Arguments> provideState() {
+        return Stream.of(
+                Arguments.of(new Bust(new ArrayList<>())),
+                Arguments.of(new Blackjack(new ArrayList<>())),
+                Arguments.of(new Stay(new ArrayList<>()))
+        );
     }
 
 }
