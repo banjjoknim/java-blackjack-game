@@ -3,13 +3,14 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.user.state.State;
-import domain.user.state.Wait;
-
-import java.util.ArrayList;
 
 public abstract class User {
 
-    protected State state = new Wait(new ArrayList<>());
+    protected State state;
+
+    public User(State state) {
+        this.state = state;
+    }
 
     public void hit(Deck deck) {
         deck.distributeCard(this);
