@@ -13,6 +13,10 @@ public class BettingMoney {
         this.amount = amount;
     }
 
+    public BigDecimal calculateProfit(BigDecimal earningRate) {
+        return amount.multiply(earningRate);
+    }
+
     private void validateAmount(BigDecimal amount) {
         if (BigDecimal.ZERO.compareTo(amount) != POSITIVE) {
             throw new IllegalArgumentException("배팅 금액은 0보다 커야합니다.");
