@@ -2,14 +2,19 @@ package domain.user;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BettingMoneyTest {
+
+    private static final BettingMoney THOUSAND = new BettingMoney(BigDecimal.valueOf(1000));
 
     @DisplayName("배팅 금액이 0과 같거나 작을 경우 예외 처리를 테스트한다.")
     @ParameterizedTest
@@ -38,4 +43,27 @@ class BettingMoneyTest {
         // then
         assertThat(bettingMoney.getAmount()).isEqualTo(amount);
     }
+
+    @DisplayName("수익률과 배팅금으로 수익을 계산하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideBettingMoneyAndEarningRate")
+    void 수익률과_배팅금으로_수익을_계산한다(BettingMoney bettingMoney, BigDecimal earningRate, BigDecimal expected) {
+        // given
+
+        // when
+        BigDecimal profit = bettingMoney.calculateProfit(earningRate);
+
+        // then
+        assertThat(profit).isEqualTo(profit);
+    }
+
+    private static Stream<Arguments> provideBettingMoneyAndEarningRate() {
+        return Stream.of(
+                Arguments.of(THOUSAND, BigDecimal.valueOf(1.5), BigDecimal.valueOf(1500)),
+                Arguments.of(THOUSAND, BigDecimal.valueOf(1), BigDecimal.valueOf(1000)),
+                Arguments.of(THOUSAND, BigDecimal.valueOf(0), BigDecimal.valueOf(0)),
+                Arguments.of(THOUSAND, BigDecimal.valueOf(-1), BigDecimal.valueOf(-1000))
+        );
+    }
+
 }
