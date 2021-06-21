@@ -1,7 +1,7 @@
 package domain.user;
 
+import domain.result.EarningRate;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -48,11 +48,11 @@ class BettingMoneyTest {
     @DisplayName("수익률과 배팅금으로 수익을 계산하는 기능을 테스트한다.")
     @ParameterizedTest
     @MethodSource("provideBettingMoneyAndEarningRate")
-    void 수익률과_배팅금으로_수익을_계산한다(BettingMoney bettingMoney, BigDecimal earningRate, Profit expected) {
+    void 수익률과_배팅금으로_수익을_계산한다(BettingMoney bettingMoney, EarningRate earningRate, Profit expected) {
         // given
 
         // when
-        Profit profit = bettingMoney.calculateProfit(earningRate);
+        Profit profit = bettingMoney.produceProfit(earningRate);
 
         // then
         assertThat(profit).isEqualTo(expected);
@@ -60,10 +60,10 @@ class BettingMoneyTest {
 
     private static Stream<Arguments> provideBettingMoneyAndEarningRate() {
         return Stream.of(
-                Arguments.of(THOUSAND, BigDecimal.valueOf(1.5), new Profit(BigDecimal.valueOf(1500))),
-                Arguments.of(THOUSAND, BigDecimal.valueOf(1), new Profit(BigDecimal.valueOf(1000))),
-                Arguments.of(THOUSAND, BigDecimal.valueOf(0), new Profit(BigDecimal.valueOf(0))),
-                Arguments.of(THOUSAND, BigDecimal.valueOf(-1), new Profit(BigDecimal.valueOf(-1000)))
+                Arguments.of(THOUSAND, EarningRate.ONE_POINT_FIVE, new Profit(BigDecimal.valueOf(1500))),
+                Arguments.of(THOUSAND, EarningRate.ONE, new Profit(BigDecimal.valueOf(1000))),
+                Arguments.of(THOUSAND, EarningRate.ZERO, new Profit(BigDecimal.valueOf(0))),
+                Arguments.of(THOUSAND, EarningRate.MINUS_ONE, new Profit(BigDecimal.valueOf(-1000)))
         );
     }
 

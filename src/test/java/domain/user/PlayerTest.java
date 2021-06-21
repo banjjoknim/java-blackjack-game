@@ -44,7 +44,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         name = new Name("name");
-        bettingMoney = new BettingMoney(new BigDecimal("1000"));
+        bettingMoney = new BettingMoney(BigDecimal.valueOf(1000));
     }
 
     @DisplayName("플레이어 생성을 테스트한다.")
@@ -194,6 +194,36 @@ class PlayerTest {
                 Arguments.of(BUST_23, BLACKJACK, GameResult.BLACKJACK),
                 Arguments.of(STAY_20, BLACKJACK, GameResult.BLACKJACK),
                 Arguments.of(BLACKJACK, BLACKJACK, GameResult.DRAW)
+        );
+    }
+
+    @DisplayName("플레이어의 수익을 생성하는 기능을 테스트한다.")
+    @ParameterizedTest
+    @MethodSource("provideStatesAndProfit")
+    void 플레이어의_수익을_생성한다(State playerState, State dealerState, Profit expected) {
+        // given
+        Player player = new Player(name, bettingMoney, playerState);
+        Dealer dealer = new Dealer(dealerState);
+
+        // when
+        Profit profit = player.produceProfit(dealer);
+
+        // then
+        assertThat(profit).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideStatesAndProfit() {
+        return Stream.of(
+                Arguments.of(BUST_23, BUST_22, new Profit(BigDecimal.valueOf(-1000))),
+                Arguments.of(STAY_20, BUST_23, new Profit(BigDecimal.valueOf(1000))),
+                Arguments.of(BLACKJACK, BUST_23, new Profit(BigDecimal.valueOf(1500))),
+                Arguments.of(BUST_23, STAY_20, new Profit(BigDecimal.valueOf(-1000))),
+                Arguments.of(STAY_20, STAY_20, new Profit(BigDecimal.ZERO)),
+                Arguments.of(STAY_13, STAY_20, new Profit(BigDecimal.valueOf(-1000))),
+                Arguments.of(BLACKJACK, STAY_20, new Profit(BigDecimal.valueOf(1500))),
+                Arguments.of(BUST_23, BLACKJACK, new Profit(BigDecimal.valueOf(-1000))),
+                Arguments.of(STAY_20, BLACKJACK, new Profit(BigDecimal.valueOf(-1000))),
+                Arguments.of(BLACKJACK, BLACKJACK, new Profit(BigDecimal.ZERO))
         );
     }
 

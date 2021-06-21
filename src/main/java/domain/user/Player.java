@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.result.EarningRate;
 import domain.result.GameResult;
 import domain.user.state.State;
 import domain.user.state.Wait;
@@ -19,6 +20,12 @@ public class Player extends User {
         super(state);
         this.name = name;
         this.bettingMoney = bettingMoney;
+    }
+
+    public Profit produceProfit(Dealer dealer) {
+        GameResult gameResult = produceGameResult(dealer);
+        EarningRate earningRate = EarningRate.from(gameResult);
+        return bettingMoney.produceProfit(earningRate);
     }
 
     public GameResult produceGameResult(Dealer dealer) {
