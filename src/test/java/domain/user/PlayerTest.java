@@ -191,8 +191,8 @@ class PlayerTest {
                 Arguments.of(STAY_20, STAY_20, GameResult.DRAW),
                 Arguments.of(STAY_13, STAY_20, GameResult.WIN),
                 Arguments.of(BLACKJACK, STAY_20, GameResult.LOSE),
-                Arguments.of(BUST_23, BLACKJACK, GameResult.WIN),
-                Arguments.of(STAY_20, BLACKJACK, GameResult.WIN),
+                Arguments.of(BUST_23, BLACKJACK, GameResult.BLACKJACK),
+                Arguments.of(STAY_20, BLACKJACK, GameResult.BLACKJACK),
                 Arguments.of(BLACKJACK, BLACKJACK, GameResult.DRAW)
         );
     }

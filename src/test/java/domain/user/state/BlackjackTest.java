@@ -123,9 +123,9 @@ class BlackjackTest {
 
     private static Stream<Arguments> provideStateAndGameResult() {
         return Stream.of(
-                Arguments.of(new Bust(new ArrayList<>()), GameResult.WIN),
+                Arguments.of(new Bust(new ArrayList<>()), GameResult.BLACKJACK),
                 Arguments.of(new Blackjack(new ArrayList<>()), GameResult.DRAW),
-                Arguments.of(new Stay(new ArrayList<>()), GameResult.WIN)
+                Arguments.of(new Stay(new ArrayList<>()), GameResult.BLACKJACK)
         );
     }
 }

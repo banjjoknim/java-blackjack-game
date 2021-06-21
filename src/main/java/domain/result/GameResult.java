@@ -3,6 +3,7 @@ package domain.result;
 import java.util.Arrays;
 
 public enum GameResult {
+    BLACKJACK(2),
     WIN(1),
     DRAW(0),
     LOSE(-1);

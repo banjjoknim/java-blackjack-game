@@ -16,7 +16,7 @@ public class Blackjack extends Ended {
         if (state.isBlackjack()) {
             return GameResult.DRAW;
         }
-        return GameResult.WIN;
+        return GameResult.BLACKJACK;
     }
 
     @Override
