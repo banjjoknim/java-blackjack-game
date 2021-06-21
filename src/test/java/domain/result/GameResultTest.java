@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ResultTest {
+class GameResultTest {
 
     @DisplayName("입력값에 해당하는 게임 결과를 찾는 기능을 테스트한다.")
     @ParameterizedTest
