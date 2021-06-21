@@ -1,10 +1,12 @@
 package domain.user;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class BettingMoney {
     private static final int POSITIVE = -1;
+    private static final int SCALE = 0;
 
     private BigDecimal amount;
 
@@ -13,8 +15,9 @@ public class BettingMoney {
         this.amount = amount;
     }
 
-    public BigDecimal calculateProfit(BigDecimal earningRate) {
-        return amount.multiply(earningRate);
+    public Profit calculateProfit(BigDecimal earningRate) {
+        return new Profit(amount.multiply(earningRate)
+                .setScale(SCALE, RoundingMode.HALF_EVEN));
     }
 
     private void validateAmount(BigDecimal amount) {
