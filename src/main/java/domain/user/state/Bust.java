@@ -12,7 +12,7 @@ public class Bust extends Ended {
     }
 
     @Override
-    protected GameResult determineResult(State state) {
+    public GameResult findResult(State state) {
         return GameResult.LOSE;
     }
 

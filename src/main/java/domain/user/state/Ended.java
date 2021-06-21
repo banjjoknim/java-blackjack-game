@@ -11,12 +11,7 @@ public abstract class Ended extends State {
         super(cards);
     }
 
-    @Override
-    public GameResult findResult(State state) {
-        return determineResult(state);
-    }
-
-    protected abstract GameResult determineResult(State state);
+    public abstract GameResult findResult(State state);
 
     @Override
     public State toStay() {

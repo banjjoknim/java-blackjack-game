@@ -12,7 +12,7 @@ public class Blackjack extends Ended {
     }
 
     @Override
-    protected GameResult determineResult(State state) {
+    public GameResult findResult(State state) {
         if (state.isBlackjack()) {
             return GameResult.DRAW;
         }

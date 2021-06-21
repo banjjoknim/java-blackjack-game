@@ -12,7 +12,7 @@ public class Stay extends Ended {
     }
 
     @Override
-    protected GameResult determineResult(State state) {
+    public GameResult findResult(State state) {
         if (state.isBust()) {
             return GameResult.WIN;
         }
