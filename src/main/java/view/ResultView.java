@@ -35,10 +35,19 @@ public class ResultView {
     private static void appendDealPhaseResultOfPlayer(StringBuilder resultBuilder, Player player) {
         resultBuilder.append("\n");
         resultBuilder.append(player.getName().getName() + " 카드 : ");
-        String playerCardsResult = player.getState().getCards().stream()
+        resultBuilder.append(buildCardsInformation(player.getState().getCards()));
+    }
+
+    public static void printPlayerCardsResult(Player player) {
+        StringBuilder resultBuilder = new StringBuilder(player.getName().getName() + " 카드 : ");
+        resultBuilder.append(buildCardsInformation(player.getState().getCards()));
+        System.out.println(resultBuilder);
+    }
+
+    private static String buildCardsInformation(List<Card> cards) {
+        return cards.stream()
                 .map(ResultView::buildCardInformation)
                 .collect(joining(CARD_INFORMATION_SEPARATOR));
-        resultBuilder.append(playerCardsResult);
     }
 
     private static StringBuilder buildCardInformation(Card card) {
