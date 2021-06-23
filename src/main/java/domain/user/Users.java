@@ -5,6 +5,8 @@ import domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class Users {
 
     private List<User> users;
@@ -47,6 +49,13 @@ public class Users {
                 .map(user -> (Dealer) user)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
+    }
+
+    public List<Player> findPlayers() {
+        return users.stream()
+                .filter(User::isPlayer)
+                .map(user -> (Player) user)
+                .collect(toList());
     }
 
     public List<User> getUsers() {
