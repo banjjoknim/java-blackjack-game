@@ -5,6 +5,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.joining;
 
@@ -34,14 +35,17 @@ public class ResultView {
 
     private static void appendDealPhaseResultOfPlayer(StringBuilder resultBuilder, Player player) {
         resultBuilder.append("\n");
-        resultBuilder.append(player.getName().getName() + " 카드 : ");
-        resultBuilder.append(buildCardsInformation(player.getState().getCards()));
+        resultBuilder.append(buildPlayerCardsResult(player));
     }
 
     public static void printPlayerCardsResult(Player player) {
+        System.out.println(buildPlayerCardsResult(player));
+    }
+
+    private static String buildPlayerCardsResult(Player player) {
         StringBuilder resultBuilder = new StringBuilder(player.getName().getName() + " 카드 : ");
         resultBuilder.append(buildCardsInformation(player.getState().getCards()));
-        System.out.println(resultBuilder);
+        return resultBuilder.toString();
     }
 
     private static String buildCardsInformation(List<Card> cards) {
@@ -50,11 +54,11 @@ public class ResultView {
                 .collect(joining(CARD_INFORMATION_SEPARATOR));
     }
 
-    private static StringBuilder buildCardInformation(Card card) {
-        StringBuilder informationBuilder = new StringBuilder();
-        informationBuilder.append(card.getType().getName());
-        informationBuilder.append(card.getSymbol().getName());
-        return informationBuilder;
+    private static String buildCardInformation(Card card) {
+        StringBuilder cardInformationBuilder = new StringBuilder();
+        cardInformationBuilder.append(card.getType().getName());
+        cardInformationBuilder.append(card.getSymbol().getName());
+        return cardInformationBuilder.toString();
     }
 
     public static void printDealerHasHit() {
