@@ -30,4 +30,8 @@ public abstract class User {
     public State getState() {
         return state;
     }
+
+    public int getScore() {
+        return state.calculateScore();
+    }
 }
