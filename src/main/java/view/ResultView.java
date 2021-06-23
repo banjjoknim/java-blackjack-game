@@ -5,7 +5,6 @@ import domain.user.Dealer;
 import domain.user.Player;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.joining;
 
@@ -16,33 +15,33 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printDealPhaseResult(Dealer dealer, List<Player> players) {
+    public static void printDealPhaseInformation(Dealer dealer, List<Player> players) {
         StringBuilder resultBuilder = new StringBuilder();
-        appendDealPhaseResultOfDealer(resultBuilder, dealer);
-        appendDealPhaseResultOfPlayers(resultBuilder, players);
+        appendDealPhaseInformationOfDealer(resultBuilder, dealer);
+        appendDealPhaseInformationOfPlayers(resultBuilder, players);
         System.out.println(resultBuilder);
     }
 
-    private static void appendDealPhaseResultOfDealer(StringBuilder resultBuilder, Dealer dealer) {
+    private static void appendDealPhaseInformationOfDealer(StringBuilder resultBuilder, Dealer dealer) {
         Card card = dealer.getState().getCards().get(FIRST);
         resultBuilder.append("딜러 카드 : ");
         resultBuilder.append(buildCardInformation(card));
     }
 
-    private static void appendDealPhaseResultOfPlayers(StringBuilder resultBuilder, List<Player> players) {
-        players.forEach(player -> appendDealPhaseResultOfPlayer(resultBuilder, player));
+    private static void appendDealPhaseInformationOfPlayers(StringBuilder resultBuilder, List<Player> players) {
+        players.forEach(player -> appendDealPhaseInformationOfPlayer(resultBuilder, player));
     }
 
-    private static void appendDealPhaseResultOfPlayer(StringBuilder resultBuilder, Player player) {
+    private static void appendDealPhaseInformationOfPlayer(StringBuilder resultBuilder, Player player) {
         resultBuilder.append("\n");
-        resultBuilder.append(buildPlayerCardsResult(player));
+        resultBuilder.append(buildPlayerInformation(player));
     }
 
-    public static void printPlayerCardsResult(Player player) {
-        System.out.println(buildPlayerCardsResult(player));
+    public static void printPlayerInformation(Player player) {
+        System.out.println(buildPlayerInformation(player));
     }
 
-    private static String buildPlayerCardsResult(Player player) {
+    private static String buildPlayerInformation(Player player) {
         StringBuilder resultBuilder = new StringBuilder(player.getName().getName() + " 카드 : ");
         resultBuilder.append(buildCardsInformation(player.getState().getCards()));
         return resultBuilder.toString();
@@ -63,5 +62,12 @@ public class ResultView {
 
     public static void printDealerHasHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printAllUserInformationAndScore(Dealer dealer, List<Player> players) {
+        System.out.println("딜러 카드 : " + buildCardsInformation(dealer.getState().getCards()) + " - 결과 : " + dealer.getScore());
+        players.stream()
+                .map(player -> buildPlayerInformation(player) + " - 결과 : " + player.getScore())
+                .forEach(System.out::println);
     }
 }
