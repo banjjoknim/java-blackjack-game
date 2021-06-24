@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.user.state.Blackjack;
+import domain.user.state.Stay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +21,20 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class UsersTest {
+    private static final Card SPADE_QUEEN = Card.of(Symbol.SPADE, Type.QUEEN);
+    private static final Card SPADE_KING = Card.of(Symbol.SPADE, Type.KING);
+    private static final Card SPADE_ACE = Card.of(Symbol.SPADE, Type.ACE);
 
     private List<User> userList = new ArrayList<>();
+    private Player player1;
+    private Player player2;
 
     @BeforeEach
     void setUp() {
-        userList.add(new Player(new Name("name"), new BettingMoney(new BigDecimal("1000"))));
-        userList.add(new Player(new Name("name"), new BettingMoney(new BigDecimal("1000"))));
+        player1 = new Player(new Name("name1"), new BettingMoney(new BigDecimal("1000")));
+        player2 = new Player(new Name("name2"), new BettingMoney(new BigDecimal("1000")));
+        userList.add(player1);
+        userList.add(player2);
     }
 
     @DisplayName("딜러 없이 유저들을 생성하는 기능을 테스트한다.")
@@ -165,5 +174,31 @@ class UsersTest {
 
         // then
         assertThat(players).hasSize(2);
+    }
+
+    @DisplayName("게임 결과에 따른 유저들 각각의 이익을 저장한 결과를 얻는 기능을 테스트한다.")
+    @Test
+    void 유저들로부터_각각의_유저에_대한_수익을_저장한_결과를_얻는다() {
+        // given
+        userList.clear();
+        player1 = new Player(new Name("name1"), new BettingMoney(BigDecimal.valueOf(1000)),
+                new Stay(Arrays.asList(SPADE_QUEEN, SPADE_KING)));
+        player2 = new Player(new Name("name2"), new BettingMoney(BigDecimal.valueOf(1000)),
+                new Blackjack(Arrays.asList(SPADE_QUEEN, SPADE_ACE)));
+        Dealer dealer = new Dealer(new Stay(Arrays.asList(Card.of(Symbol.SPADE, Type.QUEEN), Card.of(Symbol.SPADE, Type.KING))));
+        userList.add(player1);
+        userList.add(player2);
+        userList.add(dealer);
+        Users users = new Users(userList);
+
+        // when
+        PlayerProfitResults playerProfitResults = users.producePlayerProfits();
+
+        // then
+        assertAll(
+                () -> assertThat(playerProfitResults.getPlayerProfitResults()).hasSize(2),
+                () -> assertThat(playerProfitResults.getPlayerProfitResults().get(player1)).isEqualTo(new Profit(BigDecimal.valueOf(0))),
+                () -> assertThat(playerProfitResults.getPlayerProfitResults().get(player2)).isEqualTo(new Profit(BigDecimal.valueOf(1500)))
+        );
     }
 }

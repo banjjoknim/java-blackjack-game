@@ -4,8 +4,10 @@ import domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class Users {
 
@@ -41,6 +43,13 @@ public class Users {
                 .filter(User::isWait)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
+    }
+
+    public PlayerProfitResults producePlayerProfits() {
+        Dealer dealer = findDealer();
+        Map<Player, Profit> playerProfitResults = findPlayers().stream()
+                .collect(toMap(player -> player, player -> player.produceProfit(dealer)));
+        return new PlayerProfitResults(playerProfitResults);
     }
 
     public Dealer findDealer() {
