@@ -2,6 +2,7 @@ package domain.user.state;
 
 import domain.card.Card;
 import domain.result.GameResult;
+import domain.user.Score;
 
 import java.util.List;
 
@@ -38,15 +39,14 @@ public class Wait extends State {
 
     @Override
     public State findNextState() {
-        int score = super.calculateScore();
-        boolean isInitialCards = super.isInitialCards();
-        if (score > BLACKJACK) {
+        Score score = this.calculateScore();
+        if (score.isBiggerThan(BLACKJACK_SCORE)) {
             return new Bust(cards);
         }
-        if (score == BLACKJACK && isInitialCards) {
+        if (score.isSame(BLACKJACK_SCORE) && this.isInitialCards()) {
             return new Blackjack(cards);
         }
-        if (score == BLACKJACK) {
+        if (score.isSame(BLACKJACK_SCORE)) {
             return new Stay(cards);
         }
         return new Wait(cards);

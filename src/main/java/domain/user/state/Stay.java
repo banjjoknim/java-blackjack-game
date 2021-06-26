@@ -19,7 +19,7 @@ public class Stay extends Ended {
         if (state.isBlackjack()) {
             return GameResult.LOSE;
         }
-        return GameResult.from(Integer.compare(this.calculateScore(), state.calculateScore()));
+        return GameResult.from(this.calculateScore().compareTo(state.calculateScore()));
     }
 
     @Override

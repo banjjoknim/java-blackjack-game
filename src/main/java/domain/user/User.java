@@ -31,7 +31,7 @@ public abstract class User {
         return state;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return state.calculateScore();
     }
 }

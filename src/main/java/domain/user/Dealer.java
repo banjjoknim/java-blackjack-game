@@ -18,10 +18,10 @@ public class Dealer extends User {
 
     @Override
     public boolean isWait() {
-        if (this.state.calculateScore() >= DEALER_RULE_SCORE) {
-            return false;
+        if (this.state.calculateScore().isSmallerThan(DEALER_RULE_SCORE)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

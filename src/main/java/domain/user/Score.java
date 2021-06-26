@@ -2,7 +2,7 @@ package domain.user;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
     private int score;
 
@@ -16,6 +16,18 @@ public class Score {
         if (isNegative) {
             throw new IllegalArgumentException("점수는 0보다 작을 수 없습니다.");
         }
+    }
+
+    public boolean isBiggerThan(int score) {
+        return this.score > score;
+    }
+
+    public boolean isSame(int score) {
+        return this.score == score;
+    }
+
+    public boolean isSmallerThan(int dealerRuleScore) {
+        return score < dealerRuleScore;
     }
 
     public int getScore() {
@@ -33,5 +45,10 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return Integer.compare(score, o.score);
     }
 }

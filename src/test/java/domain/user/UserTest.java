@@ -62,12 +62,12 @@ class UserTest {
     @DisplayName("유저의 점수를 얻는 기능을 테스트한다.")
     @ParameterizedTest
     @MethodSource("provideCardsAndScore")
-    void 유저의_점수를_얻는다(List<Card> cards, int expectedScore) {
+    void 유저의_점수를_얻는다(List<Card> cards, Score expectedScore) {
         // given
 
         // when
         cards.forEach(user::draw);
-        int actualScore = user.getScore();
+        Score actualScore = user.getScore();
 
         // then
         assertThat(actualScore).isEqualTo(expectedScore);
@@ -75,10 +75,10 @@ class UserTest {
 
     private static Stream<Arguments> provideCardsAndScore() {
         return Stream.of(
-                Arguments.of(Arrays.asList(HEART_KING, HEART_ACE), 21),
-                Arguments.of(Arrays.asList(HEART_KING, HEART_QUEEN, HEART_ACE), 21),
-                Arguments.of(Arrays.asList(HEART_KING, HEART_QUEEN, HEART_NINE), 29),
-                Arguments.of(Arrays.asList(HEART_KING, HEART_NINE), 19)
+                Arguments.of(Arrays.asList(HEART_KING, HEART_ACE), new Score(21)),
+                Arguments.of(Arrays.asList(HEART_KING, HEART_QUEEN, HEART_ACE), new Score(21)),
+                Arguments.of(Arrays.asList(HEART_KING, HEART_QUEEN, HEART_NINE), new Score(29)),
+                Arguments.of(Arrays.asList(HEART_KING, HEART_NINE), new Score(19))
         );
     }
 

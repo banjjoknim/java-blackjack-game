@@ -3,13 +3,14 @@ package domain.user.state;
 import domain.card.Card;
 import domain.card.Type;
 import domain.result.GameResult;
+import domain.user.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class State {
-    protected static final int BLACKJACK = 21;
+    protected static final int BLACKJACK_SCORE = 21;
     private static final int ACE_IS_ELEVEN = 10;
     private static final int INITIAL_CARDS_SIZE = 2;
 
@@ -33,15 +34,15 @@ public abstract class State {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         int sum = cards.stream()
                 .map(Card::getType)
                 .mapToInt(Type::getScore)
                 .sum();
-        if (sum + ACE_IS_ELEVEN <= BLACKJACK && hasAceCard()) {
+        if (sum + ACE_IS_ELEVEN <= BLACKJACK_SCORE && hasAceCard()) {
             sum = sum + ACE_IS_ELEVEN;
         }
-        return sum;
+        return new Score(sum);
     }
 
     private boolean hasAceCard() {
