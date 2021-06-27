@@ -12,7 +12,7 @@ public class PlayerProfitResults {
         this.playerProfitResults = new HashMap<>(playerProfitResults);
     }
 
-    public Profit produceDealerProfit() {
+    public Profit calculateDealerProfit() {
         return playerProfitResults.values().stream()
                 .reduce(Profit.ZERO, Profit::add)
                 .negate();

@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerProfitResultsTest {
     private static final Card SPADE_QUEEN = Card.of(Symbol.SPADE, Type.QUEEN);
@@ -41,13 +40,13 @@ class PlayerProfitResultsTest {
 
     @DisplayName("플레이어의 수익 결과로부터 딜러의 수익을 계산하는 기능을 테스트한다.")
     @Test
-    void 플레이어의_수익으로_딜러의_수익을_생성한다() {
+    void 플레이어의_수익으로_딜러의_수익을_계산한다() {
         // given
         Users users = new Users(userList);
         PlayerProfitResults playerProfitResults = users.producePlayerProfits();
 
         // when
-        Profit actual = playerProfitResults.produceDealerProfit();
+        Profit actual = playerProfitResults.calculateDealerProfit();
 
         // then
         assertThat(actual).isEqualTo(new Profit(BigDecimal.valueOf(-1500)));
