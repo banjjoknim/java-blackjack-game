@@ -49,7 +49,12 @@ public class ResultView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllUserInformationAndScore(BlackjackGame blackjackGame) {
+    public static void printResult(BlackjackGame blackjackGame) {
+        printAllUserInformationAndScore(blackjackGame);
+        printAllUserProfitAmount(blackjackGame);
+    }
+
+    private static void printAllUserInformationAndScore(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
         List<Player> players = blackjackGame.getPlayers();
         printDealerInformationAndScore(dealer);
@@ -107,17 +112,17 @@ public class ResultView {
         return builder.toString();
     }
 
-    public static void printAllUserProfitResult(BlackjackGame blackjackGame) {
+    private static void printAllUserProfitAmount(BlackjackGame blackjackGame) {
         StringBuilder builder = new StringBuilder();
         UserProfits userProfits = blackjackGame.getUserProfits();
         Dealer dealer = blackjackGame.getDealer();
+        builder.append(buildDealerProfitAmount(userProfits, dealer));
         List<Player> players = blackjackGame.getPlayers();
-        builder.append(buildDealerProfitResult(userProfits, dealer));
         players.forEach(player -> builder.append(buildPlayerProfitResult(userProfits, player)));
         System.out.println(builder);
     }
 
-    private static String buildDealerProfitResult(UserProfits userProfits, Dealer dealer) {
+    private static String buildDealerProfitAmount(UserProfits userProfits, Dealer dealer) {
         StringBuilder builder = new StringBuilder();
         builder.append("딜러 : ");
         builder.append(userProfits.getUserProfit(dealer).getAmount());

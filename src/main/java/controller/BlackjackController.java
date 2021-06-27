@@ -6,7 +6,6 @@ import domain.user.*;
 import view.InputView;
 import view.ResultView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,38 +14,62 @@ import static java.util.stream.Collectors.toList;
 public class BlackjackController {
 
     public void run() {
-        List<Name> names = InputView.inputNames().stream()
-                .map(Name::new)
-                .collect(toList());
-        List<User> users = new ArrayList<>();
-        users.add(new Dealer());
-        for (Name name : names) {
-            BigDecimal amount = InputView.inputBettingMoneyAmount(name);
-            users.add(new Player(name, new BettingMoney(amount)));
-        }
+        Users users = inputUsers();
+        BlackjackGame blackjackGame = new BlackjackGame(users, new Deck());
+        runDealPhase(blackjackGame);
+        runPlayersPhase(blackjackGame);
+        runDealerPhase(blackjackGame);
+        ResultView.printResult(blackjackGame);
+    }
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Users(users), new Deck());
+    private void runDealPhase(BlackjackGame blackjackGame) {
         blackjackGame.proceedDealPhase();
         ResultView.printDealPhaseInformation(blackjackGame);
+    }
 
+    private void runPlayersPhase(BlackjackGame blackjackGame) {
         while (blackjackGame.isPlayersPhase()) {
             Player playerOfCurrentTurn = blackjackGame.getPlayerOfCurrentTurn();
-            while (playerOfCurrentTurn.isWait()) {
-                if (InputView.inputAnswer(playerOfCurrentTurn)) {
-                    blackjackGame.proceedPlayerHitPhase();
-                    ResultView.printPlayerInformation(playerOfCurrentTurn);
-                    continue;
-                }
-                playerOfCurrentTurn.stay();
-            }
+            runPlayerPhase(blackjackGame, playerOfCurrentTurn);
         }
+    }
 
+    private void runPlayerPhase(BlackjackGame blackjackGame, Player player) {
+        while (player.isWait()) {
+            runChoiceAnswerPhase(blackjackGame, player);
+        }
+    }
+
+    private void runChoiceAnswerPhase(BlackjackGame blackjackGame, Player player) {
+        if (InputView.inputAnswer(player)) {
+            blackjackGame.proceedPlayerHitPhase();
+            ResultView.printPlayerInformation(player);
+            return;
+        }
+        player.stay();
+    }
+
+    private void runDealerPhase(BlackjackGame blackjackGame) {
         while (blackjackGame.isDealerPhase()) {
             blackjackGame.proceedDealerHitPhase();
             ResultView.printDealerHasHit();
         }
-        ResultView.printAllUserInformationAndScore(blackjackGame);
+    }
 
-        ResultView.printAllUserProfitResult(blackjackGame);
+    private Users inputUsers() {
+        List<Name> names = inputNames();
+        List<User> users = new ArrayList<>();
+        users.add(new Dealer());
+        names.stream()
+                .map(name -> new Player(name, new BettingMoney(InputView.inputBettingMoneyAmount(name))))
+                .forEach(users::add);
+        return new Users(users);
+    }
+
+    private List<Name> inputNames() {
+        List<Name> names = InputView.inputNames().stream()
+                .map(Name::new)
+                .collect(toList());
+        return names;
     }
 }
