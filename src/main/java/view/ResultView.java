@@ -48,7 +48,9 @@ public class ResultView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllUserInformationAndScore(Dealer dealer, List<Player> players) {
+    public static void printAllUserInformationAndScore(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getDealer();
+        List<Player> players = blackjackGame.getPlayers();
         printDealerInformationAndScore(dealer);
         printPlayersInformationAndScore(players);
     }
@@ -67,7 +69,6 @@ public class ResultView {
 
     private static void printPlayersInformationAndScore(List<Player> players) {
         System.out.println(buildPlayersInformationAndScore(players));
-
     }
 
     private static String buildPlayersInformationAndScore(List<Player> players) {
