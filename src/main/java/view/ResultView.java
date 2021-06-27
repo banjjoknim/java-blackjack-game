@@ -114,19 +114,26 @@ public class ResultView {
 
     private static void printAllUserProfitAmount(BlackjackGame blackjackGame) {
         StringBuilder builder = new StringBuilder();
-        UserProfits userProfits = blackjackGame.getUserProfits();
-        Dealer dealer = blackjackGame.getDealer();
-        builder.append(buildDealerProfitAmount(userProfits, dealer));
-        List<Player> players = blackjackGame.getPlayers();
-        players.forEach(player -> builder.append(buildPlayerProfitResult(userProfits, player)));
+        builder.append(buildDealerProfitAmount(blackjackGame));
+        builder.append(buildPlayersProfitResult(blackjackGame));
         System.out.println(builder);
     }
 
-    private static String buildDealerProfitAmount(UserProfits userProfits, Dealer dealer) {
+    private static String buildDealerProfitAmount(BlackjackGame blackjackGame) {
+        UserProfits userProfits = blackjackGame.getUserProfits();
+        Dealer dealer = blackjackGame.getDealer();
         StringBuilder builder = new StringBuilder();
         builder.append("딜러 : ");
         builder.append(userProfits.getUserProfit(dealer).getAmount());
         builder.append("\n");
+        return builder.toString();
+    }
+
+    private static String buildPlayersProfitResult(BlackjackGame blackjackGame) {
+        StringBuilder builder = new StringBuilder();
+        UserProfits userProfits = blackjackGame.getUserProfits();
+        List<Player> players = blackjackGame.getPlayers();
+        players.forEach(player -> builder.append(buildPlayerProfitResult(userProfits, player)));
         return builder.toString();
     }
 
