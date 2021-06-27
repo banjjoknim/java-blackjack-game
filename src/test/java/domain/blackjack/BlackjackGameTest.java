@@ -28,12 +28,14 @@ class BlackjackGameTest {
     private List<User> userList = new ArrayList<>();
     private Deck deck;
     private Users users;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         userList.add(new Player(new Name("name"), new BettingMoney(new BigDecimal("1000"))));
         userList.add(new Player(new Name("name"), new BettingMoney(new BigDecimal("1000"))));
-        userList.add(new Dealer());
+        dealer = new Dealer();
+        userList.add(dealer);
         deck = new Deck();
         users = new Users(userList);
     }
@@ -43,11 +45,14 @@ class BlackjackGameTest {
     void 블랙잭_게임을_생성한다() {
         // given
 
-
         // when
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
 
         // then
-        assertDoesNotThrow(() -> new BlackjackGame(users, deck));
+        assertAll(
+                () -> assertThat(blackjackGame.getPlayers()).hasSize(2),
+                () -> assertThat(blackjackGame.getDealer()).isEqualTo(dealer)
+        );
     }
 
     @DisplayName("유저들에게 카드를 나누어주는 단계가 잘 수행되는지 테스트한다.")
@@ -67,9 +72,9 @@ class BlackjackGameTest {
         );
     }
 
-    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어의 존재 여부 판단 기능을 테스트한다.")
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 플레이어의 차례인지 판단하는 기능을 테스트한다.")
     @Test
-    void 대기중인_플레이어가_존재한다() {
+    void 대기중인_플레이어가_존재하면_플레이어들의_차례이다() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(users, deck);
 
@@ -80,9 +85,9 @@ class BlackjackGameTest {
         assertThat(isPlayersPhase).isTrue();
     }
 
-    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어의 존재 여부 판단 기능을 테스트한다.")
+    @DisplayName("블랙잭 게임에서 대기중인 플레이어가 없을 때 플레이어의 차례인지 판단하는 기능을 테스트한다.")
     @Test
-    void 대기중인_플레이어가_존재하지_않는다() {
+    void 대기중인_플레이어가_없으면_플레이어들의_차례가_아니다() {
         // given
         List<Card> cards = Arrays.asList(Card.of(Symbol.SPADE, Type.ACE), Card.of(Symbol.SPADE, Type.KING));
         User user1 = users.getUsers().get(0);
@@ -100,7 +105,7 @@ class BlackjackGameTest {
 
     @DisplayName("블랙잭 게임에서 대기중인 플레이어가 있을 때 대기중인 플레이어를 찾는 기능을 테스트한다.")
     @Test
-    void 대기중인_플레이어가_존재할때_대기중인_플레이어를_찾는다() {
+    void 대기중인_플레이어가_존재할때_대기중인_플레이어를_찾을_수_있다() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(users, deck);
 
