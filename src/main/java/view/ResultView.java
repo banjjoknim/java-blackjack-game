@@ -44,6 +44,45 @@ public class ResultView {
         System.out.println(buildPlayerInformation(player));
     }
 
+    public static void printDealerHasHit() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printAllUserInformationAndScore(Dealer dealer, List<Player> players) {
+        printDealerInformationAndScore(dealer);
+        printPlayersInformationAndScore(players);
+    }
+
+    private static void printDealerInformationAndScore(Dealer dealer) {
+        System.out.println(buildDealerInformationAndScore(dealer));
+    }
+
+    private static String buildDealerInformationAndScore(Dealer dealer) {
+        StringBuilder builder = new StringBuilder("딜러 카드 : ");
+        builder.append(buildCardsInformation(dealer.getState().getCards()));
+        builder.append(" - 결과 : ");
+        builder.append(dealer.getScore().getValue());
+        return builder.toString();
+    }
+
+    private static void printPlayersInformationAndScore(List<Player> players) {
+        System.out.println(buildPlayersInformationAndScore(players));
+
+    }
+
+    private static String buildPlayersInformationAndScore(List<Player> players) {
+        StringBuilder builder = new StringBuilder();
+        players.forEach(player -> buildPlayerInformationAndScore(builder, player));
+        return builder.toString();
+    }
+
+    private static void buildPlayerInformationAndScore(StringBuilder builder, Player player) {
+        builder.append(buildPlayerInformation(player));
+        builder.append(" - 결과 : ");
+        builder.append(player.getScore().getValue());
+        builder.append("\n");
+    }
+
     private static String buildPlayerInformation(Player player) {
         StringBuilder resultBuilder = new StringBuilder(player.getName().getName() + " 카드 : ");
         resultBuilder.append(buildCardsInformation(player.getState().getCards()));
@@ -61,16 +100,5 @@ public class ResultView {
         cardInformationBuilder.append(card.getType().getName());
         cardInformationBuilder.append(card.getSymbol().getName());
         return cardInformationBuilder.toString();
-    }
-
-    public static void printDealerHasHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public static void printAllUserInformationAndScore(Dealer dealer, List<Player> players) {
-        System.out.println("딜러 카드 : " + buildCardsInformation(dealer.getState().getCards()) + " - 결과 : " + dealer.getScore());
-        players.stream()
-                .map(player -> buildPlayerInformation(player) + " - 결과 : " + player.getScore())
-                .forEach(System.out::println);
     }
 }
