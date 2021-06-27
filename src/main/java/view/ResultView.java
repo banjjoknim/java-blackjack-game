@@ -73,21 +73,24 @@ public class ResultView {
 
     private static String buildPlayersInformationAndScore(List<Player> players) {
         StringBuilder builder = new StringBuilder();
-        players.forEach(player -> buildPlayerInformationAndScore(builder, player));
+        players.forEach(player -> builder.append(buildPlayerInformationAndScore(player)));
         return builder.toString();
     }
 
-    private static void buildPlayerInformationAndScore(StringBuilder builder, Player player) {
+    private static String buildPlayerInformationAndScore(Player player) {
+        StringBuilder builder = new StringBuilder();
         builder.append(buildPlayerInformation(player));
         builder.append(" - 결과 : ");
         builder.append(player.getScore().getValue());
         builder.append("\n");
+        return builder.toString();
     }
 
     private static String buildPlayerInformation(Player player) {
-        StringBuilder resultBuilder = new StringBuilder(player.getName().getName() + " 카드 : ");
-        resultBuilder.append(buildCardsInformation(player.getState().getCards()));
-        return resultBuilder.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append(player.getName().getName() + " 카드 : ");
+        builder.append(buildCardsInformation(player.getState().getCards()));
+        return builder.toString();
     }
 
     private static String buildCardsInformation(List<Card> cards) {
@@ -97,9 +100,9 @@ public class ResultView {
     }
 
     private static String buildCardInformation(Card card) {
-        StringBuilder cardInformationBuilder = new StringBuilder();
-        cardInformationBuilder.append(card.getType().getName());
-        cardInformationBuilder.append(card.getSymbol().getName());
-        return cardInformationBuilder.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append(card.getType().getName());
+        builder.append(card.getSymbol().getName());
+        return builder.toString();
     }
 }
