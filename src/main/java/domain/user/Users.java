@@ -3,11 +3,11 @@ package domain.user;
 import domain.card.Deck;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 public class Users {
 
@@ -45,11 +45,19 @@ public class Users {
                 .orElseThrow(() -> new IllegalStateException("대기중인 플레이어가 없습니다."));
     }
 
-    public PlayerProfitResults producePlayerProfits() {
+    public UserProfits produceUserProfits() {
+        Map<User, Profit> userProfits = new HashMap<>();
         Dealer dealer = findDealer();
-        Map<Player, Profit> playerProfitResults = findPlayers().stream()
-                .collect(toMap(player -> player, player -> player.produceProfit(dealer)));
-        return new PlayerProfitResults(playerProfitResults);
+        findPlayers().forEach(player -> userProfits.put(player, player.produceProfit(dealer)));
+        Profit dealerProfit = calculateDealerProfit(userProfits);
+        userProfits.put(dealer, dealerProfit);
+        return new UserProfits(userProfits);
+    }
+
+    private Profit calculateDealerProfit(Map<User, Profit> playerProfitResults) {
+        return playerProfitResults.values().stream()
+                .reduce(Profit.ZERO, Profit::add)
+                .negate();
     }
 
     public Dealer findDealer() {

@@ -192,13 +192,13 @@ class UsersTest {
         Users users = new Users(userList);
 
         // when
-        PlayerProfitResults playerProfitResults = users.producePlayerProfits();
+        UserProfits userProfits = users.produceUserProfits();
 
         // then
         assertAll(
-                () -> assertThat(playerProfitResults.getPlayerProfitResults()).hasSize(2),
-                () -> assertThat(playerProfitResults.getPlayerProfitResults().get(player1)).isEqualTo(new Profit(BigDecimal.valueOf(0))),
-                () -> assertThat(playerProfitResults.getPlayerProfitResults().get(player2)).isEqualTo(new Profit(BigDecimal.valueOf(1500)))
+                () -> assertThat(userProfits.getUserProfits()).hasSize(3),
+                () -> assertThat(userProfits.getUserProfits().get(player1)).isEqualTo(new Profit(BigDecimal.valueOf(0))),
+                () -> assertThat(userProfits.getUserProfits().get(player2)).isEqualTo(new Profit(BigDecimal.valueOf(1500)))
         );
     }
 }
