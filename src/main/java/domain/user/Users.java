@@ -36,7 +36,7 @@ public class Users {
                 .anyMatch(User::isWait);
     }
 
-    public Player findWaitingPlayer() {
+    public Player findPlayerOfCurrentTurn() {
         return users.stream()
                 .filter(User::isPlayer)
                 .map(user -> (Player) user)

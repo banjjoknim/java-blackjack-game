@@ -107,7 +107,7 @@ class BlackjackGameTest {
         // when
 
         // then
-        assertDoesNotThrow(blackjackGame::getWaitingPlayer);
+        assertDoesNotThrow(blackjackGame::getPlayerOfCurrentTurn);
     }
 
     @DisplayName("블랙잭 게임에서 대기중인 플레이어가 없을 때 대기중인 플레이어를 찾는 기능을 테스트한다.")
@@ -124,7 +124,7 @@ class BlackjackGameTest {
         // when
 
         // then
-        assertThatThrownBy(blackjackGame::getWaitingPlayer)
+        assertThatThrownBy(blackjackGame::getPlayerOfCurrentTurn)
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -133,12 +133,12 @@ class BlackjackGameTest {
     void 유저가_카드덱으로부터_카드를_뽑는_과정을_수행한다() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(users, deck);
-        Player player = blackjackGame.getWaitingPlayer();
+        Player player = blackjackGame.getPlayerOfCurrentTurn();
         Dealer dealer = blackjackGame.getDealer();
 
         // when
-        blackjackGame.proceedHitPhase(player);
-        blackjackGame.proceedHitPhase(dealer);
+        blackjackGame.proceedPlayerHitPhase();
+        blackjackGame.proceedDealerHitPhase();
 
         // then
         assertAll(

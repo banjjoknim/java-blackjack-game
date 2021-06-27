@@ -1,5 +1,6 @@
 package view;
 
+import domain.blackjack.BlackjackGame;
 import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -15,7 +16,9 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printDealPhaseInformation(Dealer dealer, List<Player> players) {
+    public static void printDealPhaseInformation(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getDealer();
+        List<Player> players = blackjackGame.getPlayers();
         StringBuilder resultBuilder = new StringBuilder();
         appendDealPhaseInformationOfDealer(resultBuilder, dealer);
         appendDealPhaseInformationOfPlayers(resultBuilder, players);

@@ -127,7 +127,7 @@ class UsersTest {
         // when
 
         // then
-        assertDoesNotThrow(users::findWaitingPlayer);
+        assertDoesNotThrow(users::findPlayerOfCurrentTurn);
     }
 
     @DisplayName("대기중인 플레이어가 존재하지 않을 때 유저들 중에서 대기중인 플레이어를 찾는 기능을 테스트한다.")
@@ -145,7 +145,7 @@ class UsersTest {
         // when
 
         // then
-        assertThatThrownBy(users::findWaitingPlayer)
+        assertThatThrownBy(users::findPlayerOfCurrentTurn)
                 .isInstanceOf(IllegalStateException.class);
     }
 

@@ -3,8 +3,9 @@ package domain.blackjack;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.User;
 import domain.user.Users;
+
+import java.util.List;
 
 public class BlackjackGame {
     private static final int ZERO = 0;
@@ -25,23 +26,31 @@ public class BlackjackGame {
     }
 
     public boolean isDealerPhase() {
-        Dealer dealer = getDealer();
+        Dealer dealer = users.findDealer();
         return dealer.isWait() && !isPlayersPhase();
-    }
-
-    public Dealer getDealer() {
-        return users.findDealer();
     }
 
     public boolean isPlayersPhase() {
         return users.hasWaitingPlayer();
     }
 
-    public Player getWaitingPlayer() {
-        return users.findWaitingPlayer();
+    public void proceedPlayerHitPhase() {
+        users.findPlayerOfCurrentTurn().hit(deck);
     }
 
-    public void proceedHitPhase(User user) {
-        user.hit(deck);
+    public void proceedDealerHitPhase() {
+        users.findDealer().hit(deck);
+    }
+
+    public Player getPlayerOfCurrentTurn() {
+        return users.findPlayerOfCurrentTurn();
+    }
+
+    public Dealer getDealer() {
+        return users.findDealer();
+    }
+
+    public List<Player> getPlayers() {
+        return users.findPlayers();
     }
 }
