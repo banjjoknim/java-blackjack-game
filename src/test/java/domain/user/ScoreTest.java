@@ -36,7 +36,7 @@ class ScoreTest {
         Score actual = new Score(score);
 
         // then
-        assertThat(actual.getScore()).isEqualTo(score);
+        assertThat(actual.getValue()).isEqualTo(score);
     }
 
     @DisplayName("점수의 대소 비교 기능을 테스트한다.")

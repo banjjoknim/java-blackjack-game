@@ -3,35 +3,36 @@ package domain.user;
 import java.util.Objects;
 
 public class Score implements Comparable<Score> {
+    private static final int ZERO = 0;
 
-    private int score;
+    private int value;
 
-    public Score(int score) {
-        validateScore(score);
-        this.score = score;
+    public Score(int value) {
+        validateScore(value);
+        this.value = value;
     }
 
-    private void validateScore(int score) {
-        boolean isNegative = score < 0;
+    private void validateScore(int value) {
+        boolean isNegative = value < ZERO;
         if (isNegative) {
             throw new IllegalArgumentException("점수는 0보다 작을 수 없습니다.");
         }
     }
 
-    public boolean isBiggerThan(int score) {
-        return this.score > score;
+    public boolean isBiggerThan(int value) {
+        return this.value > value;
     }
 
-    public boolean isSame(int score) {
-        return this.score == score;
+    public boolean isSame(int value) {
+        return this.value == value;
     }
 
-    public boolean isSmallerThan(int dealerRuleScore) {
-        return score < dealerRuleScore;
+    public boolean isSmallerThan(int dealerRuleScoreValue) {
+        return value < dealerRuleScoreValue;
     }
 
-    public int getScore() {
-        return score;
+    public int getValue() {
+        return value;
     }
 
     @Override
@@ -39,16 +40,16 @@ public class Score implements Comparable<Score> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return score == score1.score;
+        return value == score1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(value);
     }
 
     @Override
     public int compareTo(Score o) {
-        return Integer.compare(score, o.score);
+        return Integer.compare(value, o.value);
     }
 }

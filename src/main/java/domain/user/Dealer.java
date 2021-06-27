@@ -6,7 +6,7 @@ import domain.user.state.Wait;
 import java.util.ArrayList;
 
 public class Dealer extends User {
-    private static final int DEALER_RULE_SCORE = 17;
+    private static final int DEALER_RULE_SCORE_VALUE = 17;
 
     public Dealer() {
         this(new Wait(new ArrayList<>()));
@@ -18,7 +18,7 @@ public class Dealer extends User {
 
     @Override
     public boolean isWait() {
-        if (this.state.calculateScore().isSmallerThan(DEALER_RULE_SCORE)) {
+        if (this.state.calculateScore().isSmallerThan(DEALER_RULE_SCORE_VALUE)) {
             return true;
         }
         return false;
