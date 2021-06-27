@@ -5,6 +5,8 @@ import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.user.*;
+import domain.user.state.Blackjack;
+import domain.user.state.Stay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BlackjackGameTest {
+
+    private static final Card SPADE_QUEEN = Card.of(Symbol.SPADE, Type.QUEEN);
+    private static final Card SPADE_KING = Card.of(Symbol.SPADE, Type.KING);
+    private static final Card SPADE_ACE = Card.of(Symbol.SPADE, Type.ACE);
 
     private List<User> userList = new ArrayList<>();
     private Deck deck;
@@ -222,5 +228,27 @@ class BlackjackGameTest {
 
         // then
         assertThat(isDealerPhase).isFalse();
+    }
+
+    @DisplayName("블랙잭 게임이 유저로부터 유저별 수익을 저장한 결과를 얻는 기능을 테스트한다.")
+    @Test
+    void 유저로부터_유저의_수익을_저장한_결과를_얻는다() {
+        // given
+        userList.clear();
+        Player player1 = new Player(new Name("name1"), new BettingMoney(BigDecimal.valueOf(1000)),
+                new Stay(Arrays.asList(SPADE_QUEEN, SPADE_KING)));
+        Player player2 = new Player(new Name("name2"), new BettingMoney(BigDecimal.valueOf(1000)),
+                new Blackjack(Arrays.asList(SPADE_QUEEN, SPADE_ACE)));
+        Dealer dealer = new Dealer(new Stay(Arrays.asList(Card.of(Symbol.SPADE, Type.QUEEN), Card.of(Symbol.SPADE, Type.KING))));
+        userList.add(player1);
+        userList.add(player2);
+        userList.add(dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(users, deck);
+
+        // when
+        UserProfits userProfits = blackjackGame.getUserProfits();
+
+        // then
+        assertThat(userProfits.getUserProfits()).hasSize(3);
     }
 }

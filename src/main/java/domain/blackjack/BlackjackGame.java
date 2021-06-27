@@ -3,6 +3,7 @@ package domain.blackjack;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.UserProfits;
 import domain.user.Users;
 
 import java.util.List;
@@ -52,5 +53,9 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return users.findPlayers();
+    }
+
+    public UserProfits getUserProfits() {
+        return users.produceUserProfits();
     }
 }
