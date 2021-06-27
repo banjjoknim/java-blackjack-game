@@ -4,6 +4,7 @@ import domain.blackjack.BlackjackGame;
 import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.UserProfits;
 
 import java.util.List;
 
@@ -103,6 +104,33 @@ public class ResultView {
         StringBuilder builder = new StringBuilder();
         builder.append(card.getType().getName());
         builder.append(card.getSymbol().getName());
+        return builder.toString();
+    }
+
+    public static void printAllUserProfitResult(BlackjackGame blackjackGame) {
+        StringBuilder builder = new StringBuilder();
+        UserProfits userProfits = blackjackGame.getUserProfits();
+        Dealer dealer = blackjackGame.getDealer();
+        List<Player> players = blackjackGame.getPlayers();
+        builder.append(buildDealerProfitResult(userProfits, dealer));
+        players.forEach(player -> builder.append(buildPlayerProfitResult(userProfits, player)));
+        System.out.println(builder);
+    }
+
+    private static String buildDealerProfitResult(UserProfits userProfits, Dealer dealer) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("딜러 : ");
+        builder.append(userProfits.getUserProfit(dealer).getAmount());
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    private static String buildPlayerProfitResult(UserProfits userProfits, Player player) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(player.getName().getName());
+        builder.append(" : ");
+        builder.append(userProfits.getUserProfit(player).getAmount());
+        builder.append("\n");
         return builder.toString();
     }
 }
