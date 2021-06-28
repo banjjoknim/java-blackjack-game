@@ -6,6 +6,7 @@ import domain.user.*;
 import view.InputView;
 import view.ResultView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class BlackjackController {
         List<User> users = new ArrayList<>();
         users.add(new Dealer());
         names.stream()
-                .map(name -> new Player(name, new BettingMoney(InputView.inputBettingMoneyAmount(name))))
+                .map(name -> new Player(name, inputBettingMoney(name)))
                 .forEach(users::add);
         return new Users(users);
     }
@@ -70,5 +71,10 @@ public class BlackjackController {
         return InputView.inputNames().stream()
                 .map(Name::new)
                 .collect(toList());
+    }
+
+    private BettingMoney inputBettingMoney(Name name) {
+        BigDecimal amount = InputView.inputBettingMoneyAmount(name);
+        return new BettingMoney(amount);
     }
 }
