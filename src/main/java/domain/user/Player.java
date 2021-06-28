@@ -6,6 +6,7 @@ import domain.user.state.State;
 import domain.user.state.Wait;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Player extends User {
 
@@ -57,5 +58,18 @@ public class Player extends User {
 
     public BettingMoney getBettingMoney() {
         return bettingMoney;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

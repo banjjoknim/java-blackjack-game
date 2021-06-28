@@ -2,23 +2,37 @@ package domain.user;
 
 import domain.card.Deck;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class Users {
+    private static final int DEALER_COUNT = 1;
 
     private List<User> users;
 
     public Users(List<User> users) {
-        validateDealerIsExists(users);
+        validateUsers(users);
         this.users = users;
     }
 
-    private void validateDealerIsExists(List<User> users) {
+    private void validateUsers(List<User> users) {
+        validateDuplicateNames(users);
+        validateIsExistsDealer(users);
+    }
+
+    private void validateDuplicateNames(List<User> users) {
+        int playerCount = users.stream()
+                .filter(User::isPlayer)
+                .collect(toSet())
+                .size();
+        if (playerCount != users.size() - DEALER_COUNT) {
+            throw new IllegalArgumentException("플레이어는 중복되는 이름을 가질 수 없습니다.");
+        }
+    }
+
+    private void validateIsExistsDealer(List<User> users) {
         boolean isExistsDealer = users.stream()
                 .anyMatch(User::isDealer);
         if (!isExistsDealer) {
