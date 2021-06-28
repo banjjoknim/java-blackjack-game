@@ -67,9 +67,8 @@ public class BlackjackController {
     }
 
     private List<Name> inputNames() {
-        List<Name> names = InputView.inputNames().stream()
+        return InputView.inputNames().stream()
                 .map(Name::new)
                 .collect(toList());
-        return names;
     }
 }
