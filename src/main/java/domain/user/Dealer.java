@@ -1,19 +1,36 @@
 package domain.user;
 
-import domain.card.Card;
+import domain.user.state.State;
+import domain.user.state.Wait;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Dealer {
-
-    private final List<Card> cards = new ArrayList<>();
+public class Dealer extends User {
+    private static final int DEALER_RULE_SCORE_VALUE = 17;
 
     public Dealer() {
+        this(new Wait(new ArrayList<>()));
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public Dealer(State state) {
+        super(state);
     }
 
+    @Override
+    public boolean isWait() {
+        if (this.state.calculateScore().isSmallerThan(DEALER_RULE_SCORE_VALUE)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }
